@@ -18,19 +18,19 @@ Blazor Application Insights
 # Features
  - Automatically triggers Track Page View on route changes
  - Supported [APIs](https://github.com/microsoft/ApplicationInsights-JS/blob/master/API-reference.md#addTelemetryInitializer)
-   - TrackPageView   
    - TrackEvent
+   - TrackPageView
+   - TrackTrace
  - Todo
+   - AddTelemetryInitializer
+   - ClearAuthenticatedUserContext
+   - Flush
    - StartTrackPage
    - StopTrackPage
+   - SetAuthenticatedUserContext
    - TrackMetric
    - TrackException
-   - TrackTrace
    - TrackDependencyData
-   - Flush
-   - SetAuthenticatedUserContext
-   - ClearAuthenticatedUserContext
-   - AddTelemetryInitializer
 
 # TrackEvent
 ```csharp

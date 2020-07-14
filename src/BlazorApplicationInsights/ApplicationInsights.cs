@@ -22,5 +22,10 @@ namespace BlazorApplicationInsights
         {
             await JSRuntime.InvokeVoidAsync("appInsights.trackEvent", new { name });
         }
+
+        public async Task TrackTrace(string message)
+        {
+            await JSRuntime.InvokeVoidAsync("appInsights.trackTrace", new { message });
+        }
     }
 }
