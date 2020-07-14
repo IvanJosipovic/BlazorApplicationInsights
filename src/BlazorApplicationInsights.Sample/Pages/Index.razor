@@ -1,0 +1,21 @@
+﻿@page "/"
+
+<h1>BlazorApplicationInsights</h1>
+
+<a href="https://github.com/IvanJosipovic/BlazorApplicationInsights"><img alt="GitHub stars" src="https://img.shields.io/github/stars/IvanJosipovic/BlazorApplicationInsights?style=social"></a>
+&nbsp;
+<a href="https://www.nuget.org/packages/BlazorApplicationInsights"><img src="https://img.shields.io/nuget/vpre/BlazorApplicationInsights.svg?style=flat-square" /></a>
+<a href="https://www.nuget.org/packages/BlazorApplicationInsights"><img src="https://img.shields.io/nuget/dt/BlazorApplicationInsights.svg?style=flat-square"></a>
+<br />
+<br />
+
+<button class="btn btn-primary" @onclick="TrackEvent">Track Event</button>
+
+@code {
+    [Inject] private IApplicationInsights AppInsights { get; set; }
+
+    private async Task TrackEvent()
+    {
+        await AppInsights.TrackEvent("My Event");
+    }
+}
