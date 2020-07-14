@@ -8,6 +8,7 @@
     <PackageId>BlazorApplicationInsights</PackageId>
     <Description>Blazor Application Insights</Description>
     <Authors>Ivan Josipovic</Authors>
+    <PackageProjectUrl>https://blazorapplicationinsights.netlify.app</PackageProjectUrl>
     <PackageTags>Blazor;Application Insights</PackageTags>
     <PackageIcon>icon.png</PackageIcon>
     <RepositoryUrl>https://github.com/IvanJosipovic/BlazorApplicationInsights</RepositoryUrl>
@@ -23,10 +24,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>    
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 </Project>
