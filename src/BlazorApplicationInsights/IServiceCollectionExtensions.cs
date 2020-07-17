@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace BlazorApplicationInsights
 {
@@ -6,6 +7,7 @@ namespace BlazorApplicationInsights
     {
         public static IServiceCollection AddBlazorApplicationInsights(this IServiceCollection services)
         {
+            services.AddSingleton<ILoggerProvider, ApplicationInsightsLoggerProvider>();
             return services.AddSingleton<IApplicationInsights, ApplicationInsights>();
         }
     }

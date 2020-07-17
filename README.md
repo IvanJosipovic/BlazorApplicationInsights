@@ -9,28 +9,32 @@ Blazor Application Insights
 
 - Add [BlazorApplicationInsights Nuget](https://www.nuget.org/packages/BlazorApplicationInsights)
   - dotnet add package BlazorApplicationInsights
-- Add AddBlazorApplicationInsights() to ConfigureServices
-- Add '@using BlazorApplicationInsights;' to _Imports.razor
-- Add ApplicationInsightsComponent to App.razor
+- Add call to Program.cs
+  - ```builder.Services.AddBlazorApplicationInsights();```
+- Add using statement to _Imports.razor
+  - ```@using BlazorApplicationInsights;```
+- Add component to App.razor
+  - ```<ApplicationInsightsComponent />```
 - Add Application Insights JS to index.html
   - [Source](https://docs.microsoft.com/en-us/azure/azure-monitor/app/javascript#snippet-based-setup)
 
 # Features
  - Automatically triggers Track Page View on route changes
  - Supported [APIs](https://github.com/microsoft/ApplicationInsights-JS/blob/master/API-reference.md#addTelemetryInitializer)
-   - TrackEvent
-   - TrackPageView
-   - TrackTrace
- - Todo
-   - AddTelemetryInitializer
    - ClearAuthenticatedUserContext
    - Flush
    - StartTrackPage
    - StopTrackPage
    - SetAuthenticatedUserContext
    - TrackMetric
-   - TrackException
    - TrackDependencyData
+   - TrackEvent
+   - TrackException
+   - TrackPageView
+   - TrackTrace
+ - Todo
+   - AddTelemetryInitializer
+
 
 # TrackEvent
 ```csharp
