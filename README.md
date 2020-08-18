@@ -15,26 +15,40 @@ Blazor Application Insights
   - ```@using BlazorApplicationInsights;```
 - Add component to App.razor
   - ```<ApplicationInsightsComponent />```
-- Add Application Insights JS to index.html
+- Add Application Insights JS to head in index.html
   - [Source](https://docs.microsoft.com/en-us/azure/azure-monitor/app/javascript#snippet-based-setup)
+  - Set 'ld: -1' so that the page will be blocked until the JS is loaded
+    - Example
+      ```
+      <script type="text/javascript">
+        !function(T,l,y){// Removed for brevity}
+        src: "https://az416426.vo.msecnd.net/scripts/b/ai.2.min.js",
+        ld: -1, // Set this to -1
+        cfg: {
+            instrumentationKey: "YOUR_INSTRUMENTATION_KEY_GOES_HERE"
+        }});
+      </script>
+      ```
+
+## [Example Project](tree/master/src/BlazorApplicationInsights.Sample)
 
 # Features
  - Automatically triggers Track Page View on route changes
- - ILoggerProvider which sends all logs to Application Insights
  - Supported [APIs](https://github.com/microsoft/ApplicationInsights-JS/blob/master/API-reference.md#addTelemetryInitializer)
    - ClearAuthenticatedUserContext
    - Flush
    - StartTrackPage
    - StopTrackPage
    - SetAuthenticatedUserContext
+   - TrackMetric
    - TrackDependencyData
    - TrackEvent
    - TrackException
-   - TrackMetric   
    - TrackPageView
    - TrackTrace
  - Todo
    - AddTelemetryInitializer
+
 
 # TrackEvent
 ```csharp
