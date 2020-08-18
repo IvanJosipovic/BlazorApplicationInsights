@@ -30,7 +30,7 @@ Blazor Application Insights
       </script>
       ```
 
-## [Example Project](tree/master/src/BlazorApplicationInsights.Sample)
+## [Example Project](https://github.com/IvanJosipovic/BlazorApplicationInsights/tree/master/src/BlazorApplicationInsights.Sample)
 
 # Features
  - Automatically triggers Track Page View on route changes
