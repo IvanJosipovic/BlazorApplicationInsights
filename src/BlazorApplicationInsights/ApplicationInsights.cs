@@ -65,7 +65,7 @@ namespace BlazorApplicationInsights
 
         public async Task SetAuthenticatedUserContext(string authenticatedUserId, string? accountId = null, bool storeInCookie = false)
         {
-            await JSRuntime.InvokeVoidAsync("appInsights.clearAuthenticatedUserContext", new { authenticatedUserId, accountId, storeInCookie });
+            await JSRuntime.InvokeVoidAsync("appInsights.setAuthenticatedUserContext", new { authenticatedUserId, accountId, storeInCookie });
         }
     }
 }
