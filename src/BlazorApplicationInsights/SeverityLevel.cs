@@ -3,6 +3,9 @@ using System.Threading.Tasks;
 
 namespace BlazorApplicationInsights
 {
+    /// <summary>
+    /// Defines the level of severity for the event.
+    /// </summary>
     public enum SeverityLevel
     {
         Verbose = 0,

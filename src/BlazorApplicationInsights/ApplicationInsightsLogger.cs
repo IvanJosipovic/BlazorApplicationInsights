@@ -3,7 +3,7 @@ using System;
 
 namespace BlazorApplicationInsights
 {
-    public class ApplicationInsightsLogger : ILogger
+    internal class ApplicationInsightsLogger : ILogger
     {
         private static NullScope scope { get; } = new NullScope();
 
