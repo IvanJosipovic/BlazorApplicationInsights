@@ -65,3 +65,32 @@ Blazor Application Insights
     }
 }
 ```
+
+# Set User Name
+- Edit Authentication.razor
+```csharp
+@page "/authentication/{action}"
+
+<RemoteAuthenticatorView Action="@Action" OnLogInSucceeded="OnLogInSucceeded" OnLogOutSucceeded="OnLogOutSucceeded" />
+
+@code{
+    [Parameter] public string Action { get; set; }
+
+    [CascadingParameter] public Task<AuthenticationState> AuthenticationState { get; set; }
+    
+    [Inject] private IApplicationInsights AppInsights { get; set; }
+
+    public async Task OnLogInSucceeded()
+    {
+        var user = (await AuthenticationState).User;
+
+        await AppInsights.SetAuthenticatedUserContext(user.FindFirst("preferred_username")?.Value);
+    }
+    
+    public async Task OnLogOutSucceeded()
+    {
+        await AppInsights.ClearAuthenticatedUserContext();
+    }
+}
+
+```
