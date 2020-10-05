@@ -2,7 +2,7 @@
 
 namespace BlazorApplicationInsights
 {
-    internal class ApplicationInsightsLoggerProvider : ILoggerProvider
+    public class ApplicationInsightsLoggerProvider : ILoggerProvider
     {
         private readonly IApplicationInsights ApplicationInsights;
         private ILogger m_logger;
@@ -15,7 +15,7 @@ namespace BlazorApplicationInsights
 
         public ILogger CreateLogger(string categoryName)
         {
-            if (null == m_logger)
+            if (m_logger == null)
             {
                 m_logger = new ApplicationInsightsLogger(ApplicationInsights);
             }

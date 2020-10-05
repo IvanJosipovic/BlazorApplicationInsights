@@ -6,7 +6,7 @@ namespace BlazorApplicationInsights
     public static class IServiceCollectionExtensions
     {
         /// <summary>
-        /// Adds the BlazorApplicationInsigts services.
+        /// Adds the BlazorApplicationInsights services.
         /// </summary>
         /// <param name="services"></param>
         /// <param name="addILoggerProvider"></param>
@@ -17,7 +17,7 @@ namespace BlazorApplicationInsights
             {
                 services.AddSingleton<ILoggerProvider, ApplicationInsightsLoggerProvider>();
             }
-            
+
             return services.AddSingleton<IApplicationInsights, ApplicationInsights>();
         }
     }

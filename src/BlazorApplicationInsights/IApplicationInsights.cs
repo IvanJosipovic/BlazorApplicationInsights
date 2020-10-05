@@ -12,7 +12,7 @@ namespace BlazorApplicationInsights
         /// <param name="properties"></param>
         /// <returns></returns>
         Task TrackEvent(string name, Dictionary<string, object>? properties = null);
-        
+
         /// <summary>
         /// Log a diagnostic scenario such entering or leaving a function.
         /// </summary>
@@ -21,7 +21,7 @@ namespace BlazorApplicationInsights
         /// <param name="properties"></param>
         /// <returns></returns>
         Task TrackTrace(string message, SeverityLevel? severityLevel = null, Dictionary<string, object>? properties = null);
-        
+
         /// <summary>
         /// Log an exception that you have caught.
         /// </summary>
@@ -64,9 +64,9 @@ namespace BlazorApplicationInsights
         /// <summary>
         /// Log a numeric value that is not associated with a specific event. Typically used
         /// to send regular reports of performance indicators.
-        /// 
+        ///
         /// To send a single measurement, just use the `name` and `average` fields
-        /// 
+        ///
         ///  If you take measurements frequently, you can reduce the telemetry bandwidth by
         ///  aggregating multiple measurements and sending the resulting average and modifying
         ///  the `sampleCount`.

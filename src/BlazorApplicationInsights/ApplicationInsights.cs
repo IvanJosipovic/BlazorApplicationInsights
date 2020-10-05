@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace BlazorApplicationInsights
 {
-    internal class ApplicationInsights : IApplicationInsights
+    public class ApplicationInsights : IApplicationInsights
     {
         private readonly IJSRuntime JSRuntime;
 
