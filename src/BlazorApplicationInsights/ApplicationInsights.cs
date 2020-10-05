@@ -15,22 +15,22 @@ namespace BlazorApplicationInsights
 
         public async Task TrackPageView(string? name = null, string? uri = null, string? refUri = null, string? pageType = null, bool? isLoggedIn = null, Dictionary<string, object>? properties = null)
         {
-            await JSRuntime.InvokeVoidAsync("appInsights.trackPageView", new object[] { name, uri, refUri, pageType, isLoggedIn, properties });
+            await JSRuntime.InvokeVoidAsync("appInsights.trackPageView", new { name, uri, refUri, pageType, isLoggedIn, properties });
         }
 
         public async Task TrackEvent(string name, Dictionary<string, object>? properties = null)
         {
-            await JSRuntime.InvokeVoidAsync("appInsights.trackEvent", new object[] { name, properties });
+            await JSRuntime.InvokeVoidAsync("appInsights.trackEvent", new { name, properties });
         }
 
         public async Task TrackTrace(string message, SeverityLevel? severityLevel, Dictionary<string, object>? properties)
         {
-            await JSRuntime.InvokeVoidAsync("appInsights.trackTrace", new object[] { message, severityLevel, properties });
+            await JSRuntime.InvokeVoidAsync("appInsights.trackTrace", new { message, severityLevel, properties });
         }
 
         public async Task TrackException(Error error, SeverityLevel? severityLevel = null, Dictionary<string, object>? properties = null)
         {
-            await JSRuntime.InvokeVoidAsync("appInsights.trackException", new object[] { error, severityLevel, properties });
+            await JSRuntime.InvokeVoidAsync("appInsights.trackException", new { error, severityLevel, properties });
         }
 
         public async Task StartTrackPage(string? name = null)
@@ -45,12 +45,12 @@ namespace BlazorApplicationInsights
 
         public async Task TrackMetric(string name, double average, double? sampleCount = null, double? min = null, double? max = null, Dictionary<string, object>? properties = null)
         {
-            await JSRuntime.InvokeVoidAsync("appInsights.trackMetric", new object[] { name, average, sampleCount, min, max, properties });
+            await JSRuntime.InvokeVoidAsync("appInsights.trackMetric", new { name, average, sampleCount, min, max, properties });
         }
 
         public async Task TrackDependencyData(string id, double responseCode, string? absoluteUrl = null, bool? success = null, string? commandName = null, double? duration = null, string? method = null, Dictionary<string, object>? properties = null)
         {
-            await JSRuntime.InvokeVoidAsync("appInsights.trackDependencyData", new object[] { id, responseCode, absoluteUrl, success, commandName, duration, method, properties });
+            await JSRuntime.InvokeVoidAsync("appInsights.trackDependencyData", new { id, responseCode, absoluteUrl, success, commandName, duration, method, properties });
         }
 
         public async Task Flush(bool? async = true)

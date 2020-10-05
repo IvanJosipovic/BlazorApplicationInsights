@@ -15,7 +15,7 @@ namespace BlazorApplicationInsights
 
         public ILogger CreateLogger(string categoryName)
         {
-            if (null == m_logger)
+            if (m_logger == null)
             {
                 m_logger = new ApplicationInsightsLogger(ApplicationInsights);
             }

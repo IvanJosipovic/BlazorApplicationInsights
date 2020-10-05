@@ -17,10 +17,13 @@
 
     private async Task TrackEvent()
     {
-        await AppInsights.TrackEvent("My Event");
+        await AppInsights.TrackEvent("My Event", new Dictionary<string, object>()
+        {
+            { "customProperty", "customValue" }
+        });
     }
 
-    private async Task TrackException()
+    private void TrackException()
     {
         throw new Exception("Something wrong happened :(");
     }

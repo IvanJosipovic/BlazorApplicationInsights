@@ -7,7 +7,7 @@ namespace BlazorApplicationInsights
     {
         private static NullScope scope { get; } = new NullScope();
 
-        private IApplicationInsights ApplicationInsights;
+        private readonly IApplicationInsights ApplicationInsights;
 
         public ApplicationInsightsLogger(IApplicationInsights applicationInsights)
         {
@@ -67,7 +67,7 @@ namespace BlazorApplicationInsights
         }
     }
 
-    public class NullScope : IDisposable
+    internal class NullScope : IDisposable
     {
         public NullScope()
         {
