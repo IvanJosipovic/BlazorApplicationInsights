@@ -7,10 +7,10 @@ updates:
     time: "06:00"
     timezone: America/Vancouver
   open-pull-requests-limit: 10
-  ignore:
+  allow:
   - dependency-name: Microsoft.AspNetCore.*
     versions:
     - 3.x
   - dependency-name: System.Net.Http.Json
-    versions:
+    allow:
     - 3.x
