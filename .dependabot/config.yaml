@@ -1,12 +1,16 @@
-version: 1
-update_configs:
-  - package_manager: "dotnet:nuget"
-    directory: "/"
-    update_schedule: "live"
-    ignored_updates:
-      - match:
-          dependency_name: "Microsoft.AspNetCore.*"
-          version_requirement: "3.x"
-      - match:
-          dependency_name: "System.Net.Http.Json"
-          version_requirement: "3.x"
+version: 2
+updates:
+- package-ecosystem: nuget
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "06:00"
+    timezone: America/Vancouver
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: Microsoft.AspNetCore.*
+    versions:
+    - 5.x
+  - dependency-name: System.Net.Http.Json
+    allow:
+    - 5.x
