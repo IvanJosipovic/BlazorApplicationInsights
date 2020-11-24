@@ -12,5 +12,5 @@ updates:
     versions:
     - 5.x
   - dependency-name: System.Net.Http.Json
-    allow:
+    versions:
     - 5.x
