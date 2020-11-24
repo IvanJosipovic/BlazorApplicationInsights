@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace BlazorApplicationInsights
@@ -118,5 +119,22 @@ namespace BlazorApplicationInsights
         /// <param name="storeInCookie"></param>
         /// <returns></returns>
         Task SetAuthenticatedUserContext(string authenticatedUserId, string? accountId = null, bool storeInCookie = false);
+
+        /// <summary>
+        /// Adds a telemetry initializer to the collection. Telemetry initializers will be called one by one,
+        /// in the order they were added, before the telemetry item is pushed for sending.
+        /// If one of the telemetry initializers returns false or throws an error then the telemetry item will not be sent.
+        /// </summary>
+        /// <param name="telemetryItem"></param>
+        /// <returns></returns>
+        Task AddTelemetryInitializer(ITelemetryItem telemetryItem);
+
+        /// <summary>
+        /// Send browser performance metrics.
+        /// </summary>
+        /// <param name="pageViewPerformance"></param>
+        /// <param name="customProperties"></param>
+        /// <returns></returns>
+        Task TrackPageViewPerformance(IPageViewPerformanceTelemetry pageViewPerformance, Dictionary<string, object> customProperties = null);
     }
 }

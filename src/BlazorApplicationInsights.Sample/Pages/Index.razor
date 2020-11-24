@@ -21,6 +21,8 @@
         {
             { "customProperty", "customValue" }
         });
+
+        await AppInsights.Flush();
     }
 
     private void TrackException()

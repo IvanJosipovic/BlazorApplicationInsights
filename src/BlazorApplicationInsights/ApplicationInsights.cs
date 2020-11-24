@@ -1,4 +1,5 @@
 ﻿using Microsoft.JSInterop;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -66,6 +67,16 @@ namespace BlazorApplicationInsights
         public async Task SetAuthenticatedUserContext(string authenticatedUserId, string? accountId = null, bool storeInCookie = false)
         {
             await JSRuntime.InvokeVoidAsync("appInsights.setAuthenticatedUserContext", new object[] { authenticatedUserId, accountId, storeInCookie });
+        }
+
+        public async Task AddTelemetryInitializer(ITelemetryItem telemetryItem)
+        {
+            await JSRuntime.InvokeVoidAsync("blazorApplicationInsights.addTelemetryInitializer", new object[] { telemetryItem });
+        }
+
+        public async Task TrackPageViewPerformance(IPageViewPerformanceTelemetry pageViewPerformance, Dictionary<string, object> customProperties = null)
+        {
+            await JSRuntime.InvokeVoidAsync("appInsights.trackPageViewPerformance", new object[] { pageViewPerformance, customProperties });
         }
     }
 }
