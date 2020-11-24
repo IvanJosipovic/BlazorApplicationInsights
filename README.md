@@ -3,7 +3,7 @@
 [![Nuget (with prereleases)](https://img.shields.io/nuget/dt/BlazorApplicationInsights.svg?style=flat-square)](https://www.nuget.org/packages/BlazorApplicationInsights)
 ![](https://github.com/IvanJosipovic/BlazorApplicationInsights/workflows/Create%20Release/badge.svg)
 
-Blazor Application Insights
+Application Insights for Blazor web applications
 
 # Install
 
@@ -16,42 +16,48 @@ Blazor Application Insights
 - Add component to App.razor
   - ```<ApplicationInsightsComponent />```
 - Add Application Insights JS to head in index.html
-  - [Source](https://docs.microsoft.com/en-us/azure/azure-monitor/app/javascript#snippet-based-setup)
-  - Set 'ld: -1' so that the page will be blocked until the JS is loaded
+  - [Source](https://github.com/microsoft/ApplicationInsights-JS#snippet-setup-ignore-if-using-npm-setup)
+  - Set 'ld: -1' so that the page will be blocked until the JS is loaded and enter your instrumentationKey
     - Example
-      ```
+      ```html
       <script type="text/javascript">
-        !function(T,l,y){// Removed for brevity}
-        src: "https://az416426.vo.msecnd.net/scripts/b/ai.2.min.js",
-        ld: -1, // Set this to -1
-        cfg: {
-            instrumentationKey: "YOUR_INSTRUMENTATION_KEY_GOES_HERE"
-        }});
+      !function(T,l,y){ // Removed for brevity...
+      src: "https://js.monitor.azure.com/scripts/b/ai.2.min.js", 
+      ld: -1,  // Set this to -1
+      crossOrigin: "anonymous",
+      cfg: {
+          instrumentationKey: "YOUR_INSTRUMENTATION_KEY_GOES_HERE"
+      }});
       </script>
       ```
+- Add JS Interop to the bottom of body in index.html
+  ```html
+  <script src="_content/BlazorApplicationInsights/JsInterop.js"></script>
+  ```
 
 ## [Example Project](https://github.com/IvanJosipovic/BlazorApplicationInsights/tree/master/src/BlazorApplicationInsights.Sample)
 
 # Features
  - Automatically triggers Track Page View on route changes
  - ILoggerProvider which sends all the logs to App Insights
- - Supported [APIs](https://github.com/microsoft/ApplicationInsights-JS/blob/master/API-reference.md#addTelemetryInitializer)
+ - Supported [APIs](https://github.com/microsoft/ApplicationInsights-JS/blob/master/API-reference.md)
+   - AddTelemetryInitializer
    - ClearAuthenticatedUserContext
    - Flush
+   - SetAuthenticatedUserContext
    - StartTrackPage
    - StopTrackPage
-   - SetAuthenticatedUserContext
-   - TrackMetric
    - TrackDependencyData
    - TrackEvent
    - TrackException
+   - TrackMetric
    - TrackPageView
+   - TrackPageViewPerformance
    - TrackTrace
- - Todo
-   - AddTelemetryInitializer
 
 
 # TrackEvent
+
 ```csharp
 @page "/"
 
@@ -78,7 +84,7 @@ Blazor Application Insights
     [Parameter] public string Action { get; set; }
 
     [CascadingParameter] public Task<AuthenticationState> AuthenticationState { get; set; }
-    
+
     [Inject] private IApplicationInsights AppInsights { get; set; }
 
     public async Task OnLogInSucceeded()
@@ -87,11 +93,45 @@ Blazor Application Insights
 
         await AppInsights.SetAuthenticatedUserContext(user.FindFirst("preferred_username")?.Value);
     }
-    
+
     public async Task OnLogOutSucceeded()
     {
         await AppInsights.ClearAuthenticatedUserContext();
     }
 }
+```
+
+# Set Role and Instance
+- Edit Program.cs
+```csharp
+    public class Program
+    {
+        public static async Task Main(string[] args)
+        {
+            var builder = WebAssemblyHostBuilder.CreateDefault(args);
+            builder.RootComponents.Add<App>("app");
+
+            builder.Services.AddTransient(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+
+            builder.Services.AddBlazorApplicationInsights();
+
+            var build = builder.Build();
+
+            var applicationInsights = build.Services.GetRequiredService<IApplicationInsights>();
+
+            var telemetryItem = new TelemetryItem()
+            {
+                Tags = new Dictionary<string, object>()
+                {
+                    { "ai.cloud.role", "SPA" },
+                    { "ai.cloud.roleInstance", "Blazor Wasm" },
+                }
+            };
+
+            await applicationInsights.AddTelemetryInitializer(telemetryItem);
+
+            await build.RunAsync();
+        }
+    }
 
 ```

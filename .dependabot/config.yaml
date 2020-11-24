@@ -1,0 +1,12 @@
+version: 1
+update_configs:
+  - package_manager: "dotnet:nuget"
+    directory: "/"
+    update_schedule: "live"
+    ignored_updates:
+      - match:
+          dependency_name: "Microsoft.AspNetCore.*"
+          version_requirement: "3.x"
+      - match:
+          dependency_name: "System.Net.Http.Json"
+          version_requirement: "3.x"

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -17,7 +18,22 @@ namespace BlazorApplicationInsights.Sample
 
             builder.Services.AddBlazorApplicationInsights();
 
-            await builder.Build().RunAsync();
+            var build = builder.Build();
+
+            var applicationInsights = build.Services.GetRequiredService<IApplicationInsights>();
+
+            var telemetryItem = new TelemetryItem()
+            {
+                Tags = new Dictionary<string, object>()
+                {
+                    { "ai.cloud.role", "SPA" },
+                    { "ai.cloud.roleInstance", "Blazor Wasm" },
+                }
+            };
+
+            await applicationInsights.AddTelemetryInitializer(telemetryItem);
+
+            await build.RunAsync();
         }
     }
 }
