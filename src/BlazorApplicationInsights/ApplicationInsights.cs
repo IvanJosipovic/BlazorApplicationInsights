@@ -7,11 +7,11 @@ namespace BlazorApplicationInsights
 {
     public class ApplicationInsights : IApplicationInsights
     {
-        private readonly IJSRuntime JSRuntime;
+        private IJSRuntime? JSRuntime { get; set; }
 
-        public ApplicationInsights(IJSRuntime jsRuntime)
+        public void InitJSRuntime(IJSRuntime jSRuntime)
         {
-            JSRuntime = jsRuntime;
+            JSRuntime = jSRuntime;
         }
 
         public async Task TrackPageView(string? name = null, string? uri = null, string? refUri = null, string? pageType = null, bool? isLoggedIn = null, Dictionary<string, object>? properties = null)
