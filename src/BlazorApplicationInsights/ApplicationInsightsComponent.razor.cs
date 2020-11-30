@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.JSInterop;
 
@@ -12,9 +13,15 @@ namespace BlazorApplicationInsights
 
         protected override void OnInitialized()
         {
-            ApplicationInsights.InitJSRuntime(JSRuntime);
-
             NavigationManager.LocationChanged += NavigationManager_LocationChanged;
+        }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if(firstRender)
+            {
+                await ApplicationInsights.InitBlazorApplicationInsightsAsync(JSRuntime);
+            }
         }
 
         private async void NavigationManager_LocationChanged(object sender, LocationChangedEventArgs e)

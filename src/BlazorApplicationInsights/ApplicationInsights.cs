@@ -8,10 +8,17 @@ namespace BlazorApplicationInsights
     public class ApplicationInsights : IApplicationInsights
     {
         private IJSRuntime? JSRuntime { get; set; }
+        private Func<IApplicationInsights, Task> OnInsightsInitAction { get; }
 
-        public void InitJSRuntime(IJSRuntime jSRuntime)
+        public ApplicationInsights(Func<IApplicationInsights, Task> onInsightsInitAction)
+        {
+            OnInsightsInitAction = onInsightsInitAction;
+        }
+        public async Task InitBlazorApplicationInsightsAsync(IJSRuntime jSRuntime)
         {
             JSRuntime = jSRuntime;
+
+            await OnInsightsInitAction.Invoke(this);
         }
 
         public async Task TrackPageView(string? name = null, string? uri = null, string? refUri = null, string? pageType = null, bool? isLoggedIn = null, Dictionary<string, object>? properties = null)

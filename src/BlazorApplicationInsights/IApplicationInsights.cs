@@ -8,10 +8,10 @@ namespace BlazorApplicationInsights
     public interface IApplicationInsights
     {
         /// <summary>
-        /// Init IJSRuntime
+        /// Set IJSRuntime and run init action queue
         /// </summary>
         /// <param name="jSRuntime"></param>
-        void InitJSRuntime(IJSRuntime jSRuntime);
+        Task InitBlazorApplicationInsightsAsync(IJSRuntime jSRuntime);
 
         /// <summary>
         /// Log a user action or other occurrence.

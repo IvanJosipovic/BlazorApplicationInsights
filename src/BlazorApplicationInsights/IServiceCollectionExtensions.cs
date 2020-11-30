@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System;
+using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace BlazorApplicationInsights
@@ -11,14 +13,35 @@ namespace BlazorApplicationInsights
         /// <param name="services"></param>
         /// <param name="addILoggerProvider"></param>
         /// <returns></returns>
+        public static IServiceCollection AddBlazorApplicationInsights(this IServiceCollection services, Func<IApplicationInsights, Task> onInsightsInit, bool addILoggerProvider = true)
+        {
+            if (addILoggerProvider)
+            {
+                AddLoggerProvider(services);
+            }
+
+            return services.AddSingleton<IApplicationInsights>(factory => new ApplicationInsights(onInsightsInit));
+        }
+
+        /// <summary>
+        /// Adds the BlazorApplicationInsights services.
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="addILoggerProvider"></param>
+        /// <returns></returns>
         public static IServiceCollection AddBlazorApplicationInsights(this IServiceCollection services, bool addILoggerProvider = true)
         {
             if (addILoggerProvider)
             {
-                services.AddSingleton<ILoggerProvider, ApplicationInsightsLoggerProvider>();
+                AddLoggerProvider(services);
             }
 
             return services.AddSingleton<IApplicationInsights, ApplicationInsights>();
+        }
+
+        private static void AddLoggerProvider(IServiceCollection services)
+        {
+            services.AddSingleton<ILoggerProvider, ApplicationInsightsLoggerProvider>();
         }
     }
 }
