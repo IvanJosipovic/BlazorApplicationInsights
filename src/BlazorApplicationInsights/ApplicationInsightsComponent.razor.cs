@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Routing;
+using Microsoft.JSInterop;
 
 namespace BlazorApplicationInsights
 {
@@ -7,9 +8,12 @@ namespace BlazorApplicationInsights
     {
         [Inject] private IApplicationInsights ApplicationInsights { get; set; }
         [Inject] private NavigationManager NavigationManager { get; set; }
+        [Inject] private IJSRuntime JSRuntime { get; set; }
 
         protected override void OnInitialized()
         {
+            ApplicationInsights.InitJSRuntime(JSRuntime);
+
             NavigationManager.LocationChanged += NavigationManager_LocationChanged;
         }
 

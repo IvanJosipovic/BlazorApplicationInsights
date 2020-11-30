@@ -1,11 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.JSInterop;
 
 namespace BlazorApplicationInsights
 {
     public interface IApplicationInsights
     {
+        /// <summary>
+        /// Init IJSRuntime
+        /// </summary>
+        /// <param name="jSRuntime"></param>
+        void InitJSRuntime(IJSRuntime jSRuntime);
+
         /// <summary>
         /// Log a user action or other occurrence.
         /// </summary>
