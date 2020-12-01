@@ -18,7 +18,7 @@ namespace BlazorApplicationInsights
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            if(firstRender)
+            if (firstRender)
             {
                 await ApplicationInsights.InitBlazorApplicationInsightsAsync(JSRuntime);
             }

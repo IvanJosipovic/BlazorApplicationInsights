@@ -18,18 +18,17 @@ Application Insights for Blazor web applications
 - Add Application Insights JS to head in index.html
   - [Source](https://github.com/microsoft/ApplicationInsights-JS#snippet-setup-ignore-if-using-npm-setup)
   - Set 'ld: -1' so that the page will be blocked until the JS is loaded and enter your instrumentationKey
-    - Example
-      ```html
-      <script type="text/javascript">
-      !function(T,l,y){ // Removed for brevity...
-      src: "https://js.monitor.azure.com/scripts/b/ai.2.min.js", 
-      ld: -1,  // Set this to -1
-      crossOrigin: "anonymous",
-      cfg: {
-          instrumentationKey: "YOUR_INSTRUMENTATION_KEY_GOES_HERE"
-      }});
-      </script>
-      ```
+    ```html
+    <script type="text/javascript">
+    !function(T,l,y){ // Removed for brevity...
+    src: "https://js.monitor.azure.com/scripts/b/ai.2.min.js", 
+    ld: -1,  // Set this to -1
+    crossOrigin: "anonymous",
+    cfg: {
+        instrumentationKey: "YOUR_INSTRUMENTATION_KEY_GOES_HERE"
+    }});
+    </script>
+    ```
 - Add JS Interop to the bottom of body in index.html
   ```html
   <script src="_content/BlazorApplicationInsights/JsInterop.js"></script>
@@ -38,23 +37,22 @@ Application Insights for Blazor web applications
 ## [Example Project](https://github.com/IvanJosipovic/BlazorApplicationInsights/tree/master/src/BlazorApplicationInsights.Sample)
 
 # Features
- - Automatically triggers Track Page View on route changes
- - ILoggerProvider which sends all the logs to App Insights
- - Supported [APIs](https://github.com/microsoft/ApplicationInsights-JS/blob/master/API-reference.md)
-   - AddTelemetryInitializer
-   - ClearAuthenticatedUserContext
-   - Flush
-   - SetAuthenticatedUserContext
-   - StartTrackPage
-   - StopTrackPage
-   - TrackDependencyData
-   - TrackEvent
-   - TrackException
-   - TrackMetric
-   - TrackPageView
-   - TrackPageViewPerformance
-   - TrackTrace
-
+- Automatically triggers Track Page View on route changes
+- ILoggerProvider which sends all the logs to App Insights
+- Supported [APIs](https://github.com/microsoft/ApplicationInsights-JS/blob/master/API-reference.md)
+  - AddTelemetryInitializer
+  - ClearAuthenticatedUserContext
+  - Flush
+  - SetAuthenticatedUserContext
+  - StartTrackPage
+  - StopTrackPage
+  - TrackDependencyData
+  - TrackEvent
+  - TrackException
+  - TrackMetric
+  - TrackPageView
+  - TrackPageViewPerformance
+  - TrackTrace
 
 # TrackEvent
 
@@ -104,34 +102,28 @@ Application Insights for Blazor web applications
 # Set Role and Instance
 - Edit Program.cs
 ```csharp
-    public class Program
+public static async Task Main(string[] args)
+{
+    var builder = WebAssemblyHostBuilder.CreateDefault(args);
+    builder.RootComponents.Add<App>("app");
+
+    builder.Services.AddTransient(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+
+    builder.Services.AddBlazorApplicationInsights(async applicationInsights =>
     {
-        public static async Task Main(string[] args)
+        var telemetryItem = new TelemetryItem()
         {
-            var builder = WebAssemblyHostBuilder.CreateDefault(args);
-            builder.RootComponents.Add<App>("app");
-
-            builder.Services.AddTransient(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-
-            builder.Services.AddBlazorApplicationInsights();
-
-            var build = builder.Build();
-
-            var applicationInsights = build.Services.GetRequiredService<IApplicationInsights>();
-
-            var telemetryItem = new TelemetryItem()
+            Tags = new Dictionary<string, object>()
             {
-                Tags = new Dictionary<string, object>()
-                {
-                    { "ai.cloud.role", "SPA" },
-                    { "ai.cloud.roleInstance", "Blazor Wasm" },
-                }
-            };
+                { "ai.cloud.role", "SPA" },
+                { "ai.cloud.roleInstance", "Blazor Wasm" },
+            }
+        };
 
-            await applicationInsights.AddTelemetryInitializer(telemetryItem);
+        await applicationInsights.AddTelemetryInitializer(telemetryItem);
+    });
 
-            await build.RunAsync();
-        }
-    }
+    await builder.Build().RunAsync();
+}
 
 ```
