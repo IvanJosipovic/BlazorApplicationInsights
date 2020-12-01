@@ -16,22 +16,21 @@ namespace BlazorApplicationInsights.Sample
 
             builder.Services.AddTransient(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
-            builder.Services.AddBlazorApplicationInsights();
-
-            var build = builder.Build();
-
-            var applicationInsights = build.Services.GetRequiredService<IApplicationInsights>();
-
-            var telemetryItem = new TelemetryItem()
+            builder.Services.AddBlazorApplicationInsights(async applicationInsights =>
             {
-                Tags = new Dictionary<string, object>()
+                var telemetryItem = new TelemetryItem()
+                {
+                    Tags = new Dictionary<string, object>()
                 {
                     { "ai.cloud.role", "SPA" },
                     { "ai.cloud.roleInstance", "Blazor Wasm" },
                 }
-            };
+                };
 
-            await applicationInsights.AddTelemetryInitializer(telemetryItem);
+                await applicationInsights.AddTelemetryInitializer(telemetryItem);
+            });
+
+            var build = builder.Build();
 
             await build.RunAsync();
         }
