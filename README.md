@@ -5,7 +5,7 @@
 
 Application Insights for Blazor web applications
 
-# Install
+## Install
 
 - Add [BlazorApplicationInsights Nuget](https://www.nuget.org/packages/BlazorApplicationInsights)
   - dotnet add package BlazorApplicationInsights
@@ -36,7 +36,7 @@ Application Insights for Blazor web applications
 
 ## [Example Project](https://github.com/IvanJosipovic/BlazorApplicationInsights/tree/master/src/BlazorApplicationInsights.Sample)
 
-# Features
+## Features
 - Automatically triggers Track Page View on route changes
 - ILoggerProvider which sends all the logs to App Insights
 - Supported [APIs](https://github.com/microsoft/ApplicationInsights-JS/blob/master/API-reference.md)
@@ -54,7 +54,11 @@ Application Insights for Blazor web applications
   - TrackPageViewPerformance
   - TrackTrace
 
-# TrackEvent
+## Blazor Server
+- Disable the integrated ILoggerProvider otherwise all logs will be sent through to the browser!
+  - ```builder.Services.AddBlazorApplicationInsights(false);```
+
+## TrackEvent
 
 ```csharp
 @page "/"
@@ -71,7 +75,7 @@ Application Insights for Blazor web applications
 }
 ```
 
-# Set User Name
+## Set User Name
 - Edit Authentication.razor
 ```csharp
 @page "/authentication/{action}"
@@ -99,7 +103,7 @@ Application Insights for Blazor web applications
 }
 ```
 
-# Set Role and Instance
+## Set Role and Instance
 - Edit Program.cs
 ```csharp
 public static async Task Main(string[] args)
