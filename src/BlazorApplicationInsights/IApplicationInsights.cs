@@ -92,15 +92,27 @@ namespace BlazorApplicationInsights
         /// Log a dependency call (e.g. ajax)
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="responseCode"></param>
-        /// <param name="absoluteUrl"></param>
-        /// <param name="success"></param>
-        /// <param name="commandName"></param>
+        /// <param name="name"></param>
         /// <param name="duration"></param>
-        /// <param name="method"></param>
-        /// <param name="properties"></param>
-        /// <returns></returns>
-        Task TrackDependencyData(string id, double responseCode, string? absoluteUrl = null, bool? success = null, string? commandName = null, double? duration = null, string? method = null, Dictionary<string, object>? properties = null);
+        /// <param name="success"></param>
+        /// <param name="startTime"></param>
+        /// <param name="responseCode"></param>
+        /// <param name="correlationContext"></param>
+        /// <param name="type"></param>
+        /// <param name="data"></param>
+        /// <param name="target"></param>
+        Task TrackDependencyData(
+                                string id,
+                                string name,
+                                decimal? duration = null,
+                                bool? success = null,
+                                DateTime? startTime = null,
+                                int? responseCode = null,
+                                string? correlationContext = null,
+                                string? type = null,
+                                string? data = null,
+                                string? target = null
+            );
 
         /// <summary>
         /// Manually trigger an immediate send of all telemetry still in the buffer.

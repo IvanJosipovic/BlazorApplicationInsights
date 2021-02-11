@@ -30,5 +30,41 @@
             }
         }
         appInsights.addTelemetryInitializer(telemetryInitializer);
+    },
+    trackDependencyData: function (data) {
+        var dependencyTelemetry = {};
+
+        if (data.id !== null) {
+            dependencyTelemetry["id"] = data.id;
+        }
+        if (data.name !== null) {
+            dependencyTelemetry["name"] = data.name;
+        }
+        if (data.duration !== null) {
+            dependencyTelemetry["duration"] = data.duration;
+        }
+        if (data.success !== null) {
+            dependencyTelemetry["success"] = data.success;
+        }
+        if (data.startTime !== null) {
+            dependencyTelemetry["startTime"] = new Date(Date.parse(data.startTime));
+        }
+        if (data.responseCode !== null) {
+            dependencyTelemetry["responseCode"] = data.responseCode;
+        }
+        if (data.correlationContext !== null) {
+            dependencyTelemetry["correlationContext"] = data.correlationContext;
+        }
+        if (data.type !== null) {
+            dependencyTelemetry["type"] = data.type;
+        }
+        if (data.data !== null) {
+            dependencyTelemetry["data"] = data.data;
+        }
+        if (data.target !== null) {
+            dependencyTelemetry["target"] = data.target;
+        }
+
+        appInsights.trackDependencyData(dependencyTelemetry);
     }
 };
