@@ -64,9 +64,9 @@ namespace BlazorApplicationInsights
             await JSRuntime.InvokeVoidAsync("appInsights.trackMetric", new { name, average, sampleCount, min, max, properties });
         }
 
-        public async Task TrackDependencyData(string id, double responseCode, string? absoluteUrl = null, bool? success = null, string? commandName = null, double? duration = null, string? method = null, Dictionary<string, object>? properties = null)
+        public async Task TrackDependencyData(string id, string name, decimal? duration = null, bool? success = null, DateTime? startTime = null, int? responseCode = null, string? correlationContext = null, string? type = null, string? data = null, string? target = null)
         {
-            await JSRuntime.InvokeVoidAsync("appInsights.trackDependencyData", new { id, responseCode, absoluteUrl, success, commandName, duration, method, properties });
+            await JSRuntime.InvokeVoidAsync("blazorApplicationInsights.trackDependencyData", new { id, name, duration, success, startTime = startTime.HasValue ? startTime.Value.ToString("yyyy-MM-ddTHH:mm:ss") : null, responseCode, correlationContext, type, data, target });
         }
 
         public async Task Flush(bool? async = true)
