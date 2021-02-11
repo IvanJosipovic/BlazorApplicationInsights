@@ -66,7 +66,7 @@ namespace BlazorApplicationInsights
 
         public async Task TrackDependencyData(string id, string name, decimal? duration = null, bool? success = null, DateTime? startTime = null, int? responseCode = null, string? correlationContext = null, string? type = null, string? data = null, string? target = null)
         {
-            await JSRuntime.InvokeVoidAsync("blazorApplicationInsights.trackDependencyData", new { id, name, duration, success, startTime, responseCode, correlationContext, type, data, target });
+            await JSRuntime.InvokeVoidAsync("blazorApplicationInsights.trackDependencyData", new { id, name, duration, success, startTime = startTime.HasValue ? startTime.Value.ToString("yyyy-MM-ddTHH:mm:ss") : null, responseCode, correlationContext, type, data, target });
         }
 
         public async Task Flush(bool? async = true)

@@ -47,7 +47,7 @@
             dependencyTelemetry["success"] = data.success;
         }
         if (data.startTime !== null) {
-            dependencyTelemetry["startTime"] = new Date(Date.parse(data.startTime));
+            dependencyTelemetry["startTime"] = new Date(data.startTime);
         }
         if (data.responseCode !== null) {
             dependencyTelemetry["responseCode"] = data.responseCode;
