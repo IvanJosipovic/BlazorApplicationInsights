@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -16,7 +17,7 @@ namespace BlazorApplicationInsights
         /// <returns></returns>
         public static IServiceCollection AddBlazorApplicationInsights(this IServiceCollection services, Func<IApplicationInsights, Task> onInsightsInit, bool addILoggerProvider = true)
         {
-            if (addILoggerProvider)
+            if (addILoggerProvider && RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")))
             {
                 AddLoggerProvider(services);
             }
@@ -33,7 +34,7 @@ namespace BlazorApplicationInsights
         /// <returns></returns>
         public static IServiceCollection AddBlazorApplicationInsights(this IServiceCollection services, bool addILoggerProvider = true)
         {
-            if (addILoggerProvider)
+            if (addILoggerProvider && RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")))
             {
                 AddLoggerProvider(services);
             }
