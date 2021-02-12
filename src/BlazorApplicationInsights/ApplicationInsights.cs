@@ -36,17 +36,17 @@ namespace BlazorApplicationInsights
 
         public async Task TrackEvent(string name, Dictionary<string, object>? properties = null)
         {
-            await JSRuntime.InvokeVoidAsync("appInsights.trackEvent", new { name, properties });
+            await JSRuntime.InvokeVoidAsync("appInsights.trackEvent", new object[] { new { name }, properties });
         }
 
         public async Task TrackTrace(string message, SeverityLevel? severityLevel, Dictionary<string, object>? properties)
         {
-            await JSRuntime.InvokeVoidAsync("appInsights.trackTrace", new { message, severityLevel, properties });
+            await JSRuntime.InvokeVoidAsync("appInsights.trackTrace", new object[] { new { message, severityLevel }, properties });
         }
 
-        public async Task TrackException(Error error, SeverityLevel? severityLevel = null, Dictionary<string, object>? properties = null)
+        public async Task TrackException(Error exception, string? id = null, SeverityLevel? severityLevel = null)
         {
-            await JSRuntime.InvokeVoidAsync("appInsights.trackException", new { error, severityLevel, properties });
+            await JSRuntime.InvokeVoidAsync("appInsights.trackException", new { id, exception, severityLevel });
         }
 
         public async Task StartTrackPage(string? name = null)
@@ -54,14 +54,14 @@ namespace BlazorApplicationInsights
             await JSRuntime.InvokeVoidAsync("appInsights.startTrackPage", new object[] { name });
         }
 
-        public async Task StopTrackPage(string? name = null, string? url = null)
+        public async Task StopTrackPage(string? name = null, string? url = null, Dictionary<string, string>? properties = null, Dictionary<string, decimal>? measurements = null)
         {
-            await JSRuntime.InvokeVoidAsync("appInsights.stopTrackPage", new object[] { name, url });
+            await JSRuntime.InvokeVoidAsync("appInsights.stopTrackPage", new object[] { name, url, properties, measurements });
         }
 
         public async Task TrackMetric(string name, double average, double? sampleCount = null, double? min = null, double? max = null, Dictionary<string, object>? properties = null)
         {
-            await JSRuntime.InvokeVoidAsync("appInsights.trackMetric", new { name, average, sampleCount, min, max, properties });
+            await JSRuntime.InvokeVoidAsync("appInsights.trackMetric", new object[] { new { name, average, sampleCount, min, max }, properties });
         }
 
         public async Task TrackDependencyData(string id, string name, decimal? duration = null, bool? success = null, DateTime? startTime = null, int? responseCode = null, string? correlationContext = null, string? type = null, string? data = null, string? target = null)
@@ -84,14 +84,24 @@ namespace BlazorApplicationInsights
             await JSRuntime.InvokeVoidAsync("appInsights.setAuthenticatedUserContext", new object[] { authenticatedUserId, accountId, storeInCookie });
         }
 
-        public async Task AddTelemetryInitializer(ITelemetryItem telemetryItem)
+        public async Task AddTelemetryInitializer(TelemetryItem telemetryItem)
         {
             await JSRuntime.InvokeVoidAsync("blazorApplicationInsights.addTelemetryInitializer", new object[] { telemetryItem });
         }
 
-        public async Task TrackPageViewPerformance(IPageViewPerformanceTelemetry pageViewPerformance, Dictionary<string, object> customProperties = null)
+        public async Task TrackPageViewPerformance(PageViewPerformanceTelemetry pageViewPerformance)
         {
-            await JSRuntime.InvokeVoidAsync("appInsights.trackPageViewPerformance", new object[] { pageViewPerformance, customProperties });
+            await JSRuntime.InvokeVoidAsync("appInsights.trackPageViewPerformance", new object[] { pageViewPerformance });
+        }
+
+        public async Task StartTrackEvent(string name)
+        {
+            await JSRuntime.InvokeVoidAsync("appInsights.startTrackEvent", new object[] { name });
+        }
+
+        public async Task StopTrackEvent(string name, Dictionary<string, string>? properties = null, Dictionary<string, decimal>? measurements = null)
+        {
+            await JSRuntime.InvokeVoidAsync("appInsights.stopTrackEvent", new object[] { name, properties, measurements });
         }
     }
 }

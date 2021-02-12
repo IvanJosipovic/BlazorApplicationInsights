@@ -58,7 +58,7 @@ namespace BlazorApplicationInsights
 
             if (exception != null)
             {
-                ApplicationInsights.TrackException(new Error() { name = exception.GetType().Name, message = exception.ToString() }, severityLevel, null);
+                ApplicationInsights.TrackException(new Error() { Name = exception.GetType().Name, Message = exception.ToString() }, null, severityLevel);
             }
             else
             {

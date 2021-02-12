@@ -9,24 +9,28 @@
 <br />
 <br />
 
-<button class="btn btn-primary" @onclick="TrackEvent">Track Event</button>
-<button class="btn btn-danger" @onclick="TrackException">Track Exception</button>
-
-@code {
-    [Inject] private IApplicationInsights AppInsights { get; set; }
-
-    private async Task TrackEvent()
-    {
-        await AppInsights.TrackEvent("My Event", new Dictionary<string, object>()
-        {
-            { "customProperty", "customValue" }
-        });
-
-        await AppInsights.Flush();
-    }
-
-    private void TrackException()
-    {
-        throw new Exception("Something wrong happened :(");
-    }
-}
+<button class="btn btn-primary" @onclick="TrackEvent" id="TrackEvent">Track Event</button>
+<br />
+<button class="btn btn-primary" @onclick="TrackTrace" id="TrackTrace">Track Trace</button>
+<br />
+<button class="btn btn-danger" @onclick="TrackException" id="TrackException">Track Exception</button>
+<br />
+<button class="btn btn-danger" @onclick="TrackGlobalException" id="TrackGlobalException">Track Global Exception</button>
+<br />
+<button class="btn btn-primary" @onclick="SetAuthenticatedUserContext" id="SetAuthenticatedUserContext">Set Authenticated User Context</button>
+<br />
+<button class="btn btn-primary" @onclick="ClearAuthenticatedUserContext" id="ClearAuthenticatedUserContext">Clear Authenticated User Context</button>
+<br />
+<button class="btn btn-primary" @onclick="StartStopTrackPage" id="StartStopTrackPage">Start/Stop Track Page</button>
+<br />
+<button class="btn btn-primary" @onclick="TrackDependencyData" id="TrackDependencyData">Track Dependency Data</button>
+<br />
+<button class="btn btn-primary" @onclick="TrackMetric" id="TrackMetric">Track Metric</button>
+<br />
+<button class="btn btn-primary" @onclick="TrackPageView" id="TrackPageView">Track Page View</button>
+<br />
+<button class="btn btn-primary" @onclick="TrackPageViewPerformance" id="TrackPageViewPerformance">Track Page View Performance</button>
+<br />
+<button class="btn btn-primary" @onclick="TestLogger" id="TestLogger">Test Logger</button>
+<br />
+<button class="btn btn-primary" @onclick="StartStopTrackEvent" id="StartStopTrackEvent">Start/Stop Track Event</button>

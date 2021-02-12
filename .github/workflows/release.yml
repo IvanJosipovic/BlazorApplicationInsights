@@ -30,6 +30,15 @@ jobs:
         NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
 
+    - name: Set Test Address
+      run: |
+        Set-Content -Path "src/BlazorApplicationInsights.Tests/BrowserTestsAddress.config" -Value "https://blazorapplicationinsights.netlify.app/";
+      shell: pwsh
+
+    - name: Run Tests
+      working-directory: src/BlazorApplicationInsights.Tests
+      run: dotnet test --configuration Release
+
     - name: Semantic Release
       uses: cycjimmy/semantic-release-action@v2
       id: semantic

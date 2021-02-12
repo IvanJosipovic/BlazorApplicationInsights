@@ -35,3 +35,14 @@ jobs:
       env:
         NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+
+    - name: Set Test Address
+      run: |
+        $url = $(ConvertFrom-Json '${{ steps.netlify.outputs.output }}').deploy_url;
+        Write-Output $url;
+        Set-Content -Path "src/BlazorApplicationInsights.Tests/BrowserTestsAddress.config" -Value $url;
+      shell: pwsh
+
+    - name: Run Tests
+      working-directory: src/BlazorApplicationInsights.Tests
+      run: dotnet test --configuration Release
