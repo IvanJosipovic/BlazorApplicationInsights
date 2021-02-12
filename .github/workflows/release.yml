@@ -32,7 +32,7 @@ jobs:
 
     - name: Set Test Address
       run: |
-        Set-Content -Path "src/BlazorApplicationInsights.Tests/BrowserTestsAddress.config" -Value "https://blazorapplicationinsights.netlify.app/";
+        Set-Content -Path "src/BlazorApplicationInsights.Tests/BrowserTestsAddress.config" -Value "${{ steps.netlify.outputs.NETLIFY_LIVE_URL }}";
       shell: pwsh
 
     - name: Run Tests
