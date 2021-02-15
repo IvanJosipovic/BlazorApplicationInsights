@@ -48,7 +48,7 @@ jobs:
         NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
 
     - name: Set Test Address
-      if: github.ref == 'refs/heads/beta
+      if: github.ref == 'refs/heads/beta'
       run: |
         Set-Content -Path "src/BlazorApplicationInsights.Tests/BrowserTestsAddress.config" -Value "${{ steps.netlify.outputs.NETLIFY_URL }}";
       shell: pwsh
