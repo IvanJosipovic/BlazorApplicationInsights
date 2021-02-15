@@ -2,6 +2,7 @@ on:
   push:
     branches: 
       - master
+      - beta
 
 name: Create Release
 jobs:
@@ -23,6 +24,7 @@ jobs:
       run: dotnet publish -c Release
 
     - name: Deploy to Production
+      if: github.ref == 'refs/heads/master'
       uses: netlify/actions/cli@master
       with:
         args: deploy --prod --json -d src/BlazorApplicationInsights.Sample/bin/Release/netstandard2.1/publish/wwwroot
@@ -31,8 +33,24 @@ jobs:
         NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
 
     - name: Set Test Address
+      if: github.ref == 'refs/heads/master'
       run: |
         Set-Content -Path "src/BlazorApplicationInsights.Tests/BrowserTestsAddress.config" -Value "${{ steps.netlify.outputs.NETLIFY_LIVE_URL }}";
+      shell: pwsh
+
+    - name: Deploy to Staging
+      if: github.ref == 'refs/heads/beta'
+      uses: netlify/actions/cli@master
+      with:
+        args: deploy --json -d src/BlazorApplicationInsights.Sample/bin/Release/netstandard2.1/publish/wwwroot
+      env:
+        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+
+    - name: Set Test Address
+      if: github.ref == 'refs/heads/beta
+      run: |
+        Set-Content -Path "src/BlazorApplicationInsights.Tests/BrowserTestsAddress.config" -Value "${{ steps.netlify.outputs.NETLIFY_URL }}";
       shell: pwsh
 
     - name: Run Tests

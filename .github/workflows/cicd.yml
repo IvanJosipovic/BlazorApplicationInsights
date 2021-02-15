@@ -3,6 +3,7 @@ on:
     branches: 
       - '*'
       - '!master'
+      - '!beta'
 
 name: CI/CD
 jobs:
