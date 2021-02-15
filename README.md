@@ -44,7 +44,9 @@ Application Insights for Blazor web applications
   - ClearAuthenticatedUserContext
   - Flush
   - SetAuthenticatedUserContext
+  - StartTrackEvent
   - StartTrackPage
+  - StopTrackEvent
   - StopTrackPage
   - TrackDependencyData
   - TrackEvent
