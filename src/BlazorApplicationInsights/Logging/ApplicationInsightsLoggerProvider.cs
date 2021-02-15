@@ -15,12 +15,7 @@ namespace BlazorApplicationInsights
 
         public ILogger CreateLogger(string categoryName)
         {
-            if (m_logger == null)
-            {
-                m_logger = new ApplicationInsightsLogger(ApplicationInsights);
-            }
-
-            return m_logger;
+            return m_logger ??= new ApplicationInsightsLogger(ApplicationInsights);
         }
 
         #region IDisposable Support

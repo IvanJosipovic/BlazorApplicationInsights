@@ -5,7 +5,7 @@ namespace BlazorApplicationInsights
 {
     public class ApplicationInsightsLogger : ILogger
     {
-        private static NullScope scope { get; } = new NullScope();
+        private static NullScope Scope { get; } = new NullScope();
 
         private readonly IApplicationInsights ApplicationInsights;
 
@@ -16,7 +16,7 @@ namespace BlazorApplicationInsights
 
         public IDisposable BeginScope<TState>(TState state)
         {
-            return scope;
+            return Scope;
         }
 
         public bool IsEnabled(LogLevel logLevel)

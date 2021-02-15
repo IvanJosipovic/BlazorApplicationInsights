@@ -13,8 +13,9 @@ namespace BlazorApplicationInsights
         /// Blazor Server, set addILoggerProvider to false
         /// </summary>
         /// <param name="services"></param>
+        /// <param name="onInsightsInit"></param>
         /// <param name="addILoggerProvider"></param>
-        /// <returns></returns>
+        /// <returns>IServiceCollection</returns>
         public static IServiceCollection AddBlazorApplicationInsights(this IServiceCollection services, Func<IApplicationInsights, Task> onInsightsInit, bool addILoggerProvider = true)
         {
             if (addILoggerProvider && RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")))
@@ -22,7 +23,7 @@ namespace BlazorApplicationInsights
                 AddLoggerProvider(services);
             }
 
-            return services.AddSingleton<IApplicationInsights>(factory => new ApplicationInsights(onInsightsInit));
+            return services.AddSingleton<IApplicationInsights>(_ => new ApplicationInsights(onInsightsInit));
         }
 
         /// <summary>
@@ -31,7 +32,7 @@ namespace BlazorApplicationInsights
         /// </summary>
         /// <param name="services"></param>
         /// <param name="addILoggerProvider"></param>
-        /// <returns></returns>
+        /// <returns>IServiceCollection</returns>
         public static IServiceCollection AddBlazorApplicationInsights(this IServiceCollection services, bool addILoggerProvider = true)
         {
             if (addILoggerProvider && RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")))

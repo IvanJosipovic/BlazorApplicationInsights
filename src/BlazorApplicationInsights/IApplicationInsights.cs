@@ -72,14 +72,16 @@ namespace BlazorApplicationInsights
         Task StopTrackPage(string? name = null, string? url = null, Dictionary<string, string>? properties = null, Dictionary<string, decimal>? measurements = null);
 
         /// <summary>
+        /// <para>
         /// Log a numeric value that is not associated with a specific event. Typically used
         /// to send regular reports of performance indicators.
-        ///
-        /// To send a single measurement, just use the `name` and `average` fields
-        ///
+        /// </para>
+        /// <para>To send a single measurement, just use the `name` and `average` fields</para>
+        /// <para>
         ///  If you take measurements frequently, you can reduce the telemetry bandwidth by
         ///  aggregating multiple measurements and sending the resulting average and modifying
         ///  the `sampleCount`.
+        /// </para>
         /// </summary>
         /// <param name="name">name of this metric</param>
         /// <param name="average">Recorded value/average for this metric</param>
@@ -124,13 +126,11 @@ namespace BlazorApplicationInsights
         /// <summary>
         /// Clears the authenticated user id and account id. The associated cookie is cleared, if present.
         /// </summary>
-        /// <returns></returns>
         Task ClearAuthenticatedUserContext();
 
         /// <summary>
-        /// Set the authenticated user id and the account id. Used for identifying a specific signed-in user. Parameters must not contain whitespace or ,;=|
-        ///
-        /// The method will only set the `authenticatedUserId` and `accountId` in the current page view. To set them for the whole session, you should set `storeInCookie = true`
+        /// <para>Set the authenticated user id and the account id. Used for identifying a specific signed-in user. Parameters must not contain whitespace or ,;=|</para>
+        /// <para>The method will only set the `authenticatedUserId` and `accountId` in the current page view. To set them for the whole session, you should set `storeInCookie = true`</para>
         ///
         /// </summary>
         /// <param name="authenticatedUserId"></param>
