@@ -25,6 +25,7 @@ jobs:
 
     - name: Deploy to Production
       if: github.ref == 'refs/heads/master'
+      id: netlify
       uses: netlify/actions/cli@master
       with:
         args: deploy --prod --json -d src/BlazorApplicationInsights.Sample/bin/Release/netstandard2.1/publish/wwwroot
@@ -40,6 +41,7 @@ jobs:
 
     - name: Deploy to Staging
       if: github.ref == 'refs/heads/beta'
+      id: netlify2
       uses: netlify/actions/cli@master
       with:
         args: deploy --json -d src/BlazorApplicationInsights.Sample/bin/Release/netstandard2.1/publish/wwwroot
@@ -50,7 +52,7 @@ jobs:
     - name: Set Test Address
       if: github.ref == 'refs/heads/beta'
       run: |
-        Set-Content -Path "src/BlazorApplicationInsights.Tests/BrowserTestsAddress.config" -Value "${{ steps.netlify.outputs.NETLIFY_URL }}";
+        Set-Content -Path "src/BlazorApplicationInsights.Tests/BrowserTestsAddress.config" -Value "${{ steps.netlify2.outputs.NETLIFY_URL }}";
       shell: pwsh
 
     - name: Run Tests
