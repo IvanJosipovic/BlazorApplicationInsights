@@ -5,7 +5,7 @@ namespace BlazorApplicationInsights
 {
     public class ApplicationInsightsLogger : ILogger
     {
-        private static NullScope scope { get; } = new NullScope();
+        private static NullScope Scope { get; } = new NullScope();
 
         private readonly IApplicationInsights ApplicationInsights;
 
@@ -16,7 +16,7 @@ namespace BlazorApplicationInsights
 
         public IDisposable BeginScope<TState>(TState state)
         {
-            return scope;
+            return Scope;
         }
 
         public bool IsEnabled(LogLevel logLevel)
@@ -58,7 +58,7 @@ namespace BlazorApplicationInsights
 
             if (exception != null)
             {
-                ApplicationInsights.TrackException(new Error() { name = exception.GetType().Name, message = exception.ToString() }, severityLevel, null);
+                ApplicationInsights.TrackException(new Error() { Name = exception.GetType().Name, Message = exception.ToString() }, null, severityLevel);
             }
             else
             {

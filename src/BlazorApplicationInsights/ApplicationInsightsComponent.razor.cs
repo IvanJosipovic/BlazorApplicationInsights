@@ -30,9 +30,9 @@ namespace BlazorApplicationInsights
             await ApplicationInsights.TrackPageView();
         }
 
-		public void Dispose()
-		{
-			NavigationManager.LocationChanged -= NavigationManager_LocationChanged;
-		}
-	}
+        public void Dispose()
+        {
+            NavigationManager.LocationChanged -= NavigationManager_LocationChanged;
+        }
+    }
 }

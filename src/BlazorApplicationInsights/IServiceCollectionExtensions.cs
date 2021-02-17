@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -12,16 +13,17 @@ namespace BlazorApplicationInsights
         /// Blazor Server, set addILoggerProvider to false
         /// </summary>
         /// <param name="services"></param>
+        /// <param name="onInsightsInit"></param>
         /// <param name="addILoggerProvider"></param>
-        /// <returns></returns>
+        /// <returns>IServiceCollection</returns>
         public static IServiceCollection AddBlazorApplicationInsights(this IServiceCollection services, Func<IApplicationInsights, Task> onInsightsInit, bool addILoggerProvider = true)
         {
-            if (addILoggerProvider)
+            if (addILoggerProvider && RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")))
             {
                 AddLoggerProvider(services);
             }
 
-            return services.AddSingleton<IApplicationInsights>(factory => new ApplicationInsights(onInsightsInit));
+            return services.AddSingleton<IApplicationInsights>(_ => new ApplicationInsights(onInsightsInit));
         }
 
         /// <summary>
@@ -30,10 +32,10 @@ namespace BlazorApplicationInsights
         /// </summary>
         /// <param name="services"></param>
         /// <param name="addILoggerProvider"></param>
-        /// <returns></returns>
+        /// <returns>IServiceCollection</returns>
         public static IServiceCollection AddBlazorApplicationInsights(this IServiceCollection services, bool addILoggerProvider = true)
         {
-            if (addILoggerProvider)
+            if (addILoggerProvider && RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")))
             {
                 AddLoggerProvider(services);
             }

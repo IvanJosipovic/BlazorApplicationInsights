@@ -1,0 +1,102 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Logging;
+
+namespace BlazorApplicationInsights.Sample.Pages
+{
+    public partial class Index
+    {
+        [Inject]
+        private ILogger<Index> Logger { get; set; }
+
+        [Inject]
+        private IApplicationInsights AppInsights { get; set; }
+
+        private async Task TrackEvent()
+        {
+            await AppInsights.TrackEvent("My Event", new Dictionary<string, object>() {{"customProperty", "customValue"}});
+            await AppInsights.Flush();
+        }
+
+        private async Task TrackTrace()
+        {
+            await AppInsights.TrackTrace("myMessage");
+            await AppInsights.Flush();
+            await AppInsights.TrackTrace("myMessage1", SeverityLevel.Critical);
+            await AppInsights.Flush();
+            await AppInsights.TrackTrace("myMessage2", SeverityLevel.Critical, new Dictionary<string, object>() {{"customProperty", "customValue"}});
+            await AppInsights.Flush();
+        }
+
+        private async Task TrackException()
+        {
+            await AppInsights.TrackException(new Error() { Message = "my message", Name = "my error" }, null, SeverityLevel.Critical);
+            await AppInsights.Flush();
+        }
+
+        private void TrackGlobalException()
+        {
+            throw new Exception("Something wrong happened :(");
+        }
+
+        private async Task SetAuthenticatedUserContext()
+        {
+            await AppInsights.SetAuthenticatedUserContext("myUserId", "myUserName", true);
+            await AppInsights.Flush();
+        }
+
+        private async Task ClearAuthenticatedUserContext()
+        {
+            await AppInsights.ClearAuthenticatedUserContext();
+            await AppInsights.Flush();
+        }
+
+        private async Task StartStopTrackPage()
+        {
+            await AppInsights.StartTrackPage("myPage");
+            await AppInsights.Flush();
+            await AppInsights.StopTrackEvent("myPage");
+            await AppInsights.Flush();
+        }
+
+        private async Task TrackDependencyData()
+        {
+            await AppInsights.TrackDependencyData("myId", "myName", 1000, true, DateTime.Now, 200, "myContext", "myType", "mydata", "myTarget");
+            await AppInsights.Flush();
+        }
+
+        private async Task TrackMetric()
+        {
+            await AppInsights.TrackMetric("myMetric", 100, 200, 1, 200, new Dictionary<string, object>() {{"customProperty", "customValue"}});
+            await AppInsights.Flush();
+        }
+
+        private async Task TrackPageView()
+        {
+            await AppInsights.TrackPageView("myPage", "https://test.local", "https://test.local", "TestPage", true, new Dictionary<string, object>() {{"customProperty", "customValue"}});
+            await AppInsights.Flush();
+        }
+
+        private async Task TrackPageViewPerformance()
+        {
+            await AppInsights.TrackPageViewPerformance(new PageViewPerformanceTelemetry(){ });
+            await AppInsights.Flush();
+        }
+
+        private async Task TestLogger()
+        {
+            Logger.LogInformation("My Logging Test");
+            await AppInsights.Flush();
+        }
+
+        private async Task StartStopTrackEvent()
+        {
+            await AppInsights.StartTrackEvent("myEvent");
+            await AppInsights.Flush();
+            await AppInsights.StopTrackEvent("myEvent");
+            await AppInsights.Flush();
+        }
+    }
+}

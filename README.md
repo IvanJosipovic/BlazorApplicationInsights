@@ -38,13 +38,15 @@ Application Insights for Blazor web applications
 
 ## Features
 - Automatically triggers Track Page View on route changes
-- ILoggerProvider which sends all the logs to App Insights
+- ILoggerProvider which sends all the logs to App Insights (Wasm only)
 - Supported [APIs](https://github.com/microsoft/ApplicationInsights-JS/blob/master/API-reference.md)
   - AddTelemetryInitializer
   - ClearAuthenticatedUserContext
   - Flush
   - SetAuthenticatedUserContext
+  - StartTrackEvent
   - StartTrackPage
+  - StopTrackEvent
   - StopTrackPage
   - TrackDependencyData
   - TrackEvent
@@ -53,10 +55,6 @@ Application Insights for Blazor web applications
   - TrackPageView
   - TrackPageViewPerformance
   - TrackTrace
-
-## Blazor Server
-- Disable the integrated ILoggerProvider otherwise all logs will be sent through to the browser!
-  - ```builder.Services.AddBlazorApplicationInsights(false);```
 
 ## TrackEvent
 
