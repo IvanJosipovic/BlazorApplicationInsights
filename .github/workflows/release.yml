@@ -36,7 +36,7 @@ jobs:
     - name: Set Test Address
       if: github.ref == 'refs/heads/master'
       run: |
-        Set-Content -Path "src/BlazorApplicationInsights.Tests/BrowserTestsAddress.config" -Value "${{ steps.netlify.outputs.NETLIFY_LIVE_URL }}";
+        Set-Content -Path "src/BlazorApplicationInsights.Tests/BrowserTestsAddress.config" -Value "${{ steps.netlify.outputs.NETLIFY_URL }}";
       shell: pwsh
 
     - name: Deploy to Staging
