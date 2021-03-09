@@ -12,16 +12,12 @@ namespace BlazorApplicationInsights
         [Inject] private NavigationManager NavigationManager { get; set; }
         [Inject] private IJSRuntime JSRuntime { get; set; }
 
-        protected override void OnInitialized()
-        {
-            NavigationManager.LocationChanged += NavigationManager_LocationChanged;
-        }
-
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)
             {
                 await ApplicationInsights.InitBlazorApplicationInsightsAsync(JSRuntime);
+                NavigationManager.LocationChanged += NavigationManager_LocationChanged;
             }
         }
 
