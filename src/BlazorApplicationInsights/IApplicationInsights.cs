@@ -165,5 +165,18 @@ namespace BlazorApplicationInsights
         /// <param name="properties">additional data used to filter events and metrics in the portal. Defaults to empty.</param>
         /// <param name="measurements">metrics associated with this event, displayed in Metrics Explorer on the portal. Defaults to empty.</param>
         Task StopTrackEvent(string name, Dictionary<string, string>? properties = null, Dictionary<string, decimal>? measurements = null);
+
+        /// <summary>
+        /// Sets the Instrumentation Key
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        Task SetInstrumentationKey(string key);
+
+        /// <summary>
+        /// Initializes Application Insights
+        /// </summary>
+        /// <returns></returns>
+        Task LoadAppInsights();
     }
 }

@@ -98,5 +98,11 @@ namespace BlazorApplicationInsights.Sample.Pages
             await AppInsights.StopTrackEvent("myEvent");
             await AppInsights.Flush();
         }
+
+        private async Task SetInstrumentationKey()
+        {
+            await AppInsights.SetInstrumentationKey("219f9af4-0842-42c8-a5b1-578f09d2ee27");
+            await AppInsights.LoadAppInsights();
+        }
     }
 }

@@ -129,3 +129,35 @@ public static async Task Main(string[] args)
 }
 
 ```
+
+## Set Instrumentation Key
+- Edit Index.html and remove instrumentationKey from cfg
+```html
+<script type="text/javascript">
+!function(T,l,y){ // Removed for brevity...
+src: "https://js.monitor.azure.com/scripts/b/ai.2.min.js", 
+ld: -1,  // Set this to -1
+crossOrigin: "anonymous",
+cfg: {}
+});
+</script>
+```
+- Edit Program.cs
+```csharp
+public static async Task Main(string[] args)
+{
+    var builder = WebAssemblyHostBuilder.CreateDefault(args);
+    builder.RootComponents.Add<App>("app");
+
+    builder.Services.AddTransient(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+
+    builder.Services.AddBlazorApplicationInsights(async applicationInsights =>
+    {
+        await applicationInsights.SetInstrumentationKey("YOUR_INSTRUMENTATION_KEY_GOES_HERE");
+        await applicationInsights.LoadAppInsights();
+    });
+
+    await builder.Build().RunAsync();
+}
+
+```

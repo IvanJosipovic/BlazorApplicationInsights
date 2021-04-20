@@ -103,5 +103,15 @@ namespace BlazorApplicationInsights
         {
             await JSRuntime.InvokeVoidAsync("appInsights.stopTrackEvent", new object[] { name, properties, measurements });
         }
+
+        public async Task SetInstrumentationKey(string key)
+        {
+            await JSRuntime.InvokeVoidAsync("blazorApplicationInsights.setInstrumentationKey", new object[] { key });
+        }
+
+        public async Task LoadAppInsights()
+        {
+            await JSRuntime.InvokeVoidAsync("blazorApplicationInsights.loadAppInsights");
+        }
     }
 }
