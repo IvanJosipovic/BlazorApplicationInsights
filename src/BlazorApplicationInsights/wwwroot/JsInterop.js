@@ -71,6 +71,8 @@
         appInsights.config.instrumentationKey = instrumentationKey;
     },
     loadAppInsights: function () {
-        appInsights.loadAppInsights();
+        if (appInsights.loadAppInsights !== undefined) {
+            appInsights.loadAppInsights();
+        }
     },
 };
