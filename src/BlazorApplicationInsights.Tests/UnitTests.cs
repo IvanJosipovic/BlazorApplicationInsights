@@ -28,7 +28,7 @@ namespace BlazorApplicationInsights.Tests
         [InlineData("TrackGlobalException", false, 1)]
         [InlineData("SetAuthenticatedUserContext", false, 1)]
         [InlineData("ClearAuthenticatedUserContext", false, 1)]
-        [InlineData("StartStopTrackPage", false, 1)]
+        [InlineData("StartStopTrackPage", false, 2)]
         [InlineData("TrackDependencyData", false, 2)]
         [InlineData("TrackMetric", false, 2)]
         [InlineData("TrackPageView", false, 2)]
