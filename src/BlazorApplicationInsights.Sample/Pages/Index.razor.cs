@@ -36,7 +36,7 @@ namespace BlazorApplicationInsights.Sample.Pages
             await AppInsights.Flush();
         }
 
-        private async Task TrackGlobalException()
+        private void TrackGlobalException()
         {
             throw new Exception("Something wrong happened :(");
         }
