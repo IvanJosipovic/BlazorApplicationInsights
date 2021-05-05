@@ -40,7 +40,8 @@ namespace BlazorApplicationInsights
         /// <param name="exception"></param>
         /// <param name="id">Unique guid identifying this error</param>
         /// <param name="severityLevel"></param>
-        Task TrackException(Error exception, string? id = null, SeverityLevel? severityLevel = null);
+        /// <param name="properties"></param>
+        Task TrackException(Error exception, string? id = null, SeverityLevel? severityLevel = null, Dictionary<string, object>? properties = null);
 
         /// <summary>
         /// Logs that a page, or similar container was displayed to the user.

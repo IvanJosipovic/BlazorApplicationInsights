@@ -31,7 +31,7 @@ namespace BlazorApplicationInsights
 
         public async Task TrackPageView(string? name = null, string? uri = null, string? refUri = null, string? pageType = null, bool? isLoggedIn = null, Dictionary<string, object>? properties = null)
         {
-            await JSRuntime.InvokeVoidAsync("appInsights.trackPageView", new { name, uri, refUri, pageType, isLoggedIn, properties });
+            await JSRuntime.InvokeVoidAsync("appInsights.trackPageView", new object[] { new { name, uri, refUri, pageType, isLoggedIn }, properties });
         }
 
         public async Task TrackEvent(string name, Dictionary<string, object>? properties = null)
@@ -39,14 +39,14 @@ namespace BlazorApplicationInsights
             await JSRuntime.InvokeVoidAsync("appInsights.trackEvent", new object[] { new { name }, properties });
         }
 
-        public async Task TrackTrace(string message, SeverityLevel? severityLevel, Dictionary<string, object>? properties)
+        public async Task TrackTrace(string message, SeverityLevel? severityLevel = null, Dictionary<string, object>? properties = null)
         {
             await JSRuntime.InvokeVoidAsync("appInsights.trackTrace", new object[] { new { message, severityLevel }, properties });
         }
 
-        public async Task TrackException(Error exception, string? id = null, SeverityLevel? severityLevel = null)
+        public async Task TrackException(Error exception, string? id = null, SeverityLevel? severityLevel = null, Dictionary<string, object>? properties = null)
         {
-            await JSRuntime.InvokeVoidAsync("appInsights.trackException", new { id, exception, severityLevel });
+            await JSRuntime.InvokeVoidAsync("appInsights.trackException", new object[] { new { id, exception, severityLevel }, properties });
         }
 
         public async Task StartTrackPage(string? name = null)
