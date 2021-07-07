@@ -91,6 +91,12 @@ namespace BlazorApplicationInsights.Sample.Pages
             await AppInsights.Flush();
         }
 
+        private async Task TestSemanticLogger()
+        {
+            Logger.LogInformation("My Semantic Logging Test with customProperty={customProperty}", "customValue");
+            await AppInsights.Flush();
+        }
+
         private async Task StartStopTrackEvent()
         {
             await AppInsights.StartTrackEvent("myEvent");

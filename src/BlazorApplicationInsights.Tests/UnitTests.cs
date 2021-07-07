@@ -34,6 +34,7 @@ namespace BlazorApplicationInsights.Tests
         [InlineData("TrackPageView", false, 2)]
         [InlineData("TrackPageViewPerformance", false, 2)]
         [InlineData("TestLogger", false, 2)]
+        [InlineData("TestSemanticLogger", false, 2)]
         [InlineData("StartStopTrackEvent", false, 2)]
         public async Task Test(string id, bool shouldError, int expectedCalls)
         {
@@ -88,6 +89,7 @@ namespace BlazorApplicationInsights.Tests
         [InlineData("TrackPageView", false)]
         [InlineData("TrackPageViewPerformance", false)]
         [InlineData("TestLogger", false)]
+        [InlineData("TestSemanticLogger", false)]
         [InlineData("StartStopTrackEvent", false)]
         public async Task TestBlocked(string id, bool shouldError)
         {
