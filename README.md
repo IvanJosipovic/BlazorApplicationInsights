@@ -19,6 +19,7 @@ Application Insights for Blazor web applications
   - [Source](https://github.com/microsoft/ApplicationInsights-JS#snippet-setup-ignore-if-using-npm-setup)
   - Set 'ld: -1' so that the page will be blocked until the JS is loaded and enter your instrumentationKey
     ```html
+    // This script is a simplified example, please click on Source above to get the full working script
     <script type="text/javascript">
     !function(T,l,y){ // Removed for brevity...
     src: "https://js.monitor.azure.com/scripts/b/ai.2.min.js", 
