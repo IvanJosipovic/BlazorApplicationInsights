@@ -20,7 +20,7 @@
                 envelope.tags = telemetryItem.tags;
             }
             if (telemetryItem.data !== null) {
-                envelope.data = telemetryItem.data;
+                Object.assign(envelope.data, telemetryItem.data);
             }
             if (telemetryItem.baseType !== null) {
                 envelope.baseType = telemetryItem.baseType;
