@@ -1,0 +1,10 @@
+# Valid types https://github.com/conventional-changelog/conventional-changelog-config-spec/blob/master/versions/2.1.0/README.md
+types:
+ - feat
+ - fix
+ - chore
+ - docs
+ - style
+ - refactor
+ - perf
+ - test
