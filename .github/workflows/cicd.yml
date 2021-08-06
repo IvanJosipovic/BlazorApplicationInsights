@@ -46,8 +46,9 @@ jobs:
       run: dotnet tool install --global Microsoft.Playwright.CLI
 
     - name: Install Playwright
-      working-directory: src/BlazorApplicationInsights.Tests
-      run: playwright install
+      working-directory: src/BlazorApplicationInsights.Tests/bin/Release/netcoreapp3.1
+      run: ./playwright.ps1 install
+      shell: pwsh
 
     - name: Run Tests
       working-directory: src/BlazorApplicationInsights.Tests
