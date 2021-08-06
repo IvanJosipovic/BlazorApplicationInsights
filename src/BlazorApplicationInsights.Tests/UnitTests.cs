@@ -10,7 +10,7 @@ namespace BlazorApplicationInsights.Tests
     public class UnitTests
     {
         private string BaseAddress = "https://localhost:5001/";
-        private bool Headless = false;
+        private bool Headless = true;
 
         public UnitTests()
         {
