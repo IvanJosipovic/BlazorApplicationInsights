@@ -1,5 +1,5 @@
 using FluentAssertions;
-using PlaywrightSharp;
+using Microsoft.Playwright;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -10,7 +10,7 @@ namespace BlazorApplicationInsights.Tests
     public class UnitTests
     {
         private string BaseAddress = "https://localhost:5001/";
-        private bool Headless = true;
+        private bool Headless = false;
 
         public UnitTests()
         {
@@ -36,6 +36,7 @@ namespace BlazorApplicationInsights.Tests
         [InlineData("TestLogger", false, 2)]
         [InlineData("TestSemanticLogger", false, 2)]
         [InlineData("StartStopTrackEvent", false, 2)]
+        [InlineData("TrackHttpRequest", false, 2)]
         public async Task Test(string id, bool shouldError, int expectedCalls)
         {
             bool hasError = false;
@@ -43,12 +44,12 @@ namespace BlazorApplicationInsights.Tests
 
             using var playwright = await Playwright.CreateAsync();
 
-            await using var browser = await playwright.Chromium.LaunchAsync(Headless);
+            await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions() { Headless = Headless });
             var page = await browser.NewPageAsync();
 
             page.Console += (sender, e) =>
             {
-                if (e.Message.Type == "error" && !e.Message.Text.Contains("Something wrong happened :("))
+                if (e.Type == "error" && !e.Text.Contains("Something wrong happened :("))
                 {
                     hasError = true;
                 }
@@ -56,7 +57,7 @@ namespace BlazorApplicationInsights.Tests
 
             page.Request += (sender, e) =>
             {
-                if (e.Request.Url.Equals("https://dc.services.visualstudio.com/v2/track"))
+                if (e.Url.Equals("https://dc.services.visualstudio.com/v2/track"))
                 {
                     appInsightsCalls++;
                 }
@@ -67,7 +68,7 @@ namespace BlazorApplicationInsights.Tests
                 hasError = true;
             };
 
-            await page.GoToAsync(BaseAddress);
+            await page.GotoAsync(BaseAddress);
             await page.ClickAsync("#" + id);
 
             await page.WaitForTimeoutAsync(1000);
@@ -91,40 +92,41 @@ namespace BlazorApplicationInsights.Tests
         [InlineData("TestLogger", false)]
         [InlineData("TestSemanticLogger", false)]
         [InlineData("StartStopTrackEvent", false)]
+        [InlineData("TrackHttpRequest", false)]
         public async Task TestBlocked(string id, bool shouldError)
         {
             bool hasError = false;
 
             using var playwright = await Playwright.CreateAsync();
 
-            await using var browser = await playwright.Chromium.LaunchAsync(Headless);
+            await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions() { Headless = Headless });
             var page = await browser.NewPageAsync();
 
             page.Console += (sender, e) =>
             {
-                if (e.Message.Type == "error" && e.Message.Text != "Failed to load resource: net::ERR_FAILED" && !e.Message.Text.Contains("Something wrong happened :("))
+                if (e.Type == "error" && e.Text != "Failed to load resource: net::ERR_FAILED" && !e.Text.Contains("Something wrong happened :("))
                 {
                     hasError = true;
                 }
             };
 
-            await page.RouteAsync("https://dc.services.visualstudio.com/v2/track", async (x, y )  => {
+            await page.RouteAsync("https://dc.services.visualstudio.com/v2/track", async (x)  => {
                 await x.AbortAsync();
             });
 
-            await page.RouteAsync("https://js.monitor.azure.com/scripts/b/ai.2.min.js", async (x, y) => {
+            await page.RouteAsync("https://js.monitor.azure.com/scripts/b/ai.2.min.js", async (x) => {
                 await x.AbortAsync();
             });
 
             page.RequestFailed += (sender, e) =>
             {
-                if (e.Request.Url != "https://js.monitor.azure.com/scripts/b/ai.2.min.js" && e.Request.Url != "https://dc.services.visualstudio.com/v2/track")
+                if (e.Url != "https://js.monitor.azure.com/scripts/b/ai.2.min.js" && e.Url != "https://dc.services.visualstudio.com/v2/track")
                 {
                     hasError = true;
                 }
             };
 
-            await page.GoToAsync(BaseAddress);
+            await page.GotoAsync(BaseAddress);
             await page.ClickAsync("#" + id);
 
             await page.WaitForTimeoutAsync(1000);

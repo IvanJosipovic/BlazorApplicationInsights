@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
@@ -13,6 +14,8 @@ namespace BlazorApplicationInsights.Sample.Pages
 
         [Inject]
         private IApplicationInsights AppInsights { get; set; }
+
+        [Inject] HttpClient HttpClient { get; set; }
 
         private async Task TrackEvent()
         {
@@ -109,6 +112,12 @@ namespace BlazorApplicationInsights.Sample.Pages
         {
             await AppInsights.SetInstrumentationKey("219f9af4-0842-42c8-a5b1-578f09d2ee27");
             await AppInsights.LoadAppInsights();
+        }
+
+        private async Task TrackHttpRequest()
+        {
+            var str = await HttpClient.GetStringAsync("https://httpbin.org/get");
+            await AppInsights.Flush();
         }
     }
 }

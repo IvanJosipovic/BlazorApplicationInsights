@@ -56,6 +56,13 @@ jobs:
         Set-Content -Path "src/BlazorApplicationInsights.Tests/BrowserTestsAddress.config" -Value "${{ steps.netlify2.outputs.NETLIFY_URL }}";
       shell: pwsh
 
+    - name: Install Microsoft.Playwright.CLI
+      run: dotnet tool install --global Microsoft.Playwright.CLI
+
+    - name: Install Playwright
+      working-directory: src/BlazorApplicationInsights.Tests
+      run: playwright install
+
     - name: Run Tests
       working-directory: src/BlazorApplicationInsights.Tests
       run: dotnet test --configuration Release
