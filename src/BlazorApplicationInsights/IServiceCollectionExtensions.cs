@@ -10,7 +10,7 @@ namespace BlazorApplicationInsights
     {
         /// <summary>
         /// Adds the BlazorApplicationInsights services.
-        /// Blazor Server, set addILoggerProvider to false
+        /// For Blazor Server, addILoggerProvider is automatically set to false
         /// </summary>
         /// <param name="services"></param>
         /// <param name="onInsightsInit"></param>
@@ -28,7 +28,7 @@ namespace BlazorApplicationInsights
 
         /// <summary>
         /// Adds the BlazorApplicationInsights services.
-        /// Blazor Server, set addILoggerProvider to false
+        /// For Blazor Server, addILoggerProvider is automatically set to false
         /// </summary>
         /// <param name="services"></param>
         /// <param name="addILoggerProvider"></param>
