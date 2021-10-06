@@ -36,9 +36,9 @@ jobs:
       run: ./playwright.ps1 install
       shell: pwsh
 
-    - name: Run Tests
-      working-directory: src/BlazorApplicationInsights.Tests
-      run: dotnet test -c Release
+    # - name: Run Tests
+    #   working-directory: src/BlazorApplicationInsights.Tests
+    #   run: dotnet test -c Release
 
     - name: Deploy to Github Pages
       #if: github.ref == 'refs/heads/master'    
