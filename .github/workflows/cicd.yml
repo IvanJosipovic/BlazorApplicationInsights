@@ -30,9 +30,6 @@ jobs:
         $a = Start-Process dotnet 'run','-c','Release' -PassThru
       shell: pwsh
 
-    - name: Install Microsoft.Playwright.CLI
-      run: dotnet tool install --global Microsoft.Playwright.CLI
-
     - name: Install Playwright
       working-directory: src/BlazorApplicationInsights.Tests/bin/Release/netcoreapp3.1
       run: ./playwright.ps1 install
