@@ -18,6 +18,9 @@ jobs:
       with:
         dotnet-version: 3.1.x
 
+    - name: Dotnet Build
+      run: dotnet build -c Release
+
     - name: Dotnet Publish
       working-directory: src/BlazorApplicationInsights.Sample
       run: dotnet publish -c Release
