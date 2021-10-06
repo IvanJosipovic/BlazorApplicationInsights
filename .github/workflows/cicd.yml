@@ -27,8 +27,6 @@ jobs:
     - name: Run App
       working-directory: src/BlazorApplicationInsights.Sample
       run: |
-        dotnet dev-certs https -ep $env:USERPROFILE\.aspnet\https\aspnetapp.pfx -p crypticpassword
-        dotnet dev-certs https --trust
         $a = Start-Process dotnet 'run','-c','Release' -PassThru
       shell: pwsh
 

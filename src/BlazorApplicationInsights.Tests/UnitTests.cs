@@ -423,7 +423,7 @@ namespace BlazorApplicationInsights.Tests
             using var playwright = await Playwright.CreateAsync();
 
             await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions() { Headless = Headless });
-            var page = await browser.NewPageAsync();
+            var page = await browser.NewPageAsync( new BrowserNewPageOptions() { IgnoreHTTPSErrors = true});
 
             page.Console += (sender, e) =>
             {
