@@ -10,20 +10,20 @@ namespace BlazorApplicationInsights
     {
         /// <summary>
         /// Adds the BlazorApplicationInsights services.
-        /// For Blazor Server, addILoggerProvider is automatically set to false
         /// </summary>
         /// <param name="services"></param>
         /// <param name="onInsightsInit"></param>
-        /// <param name="addILoggerProvider"></param>
+        /// <param name="addILoggerProvider">Adds the ILogerProver which ships all logs to Application Insights. This is disabled on Blazor Server.</param>
+        /// <param name="enableAutoRouteTracking">Enables automatic Track Page View on Route changes</param>
         /// <returns>IServiceCollection</returns>
-        public static IServiceCollection AddBlazorApplicationInsights(this IServiceCollection services, Func<IApplicationInsights, Task> onInsightsInit, bool addILoggerProvider = true)
+        public static IServiceCollection AddBlazorApplicationInsights(this IServiceCollection services, Func<IApplicationInsights, Task> onInsightsInit, bool addILoggerProvider = true, bool enableAutoRouteTracking = true)
         {
             if (addILoggerProvider && RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")))
             {
                 AddLoggerProvider(services);
             }
 
-            return services.AddSingleton<IApplicationInsights>(_ => new ApplicationInsights(onInsightsInit));
+            return services.AddSingleton<IApplicationInsights>(_ => new ApplicationInsights(onInsightsInit) { EnableAutoRouteTracking = enableAutoRouteTracking });
         }
 
         /// <summary>
@@ -31,16 +31,17 @@ namespace BlazorApplicationInsights
         /// For Blazor Server, addILoggerProvider is automatically set to false
         /// </summary>
         /// <param name="services"></param>
-        /// <param name="addILoggerProvider"></param>
+        /// <param name="addILoggerProvider">Adds the ILogerProver which ships all logs to Application Insights. This is disabled on Blazor Server.</param>
+        /// <param name="enableAutoRouteTracking">Enables automatic Track Page View on Route changes</param>
         /// <returns>IServiceCollection</returns>
-        public static IServiceCollection AddBlazorApplicationInsights(this IServiceCollection services, bool addILoggerProvider = true)
+        public static IServiceCollection AddBlazorApplicationInsights(this IServiceCollection services, bool addILoggerProvider = true, bool enableAutoRouteTracking = true)
         {
             if (addILoggerProvider && RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")))
             {
                 AddLoggerProvider(services);
             }
 
-            return services.AddSingleton<IApplicationInsights, ApplicationInsights>();
+            return services.AddSingleton<IApplicationInsights>(_ => new ApplicationInsights() { EnableAutoRouteTracking = enableAutoRouteTracking });
         }
 
         private static void AddLoggerProvider(IServiceCollection services)

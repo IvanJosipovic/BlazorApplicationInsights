@@ -179,5 +179,13 @@ namespace BlazorApplicationInsights
         /// </summary>
         /// <returns></returns>
         Task LoadAppInsights();
+
+        /// <summary>
+        /// <para>
+        /// Enables automatic Track Page View on Route changes
+        /// </para>
+        /// Should only be enabled through AddBlazorApplicationInsights
+        /// </summary>
+        bool EnableAutoRouteTracking { get; set; }
     }
 }
