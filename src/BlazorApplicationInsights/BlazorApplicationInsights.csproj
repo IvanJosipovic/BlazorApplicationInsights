@@ -17,6 +17,7 @@
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,4 +25,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.1.19" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+  
 </Project>
