@@ -28,7 +28,6 @@ namespace BlazorApplicationInsights
 
         /// <summary>
         /// Adds the BlazorApplicationInsights services.
-        /// For Blazor Server, addILoggerProvider is automatically set to false
         /// </summary>
         /// <param name="services"></param>
         /// <param name="addILoggerProvider">Adds the ILogerProver which ships all logs to Application Insights. This is disabled on Blazor Server.</param>
