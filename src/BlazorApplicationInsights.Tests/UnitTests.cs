@@ -9,16 +9,21 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace BlazorApplicationInsights.Tests
 {
     public class UnitTests
     {
+        private readonly ITestOutputHelper output;
+
         private string BaseAddress = "https://localhost:5001/";
         private bool Headless = true;
 
-        public UnitTests()
+        public UnitTests(ITestOutputHelper output)
         {
+            this.output = output;
+
             string filename = "BrowserTestsAddress.config";
             if (File.Exists(filename))
             {
@@ -208,13 +213,6 @@ namespace BlazorApplicationInsights.Tests
                     {
                         data = new Data()
                         {
-                            baseType = "PageviewData"
-                        }
-                    },
-                    new AIRequestObject()
-                    {
-                        data = new Data()
-                        {
                             baseType = "PageviewData",
                             baseData = new Basedata()
                             {
@@ -284,13 +282,6 @@ namespace BlazorApplicationInsights.Tests
                     {
                         data = new Data()
                         {
-                            baseType = "PageviewData"
-                        }
-                    },
-                    new AIRequestObject()
-                    {
-                        data = new Data()
-                        {
                             baseType = "PageviewData",
                             baseData = new Basedata()
                             {
@@ -308,13 +299,6 @@ namespace BlazorApplicationInsights.Tests
                 }},
                 new object[] { "TrackPageViewPerformance", 1000, new List<AIRequestObject>()
                 {
-                    new AIRequestObject()
-                    {
-                        data = new Data()
-                        {
-                            baseType = "PageviewPerformanceData",
-                        }
-                    },
                     new AIRequestObject()
                     {
                         data = new Data()
@@ -457,12 +441,13 @@ namespace BlazorApplicationInsights.Tests
 
             await page.WaitForTimeoutAsync(timeout);
 
-            await page.CloseAsync( new PageCloseOptions() { RunBeforeUnload = true });
-
             for (int i = 0; i < expectedCalls.Count; i++)
             {
                 var expectedCall = expectedCalls[i];
-                var call = requestData.Where(x => x.data.baseType == expectedCall.data.baseType).ToArray()[i];
+                var call = requestData.Where(x => x.data.baseType == expectedCall.data.baseType
+                                               && x.tags.ContainsKey("ai.cloud.roleInstance")
+                                               && x.tags["ai.cloud.roleInstance"] == "Blazor Wasm")
+                                                .ToArray()[i];
                 
                 var compare = CompareObjects(expectedCall, call);
 
@@ -473,6 +458,8 @@ namespace BlazorApplicationInsights.Tests
                 else
                 {
                     hasError = true;
+                    var calls = JsonConvert.SerializeObject(requestData, new JsonSerializerSettings() { Formatting = Formatting.Indented });
+                    output.WriteLine(calls);
                 }
             }
 
