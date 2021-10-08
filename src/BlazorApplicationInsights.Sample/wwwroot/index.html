@@ -11,11 +11,17 @@
             src: "https://js.monitor.azure.com/scripts/b/ai.2.min.js",
             ld: -1,
             crossOrigin: "anonymous",
-            cfg: {}
+            cfg: {
+                    instrumentationKey: "219f9af4-0842-42c8-a5b1-578f09d2ee27",
+                    disableFetchTracking: false,
+                    enableCorsCorrelation: true,
+                    enableRequestHeaderTracking: true,
+                    enableResponseHeaderTracking: true
+            }
         });
     </script>
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
-    <link href="css/app.css" rel="stylesheet" />
+    <link href="css/app.css" rel="stylesheet" /> 
 </head>
 
 <body>

@@ -17,7 +17,11 @@ namespace BlazorApplicationInsights
             if (firstRender)
             {
                 await ApplicationInsights.InitBlazorApplicationInsightsAsync(JSRuntime);
-                NavigationManager.LocationChanged += NavigationManager_LocationChanged;
+
+                if (ApplicationInsights.EnableAutoRouteTracking)
+                {
+                    NavigationManager.LocationChanged += NavigationManager_LocationChanged;
+                }
             }
         }
 
@@ -28,7 +32,10 @@ namespace BlazorApplicationInsights
 
         public void Dispose()
         {
-            NavigationManager.LocationChanged -= NavigationManager_LocationChanged;
+            if (ApplicationInsights.EnableAutoRouteTracking)
+            {
+                NavigationManager.LocationChanged -= NavigationManager_LocationChanged;
+            }
         }
     }
 }

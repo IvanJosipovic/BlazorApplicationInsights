@@ -10,6 +10,8 @@ namespace BlazorApplicationInsights
         private IJSRuntime? JSRuntime { get; set; }
         private Func<IApplicationInsights, Task>? OnInsightsInitAction { get; }
 
+        public bool EnableAutoRouteTracking { get; set; }
+
         public ApplicationInsights()
         {
         }

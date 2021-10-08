@@ -2,17 +2,14 @@ on:
   push:
     branches: 
       - '*'
-      - '!master'
-      - '!beta'
 
-name: CI/CD
+name: Create Release
 jobs:
   build:
-    name: CI/CD
+    name: Create Release
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-
     - name: Checkout code
       uses: actions/checkout@v2
 
@@ -28,20 +25,46 @@ jobs:
       working-directory: src/BlazorApplicationInsights.Sample
       run: dotnet publish -c Release
 
-    - name: Deploy to Test
-      id: netlify
-      uses: netlify/actions/cli@master
-      with:
-        args: deploy --json -d src/BlazorApplicationInsights.Sample/bin/Release/netstandard2.1/publish/wwwroot
-      env:
-        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-
-    - name: Set Test Address
+    - name: Run App
+      working-directory: src/BlazorApplicationInsights.Sample
       run: |
-        Set-Content -Path "src/BlazorApplicationInsights.Tests/BrowserTestsAddress.config" -Value "${{ steps.netlify.outputs.NETLIFY_URL }}";
+        $a = Start-Process dotnet 'run','-c','Release' -PassThru
+      shell: pwsh
+
+    - name: Install Playwright
+      working-directory: src/BlazorApplicationInsights.Tests/bin/Release/netcoreapp3.1
+      run: ./playwright.ps1 install
       shell: pwsh
 
     - name: Run Tests
       working-directory: src/BlazorApplicationInsights.Tests
-      run: dotnet test --configuration Release
+      run: dotnet test -c Release
+
+    - name: Deploy to Production
+      if: github.ref == 'refs/heads/master'
+      uses: netlify/actions/cli@master
+      with:
+        args: deploy --prod --json -d src/BlazorApplicationInsights.Sample/bin/Release/netstandard2.1/publish/wwwroot
+      env:
+        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+
+    - name: Semantic Release
+      uses: cycjimmy/semantic-release-action@v2
+      id: semantic
+      with:
+        semantic_version: 18
+        extra_plugins: |
+          conventional-changelog-conventionalcommits
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Dotnet Pack 
+      if: steps.semantic.outputs.new_release_published == 'true'
+      working-directory: src/BlazorApplicationInsights
+      run: dotnet pack -c Release -p:Version=${{ steps.semantic.outputs.new_release_version }}
+
+    - name: Dotnet Nuget Push
+      if: steps.semantic.outputs.new_release_published == 'true'
+      working-directory: src/BlazorApplicationInsights/bin/Release
+      run: dotnet nuget push BlazorApplicationInsights.*.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_API_KEY }}

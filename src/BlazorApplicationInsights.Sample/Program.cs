@@ -27,9 +27,6 @@ namespace BlazorApplicationInsights.Sample
                     }
                 };
 
-                await applicationInsights.SetInstrumentationKey("219f9af4-0842-42c8-a5b1-578f09d2ee27");
-                await applicationInsights.LoadAppInsights();
-
                 await applicationInsights.AddTelemetryInitializer(telemetryItem);
             });
 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
@@ -13,6 +14,8 @@ namespace BlazorApplicationInsights.Sample.Pages
 
         [Inject]
         private IApplicationInsights AppInsights { get; set; }
+
+        [Inject] HttpClient HttpClient { get; set; }
 
         private async Task TrackEvent()
         {
@@ -44,12 +47,16 @@ namespace BlazorApplicationInsights.Sample.Pages
         private async Task SetAuthenticatedUserContext()
         {
             await AppInsights.SetAuthenticatedUserContext("myUserId", "myUserName", true);
+            await AppInsights.TrackEvent("Auth Event");
             await AppInsights.Flush();
         }
 
         private async Task ClearAuthenticatedUserContext()
         {
+            await AppInsights.SetAuthenticatedUserContext("myUserId", "myUserName", true);
+            await AppInsights.TrackEvent("Auth Event");
             await AppInsights.ClearAuthenticatedUserContext();
+            await AppInsights.TrackEvent("Auth Event2");
             await AppInsights.Flush();
         }
 
@@ -57,6 +64,7 @@ namespace BlazorApplicationInsights.Sample.Pages
         {
             await AppInsights.StartTrackPage("myPage");
             await AppInsights.Flush();
+            await Task.Delay(100);
             await AppInsights.StopTrackPage("myPage");
             await AppInsights.Flush();
         }
@@ -81,7 +89,10 @@ namespace BlazorApplicationInsights.Sample.Pages
 
         private async Task TrackPageViewPerformance()
         {
-            await AppInsights.TrackPageViewPerformance(new PageViewPerformanceTelemetry(){ });
+            await AppInsights.TrackPageViewPerformance(new PageViewPerformanceTelemetry()
+            {
+                Name = "myPerf"
+            });
             await AppInsights.Flush();
         }
 
@@ -109,6 +120,12 @@ namespace BlazorApplicationInsights.Sample.Pages
         {
             await AppInsights.SetInstrumentationKey("219f9af4-0842-42c8-a5b1-578f09d2ee27");
             await AppInsights.LoadAppInsights();
+        }
+
+        private async Task TrackHttpRequest()
+        {
+            var str = await HttpClient.GetStringAsync("https://httpbin.org/get");
+            await AppInsights.Flush();
         }
     }
 }
