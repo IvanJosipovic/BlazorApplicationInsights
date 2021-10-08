@@ -25,7 +25,7 @@ Application Insights for Blazor web applications
       ld: -1,
       crossOrigin: "anonymous",
       cfg: {
-          instrumentationKey: "INSTRUMENTATION_KEY"
+          instrumentationKey: "INSTRUMENTATION_KEY",
           disableFetchTracking: false,
           enableCorsCorrelation: true,
           enableRequestHeaderTracking: true,
