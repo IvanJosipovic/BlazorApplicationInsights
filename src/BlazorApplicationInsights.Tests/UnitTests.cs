@@ -149,7 +149,7 @@ namespace BlazorApplicationInsights.Tests
                                 properties = new Dictionary<string, string>()
                                 {
                                     { "Message", "Something wrong happened :(" },
-                                    { "{OriginalFormat}", "Unhandled exception rendering component: {Message}" },
+                                    { "OriginalFormat", "Unhandled exception rendering component: {Message}" },
                                     { "typeName", "Exception" },
                                 }
                             }
@@ -330,7 +330,7 @@ namespace BlazorApplicationInsights.Tests
                                 severityLevel = 1,
                                 properties = new Dictionary<string, string>
                                 {
-                                    { "{OriginalFormat}", "My Logging Test" }
+                                    { "OriginalFormat", "My Logging Test" }
                                 }
                             }
                         }
@@ -350,7 +350,7 @@ namespace BlazorApplicationInsights.Tests
                                 properties = new Dictionary<string, string>
                                 {
                                     { "customProperty", "customValue" },
-                                    { "{OriginalFormat}", "My Semantic Logging Test with customProperty={customProperty}" }
+                                    { "OriginalFormat", "My Semantic Logging Test with customProperty={customProperty}" }
                                 }
                             }
                         }

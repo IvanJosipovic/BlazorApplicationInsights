@@ -1,97 +1,161 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
+using System.Runtime.CompilerServices;
+using System.Text;
+using JetBrains.Annotations;
+using Microsoft.Extensions.DependencyInjection;
 
+// ReSharper disable once CheckNamespace
 namespace BlazorApplicationInsights
 {
+    /// <summary>Logger implementation for logging to Application Insights in Blazor Client-Side (WASM) applications</summary>
+    [PublicAPI]
     public class ApplicationInsightsLogger : ILogger
     {
-        private static NullScope Scope { get; } = new NullScope();
+        private readonly string? _categoryName;
+        private readonly IApplicationInsights _applicationInsights;
 
-        private readonly IApplicationInsights ApplicationInsights;
-
+        /// <summary>Initializes a new instance of the <see cref="ApplicationInsightsLogger"/> class</summary>
+        /// <param name="applicationInsights">Instance to use for transmitting logging messages</param>
+        [ActivatorUtilitiesConstructor]
         public ApplicationInsightsLogger(IApplicationInsights applicationInsights)
+            : this(null, applicationInsights)
         {
-            ApplicationInsights = applicationInsights;
         }
 
-        public IDisposable BeginScope<TState>(TState state)
+        /// <summary>Initializes a new instance of the <see cref="ApplicationInsightsLogger"/> class</summary>
+        /// <param name="categoryName">Category of the logger, stored in the CategoryName in customDimensions if set</param>
+        /// <param name="applicationInsights">Instance to use for transmitting logging messages</param>
+        public ApplicationInsightsLogger(string? categoryName, IApplicationInsights applicationInsights)
         {
-            return Scope;
+            _categoryName = categoryName;
+            _applicationInsights = applicationInsights;
         }
 
-        public bool IsEnabled(LogLevel logLevel)
-        {
-            return true;
-        }
+        /// <summary>Include the logger category name in customDimensions under the 'CategoryName' key</summary>
+        public bool IncludeCategoryName { get; set; }
 
-        public void Log<TState>(
-            LogLevel logLevel,
-            EventId eventId,
-            TState state,
-            Exception exception,
-            Func<TState, Exception, string> formatter
-        )
-        {
-            SeverityLevel severityLevel = SeverityLevel.Verbose;
-            var msg = formatter(state, exception);
-            var properties = GetProperties(state);
+        /// <summary>Include scope information in CustomDimensions</summary>
+        public bool IncludeScopes { get; set; }
 
-            switch (logLevel)
+        /// <summary>
+        /// <para>Callback that will be called before customDimensions are set</para>
+        /// <para>This allows enriching customDimensions with values that should apply to all log lines</para>
+        /// <remarks>
+        /// <para>On key conflict, the enriched value will be overwritten</para>
+        /// </remarks>
+        /// </summary>
+        // See reasoning in ApplicationInsightsLoggerProvider
+        [Obsolete("Not part of the stable API")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public Action<Dictionary<string, object?>> EnrichmentCallback { get; set; } = delegate { };
+
+        /// <summary>Set the active scope provider</summary>
+        internal IExternalScopeProvider ScopeProvider { private get; set; } = new LoggerExternalScopeProvider();
+
+        /// <inheritdoc />
+        public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
+        {
+            if (!IsEnabled(logLevel))
+                return;
+
+            var severity = GetSeverityLevel(logLevel);
+            var message = formatter(state, exception);
+            var customDimensions = GetCustomDimensions(state, eventId);
+
+            if (exception is null)
             {
-                case LogLevel.Trace:
-                case LogLevel.Debug:
-                    severityLevel = SeverityLevel.Verbose;
-                    break;
-                case LogLevel.Information:
-                    severityLevel = SeverityLevel.Information;
-                    break;
-                case LogLevel.Warning:
-                    severityLevel = SeverityLevel.Warning;
-                    break;
-                case LogLevel.Error:
-                    severityLevel = SeverityLevel.Error;
-                    break;
-                case LogLevel.Critical:
-                case LogLevel.None:
-                    severityLevel = SeverityLevel.Critical;
-                    break;
+                _applicationInsights.TrackTrace(message, severity, customDimensions);
+                return;
             }
 
-            if (exception != null)
-            {
-                ApplicationInsights.TrackException(new Error() { Name = exception.GetType().Name, Message = exception.ToString() }, null, severityLevel, properties);
-            }
-            else
-            {
-                ApplicationInsights.TrackTrace(msg, severityLevel, properties);
-            }
-        }
-        
-        private Dictionary<string, object>? GetProperties<TState>(TState state)
-        {
-            var properties = state as IReadOnlyList<KeyValuePair<string, object>>;
-            if (properties == null)
-                return null;
-            
-            Dictionary<string, object> dict = new Dictionary<string, object>();
-            foreach (KeyValuePair<string, object> item in properties)
-                dict[item.Key] = Convert.ToString(item.Value, CultureInfo.InvariantCulture);
-
-            return dict;
-        }
-    }
-
-    internal class NullScope : IDisposable
-    {
-        public NullScope()
-        {
+            var error = new Error { Name = exception.GetType().Name, Message = $"{exception}" };
+            _applicationInsights.TrackException(error, null, severity, customDimensions);
         }
 
         /// <inheritdoc />
-        public void Dispose()
+        public bool IsEnabled(LogLevel logLevel) => logLevel != LogLevel.None;
+
+        /// <inheritdoc />
+        public IDisposable BeginScope<TState>(TState state) => ScopeProvider.Push(state);
+
+        private Dictionary<string, object?> GetCustomDimensions<TState>(TState state, EventId eventId)
         {
+            var result = new Dictionary<string, object?>();
+
+            // Give a chance to customize customDimensions
+            // Obviously this warning isn't for us
+#pragma warning disable 618
+            EnrichmentCallback(result);
+#pragma warning restore 618
+
+            ApplyScopes(result);
+            ApplyLogState(result, state, eventId);
+            return result;
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void ApplyLogState<TState>(Dictionary<string, object?> customDimensions, TState state, EventId eventId)
+        {
+            if (IncludeCategoryName && !string.IsNullOrEmpty(_categoryName))
+                customDimensions["CategoryName"] = _categoryName;
+
+            if (eventId.Id != 0)
+                customDimensions["EventId"] = eventId.Id.ToString(CultureInfo.InvariantCulture);
+
+            if (!string.IsNullOrEmpty(eventId.Name))
+                customDimensions["EventName"] = eventId.Name;
+
+            if (state is IReadOnlyCollection<KeyValuePair<string, object?>> stateDictionary)
+                ApplyDictionary(customDimensions, stateDictionary);
+        }
+
+        private void ApplyScopes(Dictionary<string, object?> customDimensions)
+        {
+            if (!IncludeScopes)
+                return;
+
+            var scopeBuilder = new StringBuilder();
+            ScopeProvider.ForEachScope(ApplyScope, (customDimensions, scopeBuilder));
+
+            if (scopeBuilder.Length > 0)
+                customDimensions["Scope"] = scopeBuilder.ToString();
+
+            static void ApplyScope(object scope, (Dictionary<string, object?> data, StringBuilder scopeBuilder) result)
+            {
+                if (scope is IReadOnlyCollection<KeyValuePair<string, object?>> scopeDictionary)
+                {
+                    ApplyDictionary(result.data, scopeDictionary);
+                    return;
+                }
+
+                result.scopeBuilder.Append(" => ").Append(scope);
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void ApplyDictionary(Dictionary<string, object?> target, IReadOnlyCollection<KeyValuePair<string, object?>> source)
+        {
+            foreach (var kvp in source)
+            {
+                var key = kvp.Key == "{OriginalFormat}" ? "OriginalFormat" : kvp.Key;
+                target[key] = Convert.ToString(kvp.Value, CultureInfo.InvariantCulture);
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static SeverityLevel GetSeverityLevel(LogLevel logLevel) => logLevel switch
+        {
+            LogLevel.Trace => SeverityLevel.Verbose,
+            LogLevel.Debug => SeverityLevel.Verbose,
+            LogLevel.Information => SeverityLevel.Information,
+            LogLevel.Warning => SeverityLevel.Warning,
+            LogLevel.Error => SeverityLevel.Error,
+            LogLevel.Critical => SeverityLevel.Critical,
+            _ => SeverityLevel.Verbose
+        };
     }
 }

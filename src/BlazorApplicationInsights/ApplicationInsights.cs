@@ -1,119 +1,116 @@
 ﻿using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BlazorApplicationInsights
 {
+    /// <inheritdoc />
     public class ApplicationInsights : IApplicationInsights
     {
-        private IJSRuntime? JSRuntime { get; set; }
-        private Func<IApplicationInsights, Task>? OnInsightsInitAction { get; }
+        private readonly Func<IApplicationInsights, Task> _onInsightsInitAction;
+        private IJSRuntime _jsRuntime = new NoOpJSRuntime();
 
+        /// <inheritdoc />
         public bool EnableAutoRouteTracking { get; set; }
 
         public ApplicationInsights()
+            : this(null)
         {
         }
 
-        public ApplicationInsights(Func<IApplicationInsights, Task> onInsightsInitAction)
+        public ApplicationInsights(Func<IApplicationInsights, Task>? onInsightsInitAction)
         {
-            OnInsightsInitAction = onInsightsInitAction;
+            _onInsightsInitAction = onInsightsInitAction ?? delegate { return Task.CompletedTask; };
         }
 
+        /// <inheritdoc />
         public async Task InitBlazorApplicationInsightsAsync(IJSRuntime jSRuntime)
         {
-            JSRuntime = jSRuntime;
-
-            if (OnInsightsInitAction != null)
-            {
-                await OnInsightsInitAction.Invoke(this);
-            }
+            _jsRuntime = jSRuntime;
+            await _onInsightsInitAction(this);
         }
 
-        public async Task TrackPageView(string? name = null, string? uri = null, string? refUri = null, string? pageType = null, bool? isLoggedIn = null, Dictionary<string, object>? properties = null)
-        {
-            await JSRuntime.InvokeVoidAsync("appInsights.trackPageView", new object[] { new { name, uri, refUri, pageType, isLoggedIn }, properties });
-        }
+        /// <inheritdoc />
+        public async Task TrackPageView(string? name = null, string? uri = null, string? refUri = null, string? pageType = null, bool? isLoggedIn = null, Dictionary<string, object?>? properties = null)
+            => await _jsRuntime.InvokeVoidAsync("appInsights.trackPageView", new { name, uri, refUri, pageType, isLoggedIn }, properties!);
 
-        public async Task TrackEvent(string name, Dictionary<string, object>? properties = null)
-        {
-            await JSRuntime.InvokeVoidAsync("appInsights.trackEvent", new object[] { new { name }, properties });
-        }
+        /// <inheritdoc />
+        public async Task TrackEvent(string name, Dictionary<string, object?>? properties = null)
+            => await _jsRuntime.InvokeVoidAsync("appInsights.trackEvent", new { name }, properties!);
 
-        public async Task TrackTrace(string message, SeverityLevel? severityLevel = null, Dictionary<string, object>? properties = null)
-        {
-            await JSRuntime.InvokeVoidAsync("appInsights.trackTrace", new object[] { new { message, severityLevel }, properties });
-        }
+        /// <inheritdoc />
+        public async Task TrackTrace(string message, SeverityLevel? severityLevel = null, Dictionary<string, object?>? properties = null)
+            => await _jsRuntime.InvokeVoidAsync("appInsights.trackTrace", new { message, severityLevel }, properties!);
 
-        public async Task TrackException(Error exception, string? id = null, SeverityLevel? severityLevel = null, Dictionary<string, object>? properties = null)
-        {
-            await JSRuntime.InvokeVoidAsync("appInsights.trackException", new object[] { new { id, exception, severityLevel }, properties });
-        }
+        /// <inheritdoc />
+        public async Task TrackException(Error exception, string? id = null, SeverityLevel? severityLevel = null, Dictionary<string, object?>? properties = null)
+            => await _jsRuntime.InvokeVoidAsync("appInsights.trackException", new { id, exception, severityLevel }, properties!);
 
+        /// <inheritdoc />
         public async Task StartTrackPage(string? name = null)
-        {
-            await JSRuntime.InvokeVoidAsync("appInsights.startTrackPage", new object[] { name });
-        }
+            => await _jsRuntime.InvokeVoidAsync("appInsights.startTrackPage", name!);
 
-        public async Task StopTrackPage(string? name = null, string? url = null, Dictionary<string, string>? properties = null, Dictionary<string, decimal>? measurements = null)
-        {
-            await JSRuntime.InvokeVoidAsync("appInsights.stopTrackPage", new object[] { name, url, properties, measurements });
-        }
+        /// <inheritdoc />
+        public async Task StopTrackPage(string? name = null, string? url = null, Dictionary<string, string?>? properties = null, Dictionary<string, decimal>? measurements = null)
+            => await _jsRuntime.InvokeVoidAsync("appInsights.stopTrackPage", name!, url!, properties!, measurements!);
 
-        public async Task TrackMetric(string name, double average, double? sampleCount = null, double? min = null, double? max = null, Dictionary<string, object>? properties = null)
-        {
-            await JSRuntime.InvokeVoidAsync("appInsights.trackMetric", new object[] { new { name, average, sampleCount, min, max }, properties });
-        }
+        /// <inheritdoc />
+        public async Task TrackMetric(string name, double average, double? sampleCount = null, double? min = null, double? max = null, Dictionary<string, object?>? properties = null)
+            => await _jsRuntime.InvokeVoidAsync("appInsights.trackMetric", new { name, average, sampleCount, min, max }, properties!);
 
+        /// <inheritdoc />
         public async Task TrackDependencyData(string id, string name, decimal? duration = null, bool? success = null, DateTime? startTime = null, int? responseCode = null, string? correlationContext = null, string? type = null, string? data = null, string? target = null)
-        {
-            await JSRuntime.InvokeVoidAsync("blazorApplicationInsights.trackDependencyData", new { id, name, duration, success, startTime = startTime?.ToString("yyyy-MM-ddTHH:mm:ss"), responseCode, correlationContext, type, data, target });
-        }
+            => await _jsRuntime.InvokeVoidAsync("blazorApplicationInsights.trackDependencyData", new { id, name, duration, success, startTime = startTime?.ToString("yyyy-MM-ddTHH:mm:ss"), responseCode, correlationContext, type, data, target });
 
+        /// <inheritdoc />
         public async Task Flush(bool? async = true)
-        {
-            await JSRuntime.InvokeVoidAsync("appInsights.flush", new object[] { async });
-        }
+            => await _jsRuntime.InvokeVoidAsync("appInsights.flush", async!);
 
+        /// <inheritdoc />
         public async Task ClearAuthenticatedUserContext()
-        {
-            await JSRuntime.InvokeVoidAsync("appInsights.clearAuthenticatedUserContext");
-        }
+            => await _jsRuntime.InvokeVoidAsync("appInsights.clearAuthenticatedUserContext");
 
+        /// <inheritdoc />
         public async Task SetAuthenticatedUserContext(string authenticatedUserId, string? accountId = null, bool storeInCookie = false)
-        {
-            await JSRuntime.InvokeVoidAsync("appInsights.setAuthenticatedUserContext", new object[] { authenticatedUserId, accountId, storeInCookie });
-        }
+            => await _jsRuntime.InvokeVoidAsync("appInsights.setAuthenticatedUserContext", authenticatedUserId, accountId!, storeInCookie);
 
+        /// <inheritdoc />
         public async Task AddTelemetryInitializer(TelemetryItem telemetryItem)
-        {
-            await JSRuntime.InvokeVoidAsync("blazorApplicationInsights.addTelemetryInitializer", new object[] { telemetryItem });
-        }
+            => await _jsRuntime.InvokeVoidAsync("blazorApplicationInsights.addTelemetryInitializer", telemetryItem);
 
+        /// <inheritdoc />
         public async Task TrackPageViewPerformance(PageViewPerformanceTelemetry pageViewPerformance)
-        {
-            await JSRuntime.InvokeVoidAsync("appInsights.trackPageViewPerformance", new object[] { pageViewPerformance });
-        }
+            => await _jsRuntime.InvokeVoidAsync("appInsights.trackPageViewPerformance", pageViewPerformance);
 
+        /// <inheritdoc />
         public async Task StartTrackEvent(string name)
-        {
-            await JSRuntime.InvokeVoidAsync("appInsights.startTrackEvent", new object[] { name });
-        }
+            => await _jsRuntime.InvokeVoidAsync("appInsights.startTrackEvent", name);
 
-        public async Task StopTrackEvent(string name, Dictionary<string, string>? properties = null, Dictionary<string, decimal>? measurements = null)
-        {
-            await JSRuntime.InvokeVoidAsync("appInsights.stopTrackEvent", new object[] { name, properties, measurements });
-        }
+        /// <inheritdoc />
+        public async Task StopTrackEvent(string name, Dictionary<string, string?>? properties = null, Dictionary<string, decimal>? measurements = null)
+            => await _jsRuntime.InvokeVoidAsync("appInsights.stopTrackEvent", name, properties!, measurements!);
 
+        /// <inheritdoc />
         public async Task SetInstrumentationKey(string key)
-        {
-            await JSRuntime.InvokeVoidAsync("blazorApplicationInsights.setInstrumentationKey", new object[] { key });
-        }
+            => await _jsRuntime.InvokeVoidAsync("blazorApplicationInsights.setInstrumentationKey", key);
 
+        /// <inheritdoc />
         public async Task LoadAppInsights()
+            => await _jsRuntime.InvokeVoidAsync("blazorApplicationInsights.loadAppInsights");
+
+        private class NoOpJSRuntime : IJSRuntime
         {
-            await JSRuntime.InvokeVoidAsync("blazorApplicationInsights.loadAppInsights");
+            public ValueTask<TValue> InvokeAsync<TValue>(string identifier, object?[]? args) => Invoked<TValue>();
+            public ValueTask<TValue> InvokeAsync<TValue>(string identifier, CancellationToken cancellationToken, object?[]? args) => Invoked<TValue>();
+
+            private static ValueTask<TValue> Invoked<TValue>()
+            {
+                Debug.WriteLine("Attempted to use " + nameof(ApplicationInsights) + " before calling " + nameof(InitBlazorApplicationInsightsAsync));
+                return new ValueTask<TValue>(default(TValue)!);
+            }
         }
     }
 }

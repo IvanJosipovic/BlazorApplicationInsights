@@ -8,8 +8,11 @@
 
   <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="6.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="3.1.19" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="3.1.19" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
     <PackageReference Include="Microsoft.Playwright" Version="1.16.1" />
+    <PackageReference Include="Moq" Version="4.16.1" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -25,6 +28,10 @@
     <None Update="BrowserTestsAddress.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlazorApplicationInsights\BlazorApplicationInsights.csproj" />
   </ItemGroup>
 
 </Project>

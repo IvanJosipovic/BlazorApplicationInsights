@@ -24,7 +24,7 @@ namespace BlazorApplicationInsights
         /// </summary>
         /// <param name="name"></param>
         /// <param name="properties"></param>
-        Task TrackEvent(string name, Dictionary<string, object>? properties = null);
+        Task TrackEvent(string name, Dictionary<string, object?>? properties = null);
 
         /// <summary>
         /// Log a diagnostic scenario such entering or leaving a function.
@@ -32,7 +32,7 @@ namespace BlazorApplicationInsights
         /// <param name="message"></param>
         /// <param name="severityLevel"></param>
         /// <param name="properties"></param>
-        Task TrackTrace(string message, SeverityLevel? severityLevel = null, Dictionary<string, object>? properties = null);
+        Task TrackTrace(string message, SeverityLevel? severityLevel = null, Dictionary<string, object?>? properties = null);
 
         /// <summary>
         /// Log an exception that you have caught.
@@ -41,7 +41,7 @@ namespace BlazorApplicationInsights
         /// <param name="id">Unique guid identifying this error</param>
         /// <param name="severityLevel"></param>
         /// <param name="properties"></param>
-        Task TrackException(Error exception, string? id = null, SeverityLevel? severityLevel = null, Dictionary<string, object>? properties = null);
+        Task TrackException(Error exception, string? id = null, SeverityLevel? severityLevel = null, Dictionary<string, object?>? properties = null);
 
         /// <summary>
         /// Logs that a page, or similar container was displayed to the user.
@@ -52,7 +52,7 @@ namespace BlazorApplicationInsights
         /// <param name="pageType">page type</param>
         /// <param name="isLoggedIn">is user logged in</param>
         /// <param name="properties">Property bag to contain additional custom properties (Part C)</param>
-        Task TrackPageView(string? name = null, string? uri = null, string? refUri = null, string? pageType = null, bool? isLoggedIn = null, Dictionary<string, object>? properties = null);
+        Task TrackPageView(string? name = null, string? uri = null, string? refUri = null, string? pageType = null, bool? isLoggedIn = null, Dictionary<string, object?>? properties = null);
 
         /// <summary>
         /// Starts the timer for tracking a page load time. Use this instead of `trackPageView` if you want to control when the page view timer starts and stops,
@@ -70,7 +70,7 @@ namespace BlazorApplicationInsights
         /// <param name="url">a relative or absolute URL that identifies the page or other item. Defaults to the window location.</param>
         /// <param name="properties">additional data used to filter pages and metrics in the portal. Defaults to empty.</param>
         /// <param name="measurements">map[string, number] - metrics associated with this page, displayed in Metrics Explorer on the portal. Defaults to empty.</param>
-        Task StopTrackPage(string? name = null, string? url = null, Dictionary<string, string>? properties = null, Dictionary<string, decimal>? measurements = null);
+        Task StopTrackPage(string? name = null, string? url = null, Dictionary<string, string?>? properties = null, Dictionary<string, decimal>? measurements = null);
 
         /// <summary>
         /// <para>
@@ -90,7 +90,7 @@ namespace BlazorApplicationInsights
         /// <param name="min">The smallest measurement in the sample. Defaults to the average</param>
         /// <param name="max">The largest measurement in the sample. Defaults to the average.</param>
         /// <param name="properties"></param>
-        Task TrackMetric(string name, double average, double? sampleCount = null, double? min = null, double? max = null, Dictionary<string, object>? properties = null);
+        Task TrackMetric(string name, double average, double? sampleCount = null, double? min = null, double? max = null, Dictionary<string, object?>? properties = null);
 
         /// <summary>
         /// Log a dependency call (e.g. ajax)
@@ -165,7 +165,7 @@ namespace BlazorApplicationInsights
         /// <param name="name">The string you used to identify this event in `startTrackEvent`</param>
         /// <param name="properties">additional data used to filter events and metrics in the portal. Defaults to empty.</param>
         /// <param name="measurements">metrics associated with this event, displayed in Metrics Explorer on the portal. Defaults to empty.</param>
-        Task StopTrackEvent(string name, Dictionary<string, string>? properties = null, Dictionary<string, decimal>? measurements = null);
+        Task StopTrackEvent(string name, Dictionary<string, string?>? properties = null, Dictionary<string, decimal>? measurements = null);
 
         /// <summary>
         /// Sets the Instrumentation Key
