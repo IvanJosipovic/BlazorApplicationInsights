@@ -72,8 +72,13 @@ namespace BlazorApplicationInsights
                 return;
             }
 
-            var error = new Error { Name = exception.GetType().Name, Message = $"{exception}" };
-            _applicationInsights.TrackException(error, null, severity, customDimensions);
+            var error = new Error
+            {
+                Name = exception.GetType().Name, 
+                Message = exception.Message,
+                Stack = exception.StackTrace
+            };
+            _applicationInsights.TrackException(error, $"{eventId}", severity, customDimensions);
         }
 
         /// <inheritdoc />
