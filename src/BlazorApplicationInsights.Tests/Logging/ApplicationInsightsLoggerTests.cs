@@ -45,8 +45,8 @@ namespace BlazorApplicationInsights.Tests.Logging
             logger.LogError(ex, MessageSimple);
 
             _appInsightsMock.Verify(x => x.TrackException(
-                    It.Is<Error>(err => err != null && err.Message == $"{ex}" && err.Name == nameof(InvalidOperationException)),
-                    It.Is<string?>(id => id == null),
+                    It.Is<Error>(err => err != null && err.Message == ex.Message && err.Name == nameof(InvalidOperationException)),
+                    It.Is<string?>(id => id == "0"),
                     It.Is<SeverityLevel?>(severity => severity == SeverityLevel.Error),
                     It.IsAny<Dictionary<string, object?>>()),
                 Times.Once);
