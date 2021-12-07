@@ -268,10 +268,10 @@ namespace BlazorApplicationInsights.Tests
                                         max = 200
                                     }
                                 },
-                                properties = new Dictionary<string, string>()
-                                {
-                                    { "customProperty", "customValue" }
-                                }
+                                //properties = new Dictionary<string, string>()
+                                //{
+                                //    { "customProperty", "customValue" }
+                                //}
                             }
                         }
                     }
@@ -525,11 +525,6 @@ namespace BlazorApplicationInsights.Tests
             }
 
             return true;
-        }
-
-        private static bool CanDirectlyCompare(Type type)
-        {
-            return typeof(IComparable).IsAssignableFrom(type) || type.IsPrimitive || type.IsValueType;
         }
 
         [Theory]
