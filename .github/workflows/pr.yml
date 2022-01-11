@@ -17,19 +17,18 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 3.1.x
+        dotnet-version: 6.0.x
 
     - name: Dotnet Build
       run: dotnet build -c Release
 
     - name: Run App
       working-directory: src/BlazorApplicationInsights.Sample
-      run: |
-        $a = Start-Process dotnet 'run','-c','Release' -PassThru
+      run: Start-Process dotnet 'run','-c','Release' -PassThru
       shell: pwsh
 
     - name: Install Playwright
-      working-directory: src/BlazorApplicationInsights.Tests/bin/Release/netcoreapp3.1
+      working-directory: src/BlazorApplicationInsights.Tests/bin/Release/net6.0
       run: ./playwright.ps1 install
       shell: pwsh
 

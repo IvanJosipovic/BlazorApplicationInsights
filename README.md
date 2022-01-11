@@ -62,7 +62,7 @@ Application Insights for Blazor web applications
 
 ## TrackEvent
 
-```csharp
+```razor
 @page "/"
 
 <button class="btn btn-primary" @onclick="TrackEvent">Track Event</button>
@@ -79,7 +79,7 @@ Application Insights for Blazor web applications
 
 ## Set User Name
 - Edit Authentication.razor
-```csharp
+```razor
 @page "/authentication/{action}"
 
 <RemoteAuthenticatorView Action="@Action" OnLogInSucceeded="OnLogInSucceeded" OnLogOutSucceeded="OnLogOutSucceeded" />

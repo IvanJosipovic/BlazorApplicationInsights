@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="utf-8" />
@@ -12,20 +12,21 @@
             ld: -1,
             crossOrigin: "anonymous",
             cfg: {
-                    instrumentationKey: "219f9af4-0842-42c8-a5b1-578f09d2ee27",
-                    disableFetchTracking: false,
-                    enableCorsCorrelation: true,
-                    enableRequestHeaderTracking: true,
-                    enableResponseHeaderTracking: true
+                instrumentationKey: "219f9af4-0842-42c8-a5b1-578f09d2ee27",
+                disableFetchTracking: false,
+                enableCorsCorrelation: true,
+                enableRequestHeaderTracking: true,
+                enableResponseHeaderTracking: true
             }
         });
     </script>
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
-    <link href="css/app.css" rel="stylesheet" /> 
+    <link href="css/app.css" rel="stylesheet" />
+    <link href="BlazorApplicationInsights.Sample.styles.css" rel="stylesheet" />
 </head>
 
 <body>
-    <app>Loading...</app>
+    <div id="app">Loading...</div>
 
     <div id="blazor-error-ui">
         An unhandled error has occurred.
