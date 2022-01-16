@@ -543,6 +543,7 @@ namespace BlazorApplicationInsights.Tests
         [InlineData("TestSemanticLogger")]
         [InlineData("StartStopTrackEvent")]
         [InlineData("TrackHttpRequest")]
+        [InlineData("SetInstrumentationKey")]
         public async Task TestBlocked(string id)
         {
             bool hasError = false;

@@ -70,6 +70,9 @@
     setInstrumentationKey: function (instrumentationKey) {
         appInsights.config.instrumentationKey = instrumentationKey;
     },
+    setConnectionString: function (connectionString) {
+        appInsights.config.connectionString = connectionString;
+    },
     loadAppInsights: function () {
         if (appInsights.loadAppInsights !== undefined) {
             appInsights.loadAppInsights();

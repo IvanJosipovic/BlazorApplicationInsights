@@ -6,7 +6,7 @@ using Microsoft.JSInterop;
 
 namespace BlazorApplicationInsights
 {
-    public partial class ApplicationInsightsComponent : IDisposable
+    public partial class ApplicationInsightsComponent : ComponentBase, IDisposable
     {
         [Inject] private IApplicationInsights ApplicationInsights { get; set; }
         [Inject] private NavigationManager NavigationManager { get; set; }

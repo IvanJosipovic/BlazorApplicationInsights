@@ -175,6 +175,13 @@ namespace BlazorApplicationInsights
         Task SetInstrumentationKey(string key);
 
         /// <summary>
+        /// Sets the Connection String
+        /// </summary>
+        /// <param name="connectionString"></param>
+        /// <returns></returns>
+        Task SetConnectionString(string connectionString);
+
+        /// <summary>
         /// Initializes Application Insights
         /// </summary>
         /// <returns></returns>
