@@ -25,7 +25,6 @@ Application Insights for Blazor web applications
       crossOrigin: "anonymous",
       cfg: {
           connectionString:"InstrumentationKey=00000000-0000-0000-0000-000000000000;",
-          disableFetchTracking: false,
           enableCorsCorrelation: true,
           enableRequestHeaderTracking: true,
           enableResponseHeaderTracking: true
@@ -144,7 +143,6 @@ public static async Task Main(string[] args)
     crossOrigin: "anonymous",
     cfg: {
         instrumentationKey: "", // leave this blank
-        disableFetchTracking: false,
         enableCorsCorrelation: true,
         enableRequestHeaderTracking: true,
         enableResponseHeaderTracking: true
