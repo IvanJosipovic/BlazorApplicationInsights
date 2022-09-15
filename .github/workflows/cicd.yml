@@ -52,7 +52,7 @@ jobs:
       uses: cycjimmy/semantic-release-action@v2
       id: semantic
       with:
-        semantic_version: 18
+        semantic_version: 19
         extra_plugins: |
           conventional-changelog-conventionalcommits
       env:
