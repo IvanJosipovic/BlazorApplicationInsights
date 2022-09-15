@@ -57,6 +57,8 @@ Application Insights for Blazor web applications
   - TrackPageView
   - TrackPageViewPerformance
   - TrackTrace
+  - SetInstrumentationKey # Not recommended
+  - SetConnectionString # Not recommended
 
 ## TrackEvent
 
