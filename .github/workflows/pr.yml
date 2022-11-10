@@ -17,7 +17,7 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v2
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: 7.0.x
 
     - name: Dotnet Build
       run: dotnet build -c Release
@@ -28,7 +28,7 @@ jobs:
       shell: pwsh
 
     - name: Install Playwright
-      working-directory: src/BlazorApplicationInsights.Tests/bin/Release/net6.0
+      working-directory: src/BlazorApplicationInsights.Tests/bin/Release/net7.0
       run: ./playwright.ps1 install
       shell: pwsh
 
