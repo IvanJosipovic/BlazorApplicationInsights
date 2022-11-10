@@ -46,13 +46,10 @@ jobs:
       run: dotnet test -c Release
 
     - name: Deploy
-      if: github.ref == 'refs/heads/master'
-      uses: netlify/actions/cli@master
-      with:
-        args: deploy ${{ (github.ref == 'refs/heads/master' && '--prod') || '' }} --json -d src/BlazorApplicationInsights.Sample/bin/Release/net7.0/publish/wwwroot
+      run: npx netlify deploy ${{ (github.ref == 'refs/heads/alpha' && '--prod') || '' }} --json -d src/BlazorApplicationInsights.Sample/bin/Release/net7.0/publish/wwwroot
       env:
-        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
 
     - name: Semantic Release
       uses: cycjimmy/semantic-release-action@v2
