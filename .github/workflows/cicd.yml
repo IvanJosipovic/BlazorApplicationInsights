@@ -1,7 +1,13 @@
-on: 
+on:
+  workflow_dispatch:
   push:
-    branches: 
-      - '*'
+    branches:
+      - 'master'
+      - 'alpha'
+      - 'beta'
+      - 'dev'
+  pull_request:
+    types: [opened, reopened, synchronize]
 
 name: Create Release
 jobs:
@@ -16,7 +22,7 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: 7.0.x
 
     - name: Dotnet Build
       run: dotnet build -c Release
@@ -31,7 +37,7 @@ jobs:
       shell: pwsh
 
     - name: Install Playwright
-      working-directory: src/BlazorApplicationInsights.Tests/bin/Release/net6.0
+      working-directory: src/BlazorApplicationInsights.Tests/bin/Release/net7.0
       run: ./playwright.ps1 install
       shell: pwsh
 
@@ -39,14 +45,11 @@ jobs:
       working-directory: src/BlazorApplicationInsights.Tests
       run: dotnet test -c Release
 
-    - name: Deploy to Production
-      if: github.ref == 'refs/heads/master'
-      uses: netlify/actions/cli@master
-      with:
-        args: deploy --prod --json -d src/BlazorApplicationInsights.Sample/bin/Release/net6.0/publish/wwwroot
+    - name: Deploy
+      run: npx netlify deploy ${{ (github.ref == 'refs/heads/alpha' && '--prod') || '' }} --json -d src/BlazorApplicationInsights.Sample/bin/Release/net7.0/publish/wwwroot
       env:
-        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
 
     - name: Semantic Release
       uses: cycjimmy/semantic-release-action@v2
@@ -58,10 +61,9 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Dotnet Pack 
-      if: steps.semantic.outputs.new_release_published == 'true'
+    - name: Dotnet Pack
       working-directory: src/BlazorApplicationInsights
-      run: dotnet pack -c Release -p:Version=${{ steps.semantic.outputs.new_release_version }}
+      run: dotnet pack -c Release -p:Version=${{ (steps.semantic.outputs.new_release_published && steps.semantic.outputs.new_release_version) || '0.0.1' }}
 
     - name: Dotnet Nuget Push
       if: steps.semantic.outputs.new_release_published == 'true'

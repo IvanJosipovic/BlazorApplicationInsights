@@ -9,10 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApplicationInsights.S
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0131129F-20EC-4147-9C9A-A13BE002AB11}"
 	ProjectSection(SolutionItems) = preProject
+		.releaserc.json = .releaserc.json
 		.github\workflows\cicd.yml = .github\workflows\cicd.yml
 		global.json = global.json
-		.github\workflows\pr.yml = .github\workflows\pr.yml
 		README.md = README.md
+		.github\renovate.json = .github\renovate.json
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApplicationInsights.Tests", "src\BlazorApplicationInsights.Tests\BlazorApplicationInsights.Tests.csproj", "{C7FD9039-7393-4755-830C-A194C30C8F13}"
