@@ -194,5 +194,17 @@ namespace BlazorApplicationInsights
         /// Should only be enabled through AddBlazorApplicationInsights
         /// </summary>
         bool EnableAutoRouteTracking { get; set; }
+
+        /// <summary>
+        /// Returns the session id sent on every request
+        /// </summary>
+        /// <returns></returns>
+        Task<string> GetSessionId();
+
+        /// <summary>
+        /// Returns the user id sent on every request
+        /// </summary>
+        /// <returns></returns>
+        Task<string> GetUserId();
     }
 }

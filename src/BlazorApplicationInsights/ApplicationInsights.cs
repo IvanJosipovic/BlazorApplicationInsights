@@ -105,6 +105,14 @@ namespace BlazorApplicationInsights
         public async Task SetConnectionString(string connectionString)
             => await _jsRuntime.InvokeVoidAsync("blazorApplicationInsights.setConnectionString", connectionString);
 
+        /// <inheritdoc />
+        public async Task<string> GetUserId()
+            => await _jsRuntime.InvokeAsync<string>("appInsights.context.user.authenticatedId || appInsights.context.user.id");
+
+        /// <inheritdoc />
+        public async Task<string> GetSessionId()
+            => await _jsRuntime.InvokeAsync<string>("appInsights.context.sessionManager.automaticSession.id");
+
         private class NoOpJSRuntime : IJSRuntime
         {
             public ValueTask<TValue> InvokeAsync<TValue>(string identifier, object?[]? args) => Invoked<TValue>();
