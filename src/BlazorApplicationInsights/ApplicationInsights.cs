@@ -107,11 +107,11 @@ namespace BlazorApplicationInsights
 
         /// <inheritdoc />
         public async Task<string> GetUserId()
-            => await _jsRuntime.InvokeAsync<string>("appInsights.context.user.authenticatedId || appInsights.context.user.id");
+            => await _jsRuntime.InvokeAsync<string>("blazorApplicationInsights.getUserId");
 
         /// <inheritdoc />
         public async Task<string> GetSessionId()
-            => await _jsRuntime.InvokeAsync<string>("appInsights.context.sessionManager.automaticSession.id");
+            => await _jsRuntime.InvokeAsync<string>("blazorApplicationInsights.getSessionId");
 
         private class NoOpJSRuntime : IJSRuntime
         {
