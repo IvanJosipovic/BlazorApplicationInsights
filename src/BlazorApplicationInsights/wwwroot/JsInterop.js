@@ -78,4 +78,10 @@
             appInsights.loadAppInsights();
         }
     },
+    getUserId: function () {
+        return appInsights.context.user.authenticatedId || appInsights.context.user.id;
+    },
+    getSessionId: function () {
+        return appInsights.context.sessionManager.automaticSession.id;
+    },
 };
