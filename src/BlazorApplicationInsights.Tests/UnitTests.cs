@@ -580,5 +580,63 @@ namespace BlazorApplicationInsights.Tests
 
             hasError.Should().Be(false);
         }
+    
+        [Fact]
+        public async Task GetUserId_ShouldReturnAGeneratedValue_WhenNotSet()
+        {
+            using var playwright = await Playwright.CreateAsync();
+
+            await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions() { Headless = Headless });
+            var page = await browser.NewPageAsync(new BrowserNewPageOptions() { IgnoreHTTPSErrors = true });
+
+            await page.GotoAsync(BaseAddress);
+            await page.ClickAsync("#GetUserId");
+
+            await page.WaitForTimeoutAsync(1000);
+
+            var userId = (await page.Locator("#UserId").AllInnerTextsAsync()).FirstOrDefault();
+
+            userId.Should().NotBeNullOrEmpty();
+        }
+
+        [Fact]
+        public async Task GetUserId_ShouldReturnSetUserId_WhenSet()
+        {
+            using var playwright = await Playwright.CreateAsync();
+
+            await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions() { Headless = Headless });
+            var page = await browser.NewPageAsync(new BrowserNewPageOptions() { IgnoreHTTPSErrors = true });
+
+            await page.GotoAsync(BaseAddress);
+            await page.ClickAsync("#SetAuthenticatedUserContext");
+            
+            await page.WaitForTimeoutAsync(1000);
+            await page.ClickAsync("#GetUserId");
+            
+            await page.WaitForTimeoutAsync(1000);
+
+            var userId = (await page.Locator("#UserId").AllInnerTextsAsync()).FirstOrDefault();
+
+            userId.Should().Be("myUserId");
+        }
+
+        [Fact]
+        public async Task GetSessionId_ShouldReturnAGeneratedValue()
+        {
+            using var playwright = await Playwright.CreateAsync();
+
+            await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions() { Headless = Headless });
+            var page = await browser.NewPageAsync(new BrowserNewPageOptions() { IgnoreHTTPSErrors = true });
+
+            await page.GotoAsync(BaseAddress);
+            await page.ClickAsync("#GetSessionId");
+
+            await page.WaitForTimeoutAsync(1000);
+
+            var sessionId = (await page.Locator("#SessionId").AllInnerTextsAsync()).FirstOrDefault();
+
+            sessionId.Should().NotBeNullOrEmpty();
+        }
+    
     }
 }

@@ -17,6 +17,9 @@ namespace BlazorApplicationInsights.Sample.Pages
 
         [Inject] HttpClient HttpClient { get; set; }
 
+        private string UserId = string.Empty;
+        private string SessionId = string.Empty;
+
         private async Task TrackEvent()
         {
             await AppInsights.TrackEvent("My Event", new Dictionary<string, object>() {{"customProperty", "customValue"}});
@@ -126,6 +129,16 @@ namespace BlazorApplicationInsights.Sample.Pages
         {
             var str = await HttpClient.GetStringAsync("https://httpbin.org/get");
             await AppInsights.Flush();
+        }
+
+        private async Task GetUserId()
+        {
+            this.UserId = await AppInsights.GetUserId();
+        }
+
+        private async Task GetSessionId()
+        {
+            this.SessionId = await AppInsights.GetSessionId();
         }
     }
 }
