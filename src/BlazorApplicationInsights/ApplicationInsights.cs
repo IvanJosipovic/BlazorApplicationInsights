@@ -113,6 +113,14 @@ namespace BlazorApplicationInsights
         public async Task<string> GetSessionId()
             => await _jsRuntime.InvokeAsync<string>("blazorApplicationInsights.getSessionId");
 
+        /// <inheritdoc />
+        public async Task SetCookiesEnabled(bool enabled)
+            => await _jsRuntime.InvokeVoidAsync("blazorApplicationInsights.setCookiesEnabled", enabled);
+
+        /// <inheritdoc />
+        public async Task<bool> GetCookiesEnabled()
+            => await _jsRuntime.InvokeAsync<bool>("blazorApplicationInsights.getCookiesEnabled");
+
         private class NoOpJSRuntime : IJSRuntime
         {
             public ValueTask<TValue> InvokeAsync<TValue>(string identifier, object?[]? args) => Invoked<TValue>();

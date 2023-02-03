@@ -84,4 +84,10 @@
     getSessionId: function () {
         return appInsights.context.sessionManager.automaticSession.id;
     },
+    setCookiesEnabled: function (enabled) {
+        appInsights.core.getCookieMgr().setEnabled(enabled);
+    },
+    getCookiesEnabled: function () {
+        return appInsights.core.getCookieMgr().isEnabled();
+    },
 };

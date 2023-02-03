@@ -637,6 +637,47 @@ namespace BlazorApplicationInsights.Tests
 
             sessionId.Should().NotBeNullOrEmpty();
         }
-    
+
+        [Fact]
+        public async Task SetCookiesEnabled_False_ShouldDisableCookies()
+        {
+            using var playwright = await Playwright.CreateAsync();
+
+            await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions() { Headless = Headless });
+            var page = await browser.NewPageAsync(new BrowserNewPageOptions() { IgnoreHTTPSErrors = true });
+
+            await page.GotoAsync(BaseAddress);
+            await page.ClickAsync("#DisableCookies");
+
+            await page.WaitForTimeoutAsync(1000);
+
+            await page.ClickAsync("#GetCookiesEnabled");
+            var enabled = (await page.Locator("#CookiesEnabled").AllInnerTextsAsync()).FirstOrDefault();
+
+            enabled.Should().Be("False");
+        }
+
+
+        [Fact]
+        public async Task SetCookiesEnabled_True_ShouldEnableCookies()
+        {
+            using var playwright = await Playwright.CreateAsync();
+
+            await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions() { Headless = Headless });
+            var page = await browser.NewPageAsync(new BrowserNewPageOptions() { IgnoreHTTPSErrors = true });
+
+            await page.GotoAsync(BaseAddress);
+            await page.ClickAsync("#DisableCookies");
+            await page.WaitForTimeoutAsync(1000);
+
+            await page.ClickAsync("#EnableCookies");
+            await page.WaitForTimeoutAsync(1000);
+
+            await page.ClickAsync("#GetCookiesEnabled");
+            var enabled = (await page.Locator("#CookiesEnabled").AllInnerTextsAsync()).FirstOrDefault();
+
+            enabled.Should().Be("True");
+        }
+
     }
 }
