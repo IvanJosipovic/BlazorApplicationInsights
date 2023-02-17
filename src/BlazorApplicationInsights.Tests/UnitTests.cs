@@ -448,7 +448,7 @@ namespace BlazorApplicationInsights.Tests
                                                && x.tags.ContainsKey("ai.cloud.roleInstance")
                                                && x.tags["ai.cloud.roleInstance"] == "Blazor Wasm")
                                                 .ToArray()[i];
-                
+
                 var compare = CompareObjects(expectedCall, call);
 
                 if (compare)
@@ -544,6 +544,11 @@ namespace BlazorApplicationInsights.Tests
         [InlineData("StartStopTrackEvent")]
         [InlineData("TrackHttpRequest")]
         [InlineData("SetInstrumentationKey")]
+        [InlineData("GetUserId")]
+        [InlineData("GetSessionId")]
+        [InlineData("EnableCookies")]
+        [InlineData("DisableCookies")]
+        [InlineData("GetCookiesEnabled")]
         public async Task TestBlocked(string id)
         {
             bool hasError = false;
@@ -580,7 +585,7 @@ namespace BlazorApplicationInsights.Tests
 
             hasError.Should().Be(false);
         }
-    
+
         [Fact]
         public async Task GetUserId_ShouldReturnAGeneratedValue_WhenNotSet()
         {
@@ -609,10 +614,10 @@ namespace BlazorApplicationInsights.Tests
 
             await page.GotoAsync(BaseAddress);
             await page.ClickAsync("#SetAuthenticatedUserContext");
-            
+
             await page.WaitForTimeoutAsync(1000);
             await page.ClickAsync("#GetUserId");
-            
+
             await page.WaitForTimeoutAsync(1000);
 
             var userId = (await page.Locator("#UserId").AllInnerTextsAsync()).FirstOrDefault();
