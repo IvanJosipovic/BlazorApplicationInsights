@@ -20,6 +20,8 @@ namespace BlazorApplicationInsights.Sample.Pages
         private string UserId = string.Empty;
         private string SessionId = string.Empty;
 
+        private bool? CookiesEnabled;
+
         private async Task TrackEvent()
         {
             await AppInsights.TrackEvent("My Event", new Dictionary<string, object>() {{"customProperty", "customValue"}});
@@ -139,6 +141,21 @@ namespace BlazorApplicationInsights.Sample.Pages
         private async Task GetSessionId()
         {
             this.SessionId = await AppInsights.GetSessionId();
+        }
+
+        private async Task EnableCookies()
+        {
+            await AppInsights.SetCookiesEnabled(true);
+        }
+
+        private async Task DisableCookies()
+        {
+            await AppInsights.SetCookiesEnabled(false);
+        }
+
+        private async Task GetCookiesEnabled()
+        {
+            CookiesEnabled = await AppInsights.GetCookiesEnabled();
         }
     }
 }

@@ -206,5 +206,18 @@ namespace BlazorApplicationInsights
         /// </summary>
         /// <returns></returns>
         Task<string> GetUserId();
+
+        /// <summary>
+        /// Sets whether cookies are enabled
+        /// </summary>
+        /// <param name="enabled"></param>
+        /// <returns></returns>
+        Task SetCookiesEnabled(bool enabled);
+
+        /// <summary>
+        /// Gets whether cookies are enabled
+        /// </summary>
+        /// <returns></returns>
+        Task<bool> GetCookiesEnabled();
     }
 }

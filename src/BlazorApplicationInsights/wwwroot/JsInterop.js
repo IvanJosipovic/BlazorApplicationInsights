@@ -79,9 +79,25 @@
         }
     },
     getUserId: function () {
-        return appInsights.context.user.authenticatedId || appInsights.context.user.id;
+        if (appInsights.context !== undefined) {
+            return appInsights.context.user.authenticatedId || appInsights.context.user.id;
+        }
     },
     getSessionId: function () {
-        return appInsights.context.sessionManager.automaticSession.id;
+        if (appInsights.context !== undefined) {
+            return appInsights.context.sessionManager.automaticSession.id;
+        }
+    },
+    setCookiesEnabled: function (enabled) {
+        if (appInsights.core !== undefined) {
+            appInsights.core.getCookieMgr().setEnabled(enabled);
+        }
+    },
+    getCookiesEnabled: function () {
+        if (appInsights.core !== undefined) {
+            return appInsights.core.getCookieMgr().isEnabled();
+        } else {
+            return false;
+        }
     },
 };
