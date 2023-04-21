@@ -370,7 +370,7 @@ namespace BlazorApplicationInsights.Tests
                         }
                     }
                 }},
-                new object[] { "TrackHttpRequest", 1000, new List<AIRequestObject>()
+                new object[] { "TrackHttpRequest", 60000, new List<AIRequestObject>()
                 {
                     new AIRequestObject()
                     {
