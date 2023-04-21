@@ -1,14 +1,23 @@
 {
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "enabled": true,
   "timezone": "America/Vancouver",
   "dependencyDashboard": true,
   "dependencyDashboardTitle": "Renovate Dashboard",
-  "commitMessageSuffix": "",
-  "commitBody": "",
-  "suppressNotifications": ["prIgnoreNotification"],
+  "semanticCommits": "enabled",
+  "suppressNotifications": [ "prIgnoreNotification" ],
   "rebaseWhen": "conflicted",
-  "assignees": ["@ivanjosipovic"],
-  "extends": [
-    "config:base"
+  "assignees": [ "@ivanjosipovic" ],
+  "extends": [ "config:base" ],
+  "platformAutomerge": true,
+  "packageRules": [
+    {
+      "automerge": true,
+      "matchUpdateTypes": ["minor", "patch", "digest"],
+      "matchCurrentVersion": "!/^0/",
+      "matchPaths": [
+        "src/BlazorApplicationInsights.Tests/BlazorApplicationInsights.Tests.csproj"
+      ]
+    }
   ]
 }
