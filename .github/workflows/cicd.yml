@@ -52,10 +52,9 @@ jobs:
         NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
 
     - name: Semantic Release
-      uses: cycjimmy/semantic-release-action@v2
+      uses: cycjimmy/semantic-release-action@v4
       id: semantic
       with:
-        semantic_version: 19
         extra_plugins: |
           conventional-changelog-conventionalcommits
       env:
