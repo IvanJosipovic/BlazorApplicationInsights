@@ -15,7 +15,7 @@
       "automerge": true,
       "matchUpdateTypes": ["minor", "patch", "digest"],
       "matchCurrentVersion": "!/^0/",
-      "matchPaths": [
+      "matchFileNames": [
         "src/BlazorApplicationInsights.Tests/BlazorApplicationInsights.Tests.csproj"
       ]
     }
