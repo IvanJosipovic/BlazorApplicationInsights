@@ -40,7 +40,7 @@ namespace BlazorApplicationInsights
 
         public BlazorAppInsightsConfigBuilder SetEnableAutoRouteTracking(bool state)
         {
-            ShouldAddLogger = state;
+            ShouldSetEnableAutoRouteTracking = state;
             return this;
         }
 
