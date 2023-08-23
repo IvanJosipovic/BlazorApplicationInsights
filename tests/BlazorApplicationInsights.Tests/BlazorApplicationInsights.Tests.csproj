@@ -25,13 +25,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="BrowserTestsAddress.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <ProjectReference Include="..\..\src\BlazorApplicationInsights\BlazorApplicationInsights.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BlazorApplicationInsights\BlazorApplicationInsights.csproj" />
+    <None Update="BrowserTestsAddress.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\BlazorApplicationInsights\BlazorApplicationInsights.csproj" />
+    <ProjectReference Include="..\..\src\BlazorApplicationInsights\BlazorApplicationInsights.csproj" />
   </ItemGroup>
 
 </Project>
