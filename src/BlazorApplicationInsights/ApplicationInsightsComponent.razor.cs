@@ -16,6 +16,8 @@ namespace BlazorApplicationInsights
         {
             if (firstRender)
             {
+                await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./_content/BlazorApplicationInsights/JsInterop.js");
+
                 await ApplicationInsights.InitBlazorApplicationInsightsAsync(JSRuntime);
 
                 if (ApplicationInsights.EnableAutoRouteTracking)
@@ -25,7 +27,7 @@ namespace BlazorApplicationInsights
             }
         }
 
-        private async void NavigationManager_LocationChanged(object sender, LocationChangedEventArgs e)
+        private async void NavigationManager_LocationChanged(object? sender, LocationChangedEventArgs e)
         {
             await ApplicationInsights.TrackPageView();
         }

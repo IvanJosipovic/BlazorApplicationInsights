@@ -75,20 +75,6 @@ namespace BlazorApplicationInsights
             return new ApplicationInsightsLoggerProvider(appInsights, optionsMonitor);
         }
 
-        private static void AddLoggerProviderLegacy(IServiceCollection services)
-        {
-            services.TryAddSingleton<ILoggerProvider, ApplicationInsightsLoggerProvider>();
-        }
-
-        private static void RemoveService<TService, TImplementation>(IServiceCollection services)
-        {
-            foreach (var service in services.ToArray())
-            {
-                if (service.ServiceType == typeof(TService) || service.ImplementationType == typeof(TImplementation))
-                    services.Remove(service);
-            }
-        }
-
         private class DummyOptionsMonitor : IOptionsMonitor<ApplicationInsightsLoggerOptions>
         {
             public DummyOptionsMonitor(ApplicationInsightsLoggerOptions currentValue)

@@ -168,13 +168,6 @@ namespace BlazorApplicationInsights
         Task StopTrackEvent(string name, Dictionary<string, string?>? properties = null, Dictionary<string, decimal>? measurements = null);
 
         /// <summary>
-        /// Sets the Instrumentation Key
-        /// </summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
-        Task SetInstrumentationKey(string key);
-
-        /// <summary>
         /// Sets the Connection String
         /// </summary>
         /// <param name="connectionString"></param>

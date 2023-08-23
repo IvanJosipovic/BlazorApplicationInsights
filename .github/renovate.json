@@ -10,13 +10,17 @@
   "assignees": [ "@ivanjosipovic" ],
   "extends": [ "config:base" ],
   "platformAutomerge": true,
+  "ignorePaths": [
+    "**/docs/**",
+    "**/charts/**"
+  ],
   "packageRules": [
     {
       "automerge": true,
-      "matchUpdateTypes": ["minor", "patch", "digest"],
+      "matchUpdateTypes": [ "minor", "patch", "digest" ],
       "matchCurrentVersion": "!/^0/",
       "matchFileNames": [
-        "src/BlazorApplicationInsights.Tests/BlazorApplicationInsights.Tests.csproj"
+        "tests/BlazorApplicationInsights.Tests/BlazorApplicationInsights.Tests.csproj"
       ]
     }
   ]
