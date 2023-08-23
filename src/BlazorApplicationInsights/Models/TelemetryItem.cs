@@ -21,7 +21,7 @@ namespace BlazorApplicationInsights
         /// Unique name of the telemetry item
         /// </summary>
         [JsonPropertyName("name")]
-        public string? Name { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Timestamp when item was sent
@@ -77,8 +77,7 @@ namespace BlazorApplicationInsights
     {
         private JsonConverter<KeyValuePair<TKey, TValue>> _converter;
 
-        public override Dictionary<TKey, TValue> Read(
-            ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override Dictionary<TKey, TValue> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             if (reader.TokenType != JsonTokenType.StartObject && reader.TokenType != JsonTokenType.StartArray)
             {
@@ -95,18 +94,6 @@ namespace BlazorApplicationInsights
                     return dictionary;
                 }
 
-                if (reader.TokenType != JsonTokenType.PropertyName)
-                {
-                    throw new JsonException("JsonTokenType was not PropertyName");
-                }
-
-                var propertyName = reader.GetString();
-
-                if (string.IsNullOrWhiteSpace(propertyName))
-                {
-                    throw new JsonException("Failed to get property name");
-                }
-
                 var kv = _converter.Read(ref reader, typeof(KeyValuePair<TKey, TValue>), options);
 
                 dictionary.Add(kv.Key, kv.Value);
@@ -115,8 +102,7 @@ namespace BlazorApplicationInsights
             return dictionary;
         }
 
-        public override void Write(
-            Utf8JsonWriter writer, Dictionary<TKey, TValue> value, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, Dictionary<TKey, TValue> value, JsonSerializerOptions options)
         {
             JsonSerializer.Serialize(writer, (IDictionary<TKey, TValue>)value, options);
         }
