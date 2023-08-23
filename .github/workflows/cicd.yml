@@ -33,7 +33,7 @@ jobs:
 
     - name: Run App
       working-directory: samples/BlazorApplicationInsights.Wasm.Sample
-      run: Start-Process dotnet 'run','-c','Release' -PassThru
+      run: Start-Process dotnet 'run','-c','Release','--launch-profile','https' -PassThru
       shell: pwsh
 
     - name: Install Playwright
