@@ -144,8 +144,8 @@ namespace BlazorApplicationInsights
         /// in the order they were added, before the telemetry item is pushed for sending.
         /// If one of the telemetry initializers returns false or throws an error then the telemetry item will not be sent.
         /// </summary>
-        /// <param name="telemetryItem"></param>
-        Task AddTelemetryInitializer(TelemetryItem telemetryItem);
+        /// <param name="telemetryInitializer"></param>
+        Task AddTelemetryInitializer(Func<TelemetryItem, bool> telemetryInitializer);
 
         /// <summary>
         /// Send browser performance metrics.

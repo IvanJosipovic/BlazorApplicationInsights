@@ -1,4 +1,5 @@
-﻿using Microsoft.JSInterop;
+﻿using BlazorApplicationInsights.Models;
+using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -78,8 +79,8 @@ namespace BlazorApplicationInsights
             => await _jsRuntime.InvokeVoidAsync("appInsights.setAuthenticatedUserContext", authenticatedUserId, accountId!, storeInCookie);
 
         /// <inheritdoc />
-        public async Task AddTelemetryInitializer(TelemetryItem telemetryItem)
-            => await _jsRuntime.InvokeVoidAsync("blazorApplicationInsights.addTelemetryInitializer", telemetryItem);
+        public async Task AddTelemetryInitializer(Func<TelemetryItem, bool> telemetryInitializer)
+            => await _jsRuntime.InvokeVoidAsync("blazorApplicationInsights.addTelemetryInitializer", DotNetObjectReference.Create(new TelemetryInitializer(telemetryInitializer)));
 
         /// <inheritdoc />
         public async Task TrackPageViewPerformance(PageViewPerformanceTelemetry pageViewPerformance)
@@ -92,10 +93,6 @@ namespace BlazorApplicationInsights
         /// <inheritdoc />
         public async Task StopTrackEvent(string name, Dictionary<string, string?>? properties = null, Dictionary<string, decimal>? measurements = null)
             => await _jsRuntime.InvokeVoidAsync("appInsights.stopTrackEvent", name, properties!, measurements!);
-
-        /// <inheritdoc />
-        public async Task SetInstrumentationKey(string key)
-            => await _jsRuntime.InvokeVoidAsync("blazorApplicationInsights.setInstrumentationKey", key);
 
         /// <inheritdoc />
         public async Task LoadAppInsights()
