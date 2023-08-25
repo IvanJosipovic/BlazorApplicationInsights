@@ -27,7 +27,11 @@ namespace BlazorApplicationInsights
 
         private async void NavigationManager_LocationChanged(object sender, LocationChangedEventArgs e)
         {
-            await ApplicationInsights.TrackPageView();
+            try
+            {
+                await ApplicationInsights.TrackPageView();
+            }
+            catch (TaskCanceledException) { }//suppress exceptions related to quick navigations performed by the user
         }
 
         public void Dispose()
