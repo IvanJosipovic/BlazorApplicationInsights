@@ -1,16 +1,29 @@
 ﻿using System;
 using System.Threading.Tasks;
+using BlazorApplicationInsights.Interfaces;
+using BlazorApplicationInsights.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.JSInterop;
 
 namespace BlazorApplicationInsights
 {
-    public partial class ApplicationInsightsComponent : ComponentBase, IDisposable
+    public partial class ApplicationInsightsComponent : IDisposable
     {
         [Inject] private IApplicationInsights ApplicationInsights { get; set; }
         [Inject] private NavigationManager NavigationManager { get; set; }
         [Inject] private IJSRuntime JSRuntime { get; set; }
+        //[Inject]
+        private Config Config { get; set; } = new();
+
+        public bool IsWebAssembly { get; set; }
+
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+
+            IsWebAssembly = JSRuntime is IJSInProcessRuntime;
+        }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -20,7 +33,8 @@ namespace BlazorApplicationInsights
 
                 await ApplicationInsights.InitBlazorApplicationInsightsAsync(JSRuntime);
 
-                if (ApplicationInsights.EnableAutoRouteTracking)
+                //todo
+                if (Config.EnableDebug.HasValue)
                 {
                     NavigationManager.LocationChanged += NavigationManager_LocationChanged;
                 }
@@ -34,7 +48,8 @@ namespace BlazorApplicationInsights
 
         public void Dispose()
         {
-            if (ApplicationInsights.EnableAutoRouteTracking)
+            //todo
+            if (Config.EnableDebug.HasValue)
             {
                 NavigationManager.LocationChanged -= NavigationManager_LocationChanged;
             }

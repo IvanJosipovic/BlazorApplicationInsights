@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using BlazorApplicationInsights.Interfaces;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -38,7 +39,6 @@ namespace BlazorApplicationInsights
         /// <returns>IServiceCollection</returns>
         public static IServiceCollection AddBlazorApplicationInsights(this IServiceCollection services, bool addILoggerProvider = true, bool enableAutoRouteTracking = true)
             => AddBlazorApplicationInsights(services, config => config.AddLogger(addILoggerProvider).SetEnableAutoRouteTracking(enableAutoRouteTracking));
-
 
         /// <summary>
         /// Adds the BlazorApplicationInsights services.
@@ -82,7 +82,7 @@ namespace BlazorApplicationInsights
                 CurrentValue = currentValue;
             }
 
-            public ApplicationInsightsLoggerOptions Get(string name)
+            public ApplicationInsightsLoggerOptions Get(string? name)
             {
                 if (name != string.Empty)
                     return null;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using BlazorApplicationInsights.Interfaces;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
 

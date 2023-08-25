@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using System.Text.Json;
 
 namespace BlazorApplicationInsights.Wasm.Sample
 {
@@ -20,7 +19,6 @@ namespace BlazorApplicationInsights.Wasm.Sample
                 {
                     telemetryItem.Tags.Add("ai.cloud.role", "SPA");
                     telemetryItem.Tags.Add("ai.cloud.roleInstance", "Blazor Wasm");
-                    Console.WriteLine(JsonSerializer.Serialize(telemetryItem));
                     return true;
                 });
             });

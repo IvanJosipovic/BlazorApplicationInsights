@@ -24,9 +24,7 @@ Application Insights for Blazor web applications
       ld: -1,
       crossOrigin: "anonymous",
       cfg: {
-          connectionString:"InstrumentationKey=00000000-0000-0000-0000-000000000000;",
-          enableRequestHeaderTracking: true,
-          enableResponseHeaderTracking: true
+          connectionString:"InstrumentationKey=00000000-0000-0000-0000-000000000000;"
       }});
     </script>
     ```
@@ -143,9 +141,7 @@ public static async Task Main(string[] args)
           src: "https://js.monitor.azure.com/scripts/b/ai.2.min.js",
           ld: -1,
           cfg: {
-              connectionString: decodeURIComponent(getCookieValue('ai_connString')),
-              enableRequestHeaderTracking: true,
-              enableResponseHeaderTracking: true
+              connectionString: decodeURIComponent(getCookieValue('ai_connString'))
           }
       });
   </script>
@@ -179,9 +175,7 @@ public static async Task Main(string[] args)
           src: "https://js.monitor.azure.com/scripts/b/ai.2.min.js",
           ld: -1,
           cfg: {
-              connectionString: decodeURIComponent(getCookieValue('ai_connString')),
-              enableRequestHeaderTracking: true,
-              enableResponseHeaderTracking: true
+              connectionString: decodeURIComponent(getCookieValue('ai_connString'))
           }
       });
   </script>

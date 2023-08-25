@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
+using BlazorApplicationInsights.Interfaces;
 
 // ReSharper disable once CheckNamespace
 namespace BlazorApplicationInsights
@@ -68,7 +69,8 @@ namespace BlazorApplicationInsights
 
             if (exception is null)
             {
-                _applicationInsights.TrackTrace(message, severity, customDimensions);
+                //todo
+                //_applicationInsights.TrackTrace(message, severity, customDimensions);
                 return;
             }
 
@@ -79,7 +81,8 @@ namespace BlazorApplicationInsights
                 Stack = exception.ToString()
             };
 
-            _applicationInsights.TrackException(error, $"{eventId}", severity, customDimensions);
+            //todo
+            //_applicationInsights.TrackException(error, $"{eventId}", severity, customDimensions);
         }
 
         /// <inheritdoc />

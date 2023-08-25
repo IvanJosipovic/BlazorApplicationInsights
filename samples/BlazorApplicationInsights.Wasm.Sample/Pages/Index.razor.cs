@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using BlazorApplicationInsights.Interfaces;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 
@@ -24,23 +25,23 @@ namespace BlazorApplicationInsights.Wasm.Sample.Pages
 
         private async Task TrackEvent()
         {
-            await AppInsights.TrackEvent("My Event", new Dictionary<string, object>() {{"customProperty", "customValue"}});
+            //await AppInsights.TrackEvent("My Event", new Dictionary<string, object>() {{"customProperty", "customValue"}});
             await AppInsights.Flush();
         }
 
         private async Task TrackTrace()
         {
-            await AppInsights.TrackTrace("myMessage");
+            //await AppInsights.TrackTrace("myMessage");
             await AppInsights.Flush();
-            await AppInsights.TrackTrace("myMessage1", SeverityLevel.Critical);
+           // await AppInsights.TrackTrace("myMessage1", SeverityLevel.Critical);
             await AppInsights.Flush();
-            await AppInsights.TrackTrace("myMessage2", SeverityLevel.Critical, new Dictionary<string, object>() {{"customProperty", "customValue"}});
+           // await AppInsights.TrackTrace("myMessage2", SeverityLevel.Critical, new Dictionary<string, object>() {{"customProperty", "customValue"}});
             await AppInsights.Flush();
         }
 
         private async Task TrackException()
         {
-            await AppInsights.TrackException(new Error() { Message = "my message", Name = "my error" }, null, SeverityLevel.Critical);
+            //await AppInsights.TrackException(new Error() { Message = "my message", Name = "my error" }, null, SeverityLevel.Critical);
             await AppInsights.Flush();
         }
 
@@ -52,16 +53,16 @@ namespace BlazorApplicationInsights.Wasm.Sample.Pages
         private async Task SetAuthenticatedUserContext()
         {
             await AppInsights.SetAuthenticatedUserContext("myUserId", "myUserName", true);
-            await AppInsights.TrackEvent("Auth Event");
+            //await AppInsights.TrackEvent("Auth Event");
             await AppInsights.Flush();
         }
 
         private async Task ClearAuthenticatedUserContext()
         {
             await AppInsights.SetAuthenticatedUserContext("myUserId", "myUserName", true);
-            await AppInsights.TrackEvent("Auth Event");
+            //await AppInsights.TrackEvent("Auth Event");
             await AppInsights.ClearAuthenticatedUserContext();
-            await AppInsights.TrackEvent("Auth Event2");
+            //await AppInsights.TrackEvent("Auth Event2");
             await AppInsights.Flush();
         }
 
@@ -76,19 +77,19 @@ namespace BlazorApplicationInsights.Wasm.Sample.Pages
 
         private async Task TrackDependencyData()
         {
-            await AppInsights.TrackDependencyData("myId", "myName", 1000, true, DateTime.Now, 200, "myContext", "myType", "mydata", "myTarget");
+            //await AppInsights.TrackDependencyData("myId", "myName", 1000, true, DateTime.Now, 200, "myContext", "myType", "mydata", "myTarget");
             await AppInsights.Flush();
         }
 
         private async Task TrackMetric()
         {
-            await AppInsights.TrackMetric("myMetric", 100, 200, 1, 200, new Dictionary<string, object>() {{"customProperty", "customValue"}});
+            //await AppInsights.TrackMetric("myMetric", 100, 200, 1, 200, new Dictionary<string, object>() {{"customProperty", "customValue"}});
             await AppInsights.Flush();
         }
 
         private async Task TrackPageView()
         {
-            await AppInsights.TrackPageView("myPage", "https://test.local", "https://test.local", "TestPage", true, new Dictionary<string, object>() {{"customProperty", "customValue"}});
+            //await AppInsights.TrackPageView("myPage", "https://test.local", "https://test.local", "TestPage", true, new Dictionary<string, object>() {{"customProperty", "customValue"}});
             await AppInsights.Flush();
         }
 
@@ -129,27 +130,27 @@ namespace BlazorApplicationInsights.Wasm.Sample.Pages
 
         private async Task GetUserId()
         {
-            this.UserId = await AppInsights.GetUserId();
+            //this.UserId = await AppInsights.GetUserId();
         }
 
         private async Task GetSessionId()
         {
-            this.SessionId = await AppInsights.GetSessionId();
+            //this.SessionId = await AppInsights.GetSessionId();
         }
 
         private async Task EnableCookies()
         {
-            await AppInsights.SetCookiesEnabled(true);
+            //await AppInsights.SetCookiesEnabled(true);
         }
 
         private async Task DisableCookies()
         {
-            await AppInsights.SetCookiesEnabled(false);
+            //await AppInsights.SetCookiesEnabled(false);
         }
 
         private async Task GetCookiesEnabled()
         {
-            CookiesEnabled = await AppInsights.GetCookiesEnabled();
+            //CookiesEnabled = await AppInsights.GetCookiesEnabled();
         }
     }
 }

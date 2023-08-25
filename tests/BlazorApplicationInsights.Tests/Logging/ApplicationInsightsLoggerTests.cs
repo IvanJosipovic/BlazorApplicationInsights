@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using BlazorApplicationInsights.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Moq;
