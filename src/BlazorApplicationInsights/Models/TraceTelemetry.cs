@@ -1,7 +1,6 @@
-﻿using BlazorApplicationInsights.Models;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
-namespace BlazorApplicationInsights.Interfaces
+namespace BlazorApplicationInsights.Models
 {
     public class TraceTelemetry : PartC
     {

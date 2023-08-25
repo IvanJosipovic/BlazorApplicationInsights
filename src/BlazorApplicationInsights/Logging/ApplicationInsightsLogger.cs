@@ -8,6 +8,7 @@ using System.Text;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using BlazorApplicationInsights.Interfaces;
+using BlazorApplicationInsights.Models;
 
 // ReSharper disable once CheckNamespace
 namespace BlazorApplicationInsights

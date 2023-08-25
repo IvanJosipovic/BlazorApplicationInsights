@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace BlazorApplicationInsights
+namespace BlazorApplicationInsights.Models
 {
     public class Error
     {

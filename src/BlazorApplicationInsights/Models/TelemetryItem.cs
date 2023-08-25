@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace BlazorApplicationInsights
+namespace BlazorApplicationInsights.Models
 {
     /// <summary>
     /// Telemety item

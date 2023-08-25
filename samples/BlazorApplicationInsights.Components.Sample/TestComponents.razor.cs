@@ -97,13 +97,29 @@ namespace BlazorApplicationInsights.Components.Sample
 
         private async Task TrackMetric()
         {
-            //await AppInsights.TrackMetric("myMetric", 100, 200, 1, 200, new Dictionary<string, object>() {{"customProperty", "customValue"}});
+            await AppInsights.TrackMetric(new MetricTelemetry()
+            {
+                Name = "myMetric",
+                Average = 100,
+                SampleCount = 200,
+                Min = 1,
+                Max = 200
+            },
+            new Dictionary<string, object>() { { "customProperty", "customValue" } });
+
             await AppInsights.Flush();
         }
 
         private async Task TrackPageView()
         {
-            //await AppInsights.TrackPageView("myPage", "https://test.local", "https://test.local", "TestPage", true, new Dictionary<string, object>() {{"customProperty", "customValue"}});
+            await AppInsights.TrackPageView(new PageViewTelemetry()
+            {
+                Name = "myPage",
+                Uri = "https://test.local",
+                RefUri = "https://test.local",
+                PageType = "TestPage",
+                IsLoggedIn = true
+            });
             await AppInsights.Flush();
         }
 

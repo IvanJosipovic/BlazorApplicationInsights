@@ -1,7 +1,10 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace BlazorApplicationInsights
+namespace BlazorApplicationInsights.Models
 {
+    /// <summary>
+    /// Source: https://github.com/microsoft/ApplicationInsights-JS/blob/main/shared/AppInsightsCommon/src/Interfaces/IPageViewPerformanceTelemetry.ts
+    /// </summary>
     public class PageViewPerformanceTelemetry
     {
         /// <summary>
@@ -11,7 +14,7 @@ namespace BlazorApplicationInsights
         public string? Name { get; set; }
 
         /// <summary>
-        /// a relative or absolute URL that identifies the page or other item. Defaults to the window location.
+        /// A relative or absolute URL that identifies the page or other item. Defaults to the window location.
         /// </summary>
         [JsonPropertyName("uri")]
         public string? Uri { get; set; }
