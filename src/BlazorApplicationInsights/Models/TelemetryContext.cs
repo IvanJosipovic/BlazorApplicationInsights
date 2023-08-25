@@ -15,61 +15,71 @@ namespace BlazorApplicationInsights.Models
         /// The object describing a component tracked by this object.
         /// </summary>
         [JsonPropertyName("application")]
-        public Application Application { get; }
+        [JsonInclude]
+        public Application Application { get; private set; }
 
         /// <summary>
         /// The object describing a device tracked by this object.
         /// </summary>
         [JsonPropertyName("device")]
-        public Device Device { get; }
+        [JsonInclude]
+        public Device Device { get; private set; }
 
         /// <summary>
         /// The object describing internal settings.
         /// </summary>
         [JsonPropertyName("internal")]
-        public Internal Internal { get; }
+        [JsonInclude]
+        public Internal Internal { get; private set; }
 
         /// <summary>
         /// The object describing a location tracked by this object.
         /// </summary>
         [JsonPropertyName("location")]
-        public Location Location { get; }
+        [JsonInclude]
+        public Location Location { get; private set; }
 
         /// <summary>
         /// The object describing a operation tracked by this object.
         /// </summary>
         [JsonPropertyName("telemetryTrace")]
-        public TelemetryTrace TelemetryTrace { get; }
+        [JsonInclude]
+        public TelemetryTrace TelemetryTrace { get; private set; }
 
         /// <summary>
         /// The object describing a user tracked by this object.
         /// </summary>
-        [JsonPropertyName("userContext")]
-        public UserContext UserContext { get; }
+        [JsonPropertyName("user")]
+        [JsonInclude]
+        public UserContext User { get; private set; }
 
         /// <summary>
         /// The object describing a session tracked by this object.
         /// </summary>
         [JsonPropertyName("session")]
-        public Session Session { get; }
+        [JsonInclude]
+        public Session Session { get; private set; }
 
         /// <summary>
         /// The session manager that manages the automatic session from the cookies
         /// </summary>
         [JsonPropertyName("sessionManager")]
-        public SessionManager SessionManager { get; }
+        [JsonInclude]
+        public SessionManager SessionManager { get; private set; }
 
         /// <summary>
         /// The object describing os details tracked by this object.
         /// </summary>
-        [JsonPropertyName("operatingSystem")]
-        public OperatingSystem OperatingSystem { get; }
+        [JsonPropertyName("os")]
+        [JsonInclude]
+        public OperatingSystem OS { get; private set; }
 
         /// <summary>
         /// The object describing we details tracked by this object.
         /// </summary>
         [JsonPropertyName("web")]
-        public Web Web { get; }
+        [JsonInclude]
+        public Web Web { get; private set; }
 
         /// <summary>
         /// application id obtained from breeze responses. Is used if appId is not specified by root config
@@ -80,7 +90,7 @@ namespace BlazorApplicationInsights.Models
         }
 
         /// <summary>
-        /// session id obtained from session manager.
+        // session id obtained from session manager.
         /// </summary>
         public async Task<string> GetSessionId()
         {

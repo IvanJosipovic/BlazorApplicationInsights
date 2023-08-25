@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
@@ -28,25 +25,25 @@ namespace BlazorApplicationInsights.Models.Context
         /// Authenticated user id.
         /// </summary>
         [JsonPropertyName("authenticatedId")]
-        public string AuthenticatedId { get; set; }
+        public string? AuthenticatedId { get; set; }
 
         /// <summary>
         /// The account ID.
         /// </summary>
         [JsonPropertyName("accountId")]
-        public string AccountId { get; set; }
+        public string? AccountId { get; set; }
 
         /// <summary>
         /// The account acquisition date.
         /// </summary>
         [JsonPropertyName("accountAcquisitionDate")]
-        public string AccountAcquisitionDate { get; set; }
+        public string? AccountAcquisitionDate { get; set; }
 
         /// <summary>
         /// The localId.
         /// </summary>
         [JsonPropertyName("localId")]
-        public string LocalId { get; set; }
+        public string? LocalId { get; set; }
 
         /// <summary>
         /// A flag indicating whether this represents a new user.

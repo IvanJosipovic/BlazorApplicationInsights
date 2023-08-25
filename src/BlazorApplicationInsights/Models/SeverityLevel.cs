@@ -2,6 +2,7 @@
 {
     /// <summary>
     /// Defines the level of severity for the event.
+    /// Source: https://github.com/microsoft/ApplicationInsights-JS/blob/main/shared/AppInsightsCommon/src/Interfaces/Contracts/SeverityLevel.ts
     /// </summary>
     public enum SeverityLevel
     {

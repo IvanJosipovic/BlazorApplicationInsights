@@ -5,7 +5,7 @@ namespace BlazorApplicationInsights.Models
     /// <summary>
     /// Source: https://github.com/microsoft/ApplicationInsights-JS/blob/main/shared/AppInsightsCommon/src/Interfaces/IPageViewPerformanceTelemetry.ts
     /// </summary>
-    public class PageViewPerformanceTelemetry
+    public class PageViewPerformanceTelemetry : PartC
     {
         /// <summary>
         /// The name of the page. Defaults to the document title.

@@ -2,6 +2,9 @@
 
 namespace BlazorApplicationInsights.Models
 {
+    /// <summary>
+    /// Source: https://github.com/microsoft/ApplicationInsights-JS/blob/main/shared/AppInsightsCommon/src/Interfaces/IEventTelemetry.ts
+    /// </summary>
     public class EventTelemetry : PartC
     {
         /// <summary>

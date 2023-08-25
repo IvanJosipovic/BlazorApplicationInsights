@@ -26,5 +26,4 @@ namespace BlazorApplicationInsights.Models
         [JsonPropertyName("severityLevel")]
         public SeverityLevel? SeverityLevel { get; set; }
     }
-
 }

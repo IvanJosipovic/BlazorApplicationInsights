@@ -86,8 +86,9 @@ namespace BlazorApplicationInsights
 
         /// <inheritdoc />
         public async Task<TelemetryContext> Context()
-            => await _jsRuntime.InvokeAsync<TelemetryContext>("appInsights.context");
+            => await _jsRuntime.InvokeAsync<TelemetryContext>("blazorApplicationInsights.getContext");
 
+        /// <inheritdoc />
         public Task<CookieMgr> GetCookieMgr()
         {
             throw new NotImplementedException();
