@@ -13,8 +13,7 @@ namespace BlazorApplicationInsights
         [Inject] private IApplicationInsights ApplicationInsights { get; set; }
         [Inject] private NavigationManager NavigationManager { get; set; }
         [Inject] private IJSRuntime JSRuntime { get; set; }
-        //[Inject]
-        private Config Config { get; set; } = new();
+        [Inject] private BlazorApplicationInsightsConfig Config { get; set; } = new();
 
         public bool IsWebAssembly { get; set; }
 
@@ -31,10 +30,7 @@ namespace BlazorApplicationInsights
             {
                 await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./_content/BlazorApplicationInsights/JsInterop.js");
 
-                await ApplicationInsights.InitBlazorApplicationInsightsAsync(JSRuntime);
-
-                //todo
-                if (Config.EnableDebug.HasValue)
+                if (Config.EnableAutoRouteTracking.GetValueOrDefault())
                 {
                     NavigationManager.LocationChanged += NavigationManager_LocationChanged;
                 }
@@ -48,8 +44,7 @@ namespace BlazorApplicationInsights
 
         public void Dispose()
         {
-            //todo
-            if (Config.EnableDebug.HasValue)
+            if (Config.EnableAutoRouteTracking.GetValueOrDefault())
             {
                 NavigationManager.LocationChanged -= NavigationManager_LocationChanged;
             }

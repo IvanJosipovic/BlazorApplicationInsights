@@ -1,5 +1,6 @@
 ﻿using BlazorApplicationInsights.Interfaces;
 using BlazorApplicationInsights.Models;
+using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
@@ -12,27 +13,12 @@ namespace BlazorApplicationInsights
     /// <inheritdoc />
     public class ApplicationInsights : IApplicationInsights
     {
-        private readonly Func<IApplicationInsights, Task> _onInsightsInitAction;
-        private IJSRuntime _jsRuntime = new NoOpJSRuntime();
-
-        /// <inheritdoc />
-        public bool EnableAutoRouteTracking { get; set; }
-
-        public ApplicationInsights()
-        {
-        }
-
-        public ApplicationInsights(Func<IApplicationInsights, Task>? onInsightsInitAction)
-        {
-            _onInsightsInitAction = onInsightsInitAction ?? delegate { return Task.CompletedTask; };
-        }
-
-        /// <inheritdoc />
-        public async Task InitBlazorApplicationInsightsAsync(IJSRuntime jSRuntime)
+        public ApplicationInsights(IJSRuntime jSRuntime)
         {
             _jsRuntime = jSRuntime;
-            await _onInsightsInitAction(this);
         }
+
+        private readonly IJSRuntime _jsRuntime;
 
         /// <inheritdoc />
         public async Task TrackPageView(PageViewTelemetry? pageView = null)
@@ -105,18 +91,6 @@ namespace BlazorApplicationInsights
         public Task<CookieMgr> GetCookieMgr()
         {
             throw new NotImplementedException();
-        }
-
-        private class NoOpJSRuntime : IJSRuntime
-        {
-            public ValueTask<TValue> InvokeAsync<TValue>(string identifier, object?[]? args) => Invoked<TValue>();
-            public ValueTask<TValue> InvokeAsync<TValue>(string identifier, CancellationToken cancellationToken, object?[]? args) => Invoked<TValue>();
-
-            private static ValueTask<TValue> Invoked<TValue>()
-            {
-                Debug.WriteLine("Attempted to use " + nameof(ApplicationInsights) + " before calling " + nameof(InitBlazorApplicationInsightsAsync));
-                return new ValueTask<TValue>(default(TValue)!);
-            }
         }
     }
 }

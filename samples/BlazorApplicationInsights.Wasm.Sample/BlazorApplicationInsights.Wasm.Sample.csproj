@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\BlazorApplicationInsights\BlazorApplicationInsights.csproj" />
+    <ProjectReference Include="..\BlazorApplicationInsights.Components.Sample\BlazorApplicationInsights.Components.Sample.csproj" />
   </ItemGroup>
 
 </Project>

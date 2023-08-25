@@ -15,12 +15,13 @@ namespace BlazorApplicationInsights.Wasm.Sample
 
             builder.Services.AddBlazorApplicationInsights(async applicationInsights =>
             {
-                await applicationInsights.AddTelemetryInitializer(telemetryItem =>
-                {
-                    telemetryItem.Tags.Add("ai.cloud.role", "SPA");
-                    telemetryItem.Tags.Add("ai.cloud.roleInstance", "Blazor Wasm");
-                    return true;
-                });
+                //applicationInsights.ConnectionString =
+                //await applicationInsights.AddTelemetryInitializer(telemetryItem =>
+                //{
+                //    telemetryItem.Tags.Add("ai.cloud.role", "SPA");
+                //    telemetryItem.Tags.Add("ai.cloud.roleInstance", "Blazor Wasm");
+                //    return true;
+                //});
             });
 
             await builder.Build().RunAsync();

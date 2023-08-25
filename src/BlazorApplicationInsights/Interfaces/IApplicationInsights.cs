@@ -12,12 +12,6 @@ namespace BlazorApplicationInsights.Interfaces
     public interface IApplicationInsights : IAppInsights, IDependenciesPlugin, IPropertiesPlugin
     {
         /// <summary>
-        /// Set IJSRuntime and run init action queue
-        /// </summary>
-        /// <param name="jSRuntime"></param>
-        Task InitBlazorApplicationInsightsAsync(IJSRuntime jSRuntime);
-
-        /// <summary>
         /// Manually trigger an immediate send of all telemetry still in the buffer.
         /// </summary>
         /// <param name="async"></param>

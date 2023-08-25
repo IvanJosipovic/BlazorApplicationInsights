@@ -3,6 +3,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using BlazorApplicationInsights.Interfaces;
+using BlazorApplicationInsights.Models;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -23,38 +24,21 @@ namespace BlazorApplicationInsights
         /// Adds the BlazorApplicationInsights services.
         /// </summary>
         /// <param name="services"></param>
-        /// <param name="onInsightsInit"></param>
-        /// <param name="addILoggerProvider">Adds the ILogerProver which ships all logs to Application Insights. This is disabled on Blazor Server.</param>
-        /// <param name="enableAutoRouteTracking">Enables automatic Track Page View on Route changes</param>
-        /// <returns>IServiceCollection</returns>
-        public static IServiceCollection AddBlazorApplicationInsights(this IServiceCollection services, Func<IApplicationInsights, Task> onInsightsInit, bool addILoggerProvider = true, bool enableAutoRouteTracking = true)
-            => AddBlazorApplicationInsights(services, config => config.AddLogger(addILoggerProvider).SetEnableAutoRouteTracking(enableAutoRouteTracking).WithOnInitCallback(onInsightsInit));
-
-        /// <summary>
-        /// Adds the BlazorApplicationInsights services.
-        /// </summary>
-        /// <param name="services"></param>
-        /// <param name="addILoggerProvider">Adds the ILogerProver which ships all logs to Application Insights. This is disabled on Blazor Server.</param>
-        /// <param name="enableAutoRouteTracking">Enables automatic Track Page View on Route changes</param>
-        /// <returns>IServiceCollection</returns>
-        public static IServiceCollection AddBlazorApplicationInsights(this IServiceCollection services, bool addILoggerProvider = true, bool enableAutoRouteTracking = true)
-            => AddBlazorApplicationInsights(services, config => config.AddLogger(addILoggerProvider).SetEnableAutoRouteTracking(enableAutoRouteTracking));
-
-        /// <summary>
-        /// Adds the BlazorApplicationInsights services.
-        /// </summary>
-        /// <param name="services"></param>
-        /// <param name="builder">Callback for configuring the service</param>
-        /// <returns></returns>
-        public static IServiceCollection AddBlazorApplicationInsights(this IServiceCollection services, Action<BlazorAppInsightsConfigBuilder> builder)
+        /// <param name="builder">Callback for configuring the service.</param>
+        /// <param name="loggingOptions">Callback for configuring the logging options. Blazor WASM only.</param>
+        public static IServiceCollection AddBlazorApplicationInsights(this IServiceCollection services, Action<BlazorApplicationInsightsConfig>? builder = null, Action<ApplicationInsightsLoggerOptions>? loggingOptions = null)
         {
-            var configBuilder = new BlazorAppInsightsConfigBuilder();
-            builder(configBuilder);
+            builder ??= delegate { };
 
-            if (configBuilder.ShouldAddLogger && IsBrowserPlatform)
-                services.TryAddEnumerable(ServiceDescriptor.Singleton<ILoggerProvider, ApplicationInsightsLoggerProvider>(x => CreateLoggerProvider(x, configBuilder.CallbackConfigureLoggerOptions)));
+            var config = new BlazorApplicationInsightsConfig();
+            builder(config);
 
-            services.TryAddSingleton<IApplicationInsights>(_ => new ApplicationInsights(configBuilder.CallbackInitializingAppInsights) {EnableAutoRouteTracking = configBuilder.ShouldSetEnableAutoRouteTracking });
+            if (config.AddWasmLogger && IsBrowserPlatform)
+                services.TryAddEnumerable(ServiceDescriptor.Singleton<ILoggerProvider, ApplicationInsightsLoggerProvider>(x => CreateLoggerProvider(x, loggingOptions)));
+
+            services.AddTransient<IApplicationInsights, ApplicationInsights>();
+            services.TryAddSingleton(config);
+
             return services;
         }
 

@@ -1,17 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading.Tasks;
 using BlazorApplicationInsights.Interfaces;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 
-namespace BlazorApplicationInsights.Wasm.Sample.Pages
+namespace BlazorApplicationInsights.Components.Sample
 {
-    public partial class Index
+    public partial class TestComponents
     {
         [Inject]
-        private ILogger<Index> Logger { get; set; }
+        private ILogger<TestComponents> Logger { get; set; }
 
         [Inject]
         private IApplicationInsights AppInsights { get; set; }
@@ -33,9 +29,9 @@ namespace BlazorApplicationInsights.Wasm.Sample.Pages
         {
             //await AppInsights.TrackTrace("myMessage");
             await AppInsights.Flush();
-           // await AppInsights.TrackTrace("myMessage1", SeverityLevel.Critical);
+            // await AppInsights.TrackTrace("myMessage1", SeverityLevel.Critical);
             await AppInsights.Flush();
-           // await AppInsights.TrackTrace("myMessage2", SeverityLevel.Critical, new Dictionary<string, object>() {{"customProperty", "customValue"}});
+            // await AppInsights.TrackTrace("myMessage2", SeverityLevel.Critical, new Dictionary<string, object>() {{"customProperty", "customValue"}});
             await AppInsights.Flush();
         }
 

@@ -20,6 +20,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApplicationInsights.W
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApplicationInsights.WebApp.Sample", "samples\BlazorApplicationInsights.WebApp.Sample\BlazorApplicationInsights.WebApp.Sample.csproj", "{9B69E3BE-97CB-4E02-940B-9CB1A8945F16}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorApplicationInsights.Components.Sample", "samples\BlazorApplicationInsights.Components.Sample\BlazorApplicationInsights.Components.Sample.csproj", "{C020284F-BDBB-4C83-B426-0591CE027115}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +44,10 @@ Global
 		{9B69E3BE-97CB-4E02-940B-9CB1A8945F16}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B69E3BE-97CB-4E02-940B-9CB1A8945F16}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B69E3BE-97CB-4E02-940B-9CB1A8945F16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C020284F-BDBB-4C83-B426-0591CE027115}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C020284F-BDBB-4C83-B426-0591CE027115}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C020284F-BDBB-4C83-B426-0591CE027115}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C020284F-BDBB-4C83-B426-0591CE027115}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
