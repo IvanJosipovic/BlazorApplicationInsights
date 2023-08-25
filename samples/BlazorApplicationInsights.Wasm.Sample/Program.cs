@@ -13,9 +13,8 @@ namespace BlazorApplicationInsights.Wasm.Sample
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
-            builder.Services.AddBlazorApplicationInsights(async applicationInsights =>
+            builder.Services.AddBlazorApplicationInsights(config =>
             {
-                //applicationInsights.ConnectionString =
                 //await applicationInsights.AddTelemetryInitializer(telemetryItem =>
                 //{
                 //    telemetryItem.Tags.Add("ai.cloud.role", "SPA");

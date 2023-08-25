@@ -1,4 +1,5 @@
 using BlazorApplicationInsights.Interfaces;
+using BlazorApplicationInsights.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 
@@ -19,19 +20,24 @@ namespace BlazorApplicationInsights.Components.Sample
 
         private bool? CookiesEnabled;
 
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+        }
+
         private async Task TrackEvent()
         {
-            //await AppInsights.TrackEvent("My Event", new Dictionary<string, object>() {{"customProperty", "customValue"}});
+            await AppInsights.TrackEvent(new EventTelemetry() { Name = "My Event" }, new Dictionary<string, object>() {{"customProperty", "customValue"}});
             await AppInsights.Flush();
         }
 
         private async Task TrackTrace()
         {
-            //await AppInsights.TrackTrace("myMessage");
+            await AppInsights.TrackTrace(new TraceTelemetry() { Message = "myMessage" });
             await AppInsights.Flush();
-            // await AppInsights.TrackTrace("myMessage1", SeverityLevel.Critical);
+            await AppInsights.TrackTrace(new TraceTelemetry() { Message = "myMessage1", SeverityLevel = SeverityLevel.Critical });
             await AppInsights.Flush();
-            // await AppInsights.TrackTrace("myMessage2", SeverityLevel.Critical, new Dictionary<string, object>() {{"customProperty", "customValue"}});
+            await AppInsights.TrackTrace(new TraceTelemetry() { Message = "myMessage2", SeverityLevel = SeverityLevel.Critical }, new Dictionary<string, object>() { { "customProperty", "customValue" } });
             await AppInsights.Flush();
         }
 
@@ -49,16 +55,16 @@ namespace BlazorApplicationInsights.Components.Sample
         private async Task SetAuthenticatedUserContext()
         {
             await AppInsights.SetAuthenticatedUserContext("myUserId", "myUserName", true);
-            //await AppInsights.TrackEvent("Auth Event");
+            await AppInsights.TrackEvent(new EventTelemetry() { Name = "Auth Event" });
             await AppInsights.Flush();
         }
 
         private async Task ClearAuthenticatedUserContext()
         {
             await AppInsights.SetAuthenticatedUserContext("myUserId", "myUserName", true);
-            //await AppInsights.TrackEvent("Auth Event");
+            await AppInsights.TrackEvent(new EventTelemetry() { Name = "Auth Event" });
             await AppInsights.ClearAuthenticatedUserContext();
-            //await AppInsights.TrackEvent("Auth Event2");
+            await AppInsights.TrackEvent(new EventTelemetry() { Name = "Auth Event2" });
             await AppInsights.Flush();
         }
 
@@ -73,7 +79,19 @@ namespace BlazorApplicationInsights.Components.Sample
 
         private async Task TrackDependencyData()
         {
-            //await AppInsights.TrackDependencyData("myId", "myName", 1000, true, DateTime.Now, 200, "myContext", "myType", "mydata", "myTarget");
+            await AppInsights.TrackDependencyData(new DependencyTelemetry()
+            {
+                Id = "myId",
+                Name = "myName",
+                Duration = 1000,
+                Success = true,
+                StartTime = DateTime.Now,
+                ResponseCode = 200,
+                CorrelationContext = "myContext",
+                Type = "myType",
+                Data = "mydata",
+                Target = "myTarget"
+            });
             await AppInsights.Flush();
         }
 

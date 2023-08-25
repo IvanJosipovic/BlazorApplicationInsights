@@ -11,36 +11,36 @@ namespace BlazorApplicationInsights.Models
     public class DependencyTelemetry : PartC
     {
         [JsonPropertyName("id")]
-        string Id { get; set; }
+        public string Id { get; set; }
 
         [JsonPropertyName("name")]
-        string? Name { get; set; }
+        public string? Name { get; set; }
 
         [JsonPropertyName("duration")]
-        double? Duration { get; set; }
+        public double? Duration { get; set; }
 
         [JsonPropertyName("success")]
-        bool? Success { get; set; }
+        public bool? Success { get; set; }
 
         [JsonPropertyName("startTime")]
-        DateTime? StartTime { get; set; }
+        public DateTime? StartTime { get; set; }
 
         [JsonPropertyName("responseCode")]
-        int ResponseCode { get; set; }
+        public int ResponseCode { get; set; }
 
         [JsonPropertyName("correlationContext")]
-        string? CorrelationContext { get; set; }
+        public string? CorrelationContext { get; set; }
 
         [JsonPropertyName("type")]
-        string? Type { get; set; }
+        public string? Type { get; set; }
 
         [JsonPropertyName("data")]
-        string? Data { get; set; }
+        public string? Data { get; set; }
 
         [JsonPropertyName("target")]
-        string? Target { get; set; }
+        public string? Target { get; set; }
 
         [JsonPropertyName("iKey")]
-        string? IKey { get; set; }
+        public string? IKey { get; set; }
     }
 }

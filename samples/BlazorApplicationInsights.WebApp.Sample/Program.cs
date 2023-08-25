@@ -11,7 +11,7 @@ namespace BlazorApplicationInsights.WebApp.Sample
             builder.Services.AddRazorComponents()
                 .AddServerComponents();
 
-            builder.Services.AddScoped(sp => new HttpClient { });
+            builder.Services.AddScoped(sp => new HttpClient());
 
             builder.Services.AddBlazorApplicationInsights(x =>
             {
