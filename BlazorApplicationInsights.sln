@@ -20,7 +20,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApplicationInsights.W
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApplicationInsights.WebApp.Sample", "samples\BlazorApplicationInsights.WebApp.Sample\BlazorApplicationInsights.WebApp.Sample.csproj", "{9B69E3BE-97CB-4E02-940B-9CB1A8945F16}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorApplicationInsights.Components.Sample", "samples\BlazorApplicationInsights.Components.Sample\BlazorApplicationInsights.Components.Sample.csproj", "{C020284F-BDBB-4C83-B426-0591CE027115}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApplicationInsights.Components.Sample", "samples\BlazorApplicationInsights.Components.Sample\BlazorApplicationInsights.Components.Sample.csproj", "{C020284F-BDBB-4C83-B426-0591CE027115}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E301E898-61E7-42DF-8F23-DB4E34550732}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{8E51F70D-BCC4-4A78-85F2-79D639EED440}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{D6AB13B2-BF98-46F4-8D7A-361F1F5F91FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +57,13 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{07E8E6A7-A6A4-4CAB-BD84-2C4BF3142E7B} = {E301E898-61E7-42DF-8F23-DB4E34550732}
+		{24F9E5F0-0CAF-4399-86AF-4641D305B069} = {D6AB13B2-BF98-46F4-8D7A-361F1F5F91FA}
+		{EEB3BB79-E41A-4402-BA57-2C1C8D12A039} = {8E51F70D-BCC4-4A78-85F2-79D639EED440}
+		{9B69E3BE-97CB-4E02-940B-9CB1A8945F16} = {8E51F70D-BCC4-4A78-85F2-79D639EED440}
+		{C020284F-BDBB-4C83-B426-0591CE027115} = {8E51F70D-BCC4-4A78-85F2-79D639EED440}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3EBB1AF9-73E1-4D46-B0F7-C0E8B8E2173D}
