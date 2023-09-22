@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "BlazorApplicationInsights.Components.Sample": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:55790;http://localhost:55791"
+    }
+  }
+}

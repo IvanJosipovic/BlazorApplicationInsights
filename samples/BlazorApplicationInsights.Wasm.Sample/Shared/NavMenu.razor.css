@@ -11,7 +11,7 @@
     font-size: 1.1rem;
 }
 
-.oi {
+.bi {
     width: 2rem;
     font-size: 1.1rem;
     vertical-align: text-top;
@@ -58,5 +58,11 @@
     .collapse {
         /* Never collapse the sidebar for wide screens */
         display: block;
+    }
+    
+    .nav-scrollable {
+        /* Allow sidebar to scroll for tall menus */
+        height: calc(100vh - 3.5rem);
+        overflow-y: auto;
     }
 }

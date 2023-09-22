@@ -1,10 +1,9 @@
 ﻿using BlazorApplicationInsights.Models;
 using System.Threading.Tasks;
 
-namespace BlazorApplicationInsights.Interfaces
+namespace BlazorApplicationInsights.Interfaces;
+
+public interface IPropertiesPlugin
 {
-    public interface IPropertiesPlugin
-    {
-        Task<TelemetryContext> Context();
-    }
+    Task<TelemetryContext> Context();
 }
