@@ -15,12 +15,9 @@ public class Program
 
         builder.Services.AddBlazorApplicationInsights(config =>
         {
-            //await applicationInsights.AddTelemetryInitializer(telemetryItem =>
-            //{
-            //    telemetryItem.Tags.Add("ai.cloud.role", "SPA");
-            //    telemetryItem.Tags.Add("ai.cloud.roleInstance", "Blazor Wasm");
-            //    return true;
-            //});
+            config.ConnectionString = "InstrumentationKey=219f9af4-0842-42c8-a5b1-578f09d2ee27;IngestionEndpoint=https://westus2-0.in.applicationinsights.azure.com/;LiveEndpoint=https://westus2.livediagnostics.monitor.azure.com/";
+            config.InstrumentationKey = "219f9af4-0842-42c8-a5b1-578f09d2ee27";
+            config.EnableAutoRouteTracking = true;
         });
 
         await builder.Build().RunAsync();

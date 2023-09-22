@@ -567,11 +567,13 @@ namespace BlazorApplicationInsights.Tests
 
             await page.RouteAsync("https://dc.services.visualstudio.com/v2/track", async (x) => await x.AbortAsync());
 
-            await page.RouteAsync("https://js.monitor.azure.com/scripts/b/ai.2.min.js", async (x) => await x.AbortAsync());
+            await page.RouteAsync("https://js.monitor.azure.com/scripts/b/ai.3.gbl.min.js", async (x) => await x.AbortAsync());
 
             page.RequestFailed += (sender, e) =>
             {
-                if (e.Url != "https://js.monitor.azure.com/scripts/b/ai.2.min.js" && e.Url != "https://dc.services.visualstudio.com/v2/track")
+                if (e.Url != "https://js.monitor.azure.com/scripts/b/ai.3.gbl.min.js" &&
+                    e.Url != "https://dc.services.visualstudio.com/v2/track" &&
+                    e.Url != "https://localhost:5001/_framework/blazor-hotreload")
                 {
                     hasError = true;
                 }

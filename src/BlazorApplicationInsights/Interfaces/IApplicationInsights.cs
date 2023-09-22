@@ -38,5 +38,5 @@ public interface IApplicationInsights : IAppInsights, IDependenciesPlugin, IProp
     /// <param name="newConfig">The new configuration is apply</param>
     /// <param name="mergeExisting">Should the new configuration merge with the existing or just replace it. Default is to merge.</param>
     /// <returns></returns>
-    Task UpdateCfg(BlazorApplicationInsightsConfig newConfig, bool? mergeExisting = null);
+    Task UpdateCfg(BlazorApplicationInsightsConfig newConfig, bool? mergeExisting = true);
 }
