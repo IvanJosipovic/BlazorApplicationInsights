@@ -1,3 +1,4 @@
+using BlazorApplicationInsights.Models;
 using BlazorApplicationInsights.WebApp.Sample.Components;
 
 namespace BlazorApplicationInsights.WebApp.Sample;
@@ -17,6 +18,14 @@ public class Program
         builder.Services.AddBlazorApplicationInsights(x =>
         {
             x.ConnectionString = "InstrumentationKey=219f9af4-0842-42c8-a5b1-578f09d2ee27;IngestionEndpoint=https://westus2-0.in.applicationinsights.azure.com/;LiveEndpoint=https://westus2.livediagnostics.monitor.azure.com/";
+        },
+        new TelemetryItem()
+        {
+            Tags = new Dictionary<string, object>()
+            {
+                { "ai.cloud.role", "SPA" },
+                { "ai.cloud.roleInstance", "Blazor Server" },
+            }
         });
 
         var app = builder.Build();
@@ -32,6 +41,7 @@ public class Program
         app.UseHttpsRedirection();
 
         app.UseStaticFiles();
+        app.UseAntiforgery();
 
         app.MapRazorComponents<App>()
             .AddInteractiveServerRenderMode();

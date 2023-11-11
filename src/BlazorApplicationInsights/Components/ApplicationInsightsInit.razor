@@ -8,7 +8,7 @@
             src: "https://js.monitor.azure.com/scripts/b/ai.3.gbl.min.js",
             ld: -1,
             crossOrigin: "anonymous",
-            cfg: @((MarkupString)(JsonSerializer.Serialize(Config, SerializerOptions)))
+            cfg: @((MarkupString)(JsonSerializer.Serialize(Config.Config, SerializerOptions)))
         });
     </script>
     <script src="_content/BlazorApplicationInsights/JsInterop.js"></script>

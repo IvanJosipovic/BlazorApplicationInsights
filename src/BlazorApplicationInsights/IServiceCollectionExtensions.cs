@@ -25,7 +25,7 @@ public static class IServiceCollectionExtensions
     /// <param name="telemetryInitializer">Telemetry Initializer.</param>
     /// <param name="addWasmLogger">Adds the ILoggerProvider which ships all logs to Application Insights. This is disabled on Blazor Server.</param>
     /// <param name="loggingOptions">Callback for configuring the logging options. Blazor WASM only.</param>
-    public static IServiceCollection AddBlazorApplicationInsights(this IServiceCollection services, Action<Config>? builder = null, Func<TelemetryItem, bool>? telemetryInitializer = null, bool addWasmLogger = true, Action<ApplicationInsightsLoggerOptions>? loggingOptions = null)
+    public static IServiceCollection AddBlazorApplicationInsights(this IServiceCollection services, Action<Config>? builder = null, TelemetryItem telemetryInitializer = null, bool addWasmLogger = true, Action<ApplicationInsightsLoggerOptions>? loggingOptions = null)
     {
         builder ??= delegate { };
 

@@ -1,11 +1,8 @@
 ﻿using BlazorApplicationInsights.Interfaces;
 using BlazorApplicationInsights.Models;
-using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace BlazorApplicationInsights;
@@ -54,7 +51,7 @@ public class ApplicationInsights : IApplicationInsights
 
     /// <inheritdoc />
     public async Task Flush(bool? async = null)
-        => await _jsRuntime.InvokeVoidAsync("appInsights.flush", async);
+        => await _jsRuntime.InvokeVoidAsync("appInsights.flush");
 
     /// <inheritdoc />
     public async Task ClearAuthenticatedUserContext()
@@ -65,8 +62,8 @@ public class ApplicationInsights : IApplicationInsights
         => await _jsRuntime.InvokeVoidAsync("appInsights.setAuthenticatedUserContext", authenticatedUserId, accountId, storeInCookie);
 
     /// <inheritdoc />
-    public async Task AddTelemetryInitializer(Func<TelemetryItem, bool> telemetryInitializer)
-        => await _jsRuntime.InvokeVoidAsync("blazorApplicationInsights.addTelemetryInitializer", DotNetObjectReference.Create(new TelemetryInitializer(telemetryInitializer)));
+    public async Task AddTelemetryInitializer(TelemetryItem telemetryItem)
+        => await _jsRuntime.InvokeVoidAsync("blazorApplicationInsights.addTelemetryInitializer", telemetryItem);
 
     /// <inheritdoc />
     public async Task TrackPageViewPerformance(PageViewPerformanceTelemetry pageViewPerformance)

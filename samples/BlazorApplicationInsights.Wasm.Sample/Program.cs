@@ -1,3 +1,4 @@
+using BlazorApplicationInsights.Models;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
@@ -19,15 +20,13 @@ public class Program
             config.InstrumentationKey = "219f9af4-0842-42c8-a5b1-578f09d2ee27";
             config.EnableAutoRouteTracking = true;
         },
-        x =>
+        new TelemetryItem()
         {
-            x.Tags = new Dictionary<string, object>()
+            Tags = new Dictionary<string, object>()
             {
                 { "ai.cloud.role", "SPA" },
-                { "ai.cloud.roleInstance", "Blazor Wasm" }
-            };
-
-            return true;
+                { "ai.cloud.roleInstance", "Blazor Wasm" },
+            }
         });
 
         await builder.Build().RunAsync();

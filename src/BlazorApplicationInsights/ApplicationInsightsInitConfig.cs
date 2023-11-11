@@ -1,5 +1,4 @@
 ﻿using BlazorApplicationInsights.Models;
-using System;
 
 namespace BlazorApplicationInsights
 {
@@ -7,6 +6,6 @@ namespace BlazorApplicationInsights
     {
         public Config? Config { get; set; }
 
-        public Func<TelemetryItem, bool>? TelemetryInitializer { get; set; }
+        public TelemetryItem TelemetryInitializer { get; set; }
     }
 }

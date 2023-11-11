@@ -90,7 +90,7 @@ public class TelemetryContext
     }
 
     /// <summary>
-    // session id obtained from session manager.
+    /// session id obtained from session manager.
     /// </summary>
     public async Task<string> GetSessionId()
     {

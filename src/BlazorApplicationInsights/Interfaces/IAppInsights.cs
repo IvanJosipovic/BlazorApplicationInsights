@@ -98,10 +98,9 @@ public interface IAppInsights
     /// <summary>
     /// Adds a telemetry initializer to the collection. Telemetry initializers will be called one by one,
     /// in the order they were added, before the telemetry item is pushed for sending.
-    /// If one of the telemetry initializers returns false or throws an error then the telemetry item will not be sent.
     /// </summary>
-    /// <param name="telemetryInitializer"></param>
-    Task AddTelemetryInitializer(Func<TelemetryItem, bool> telemetryInitializer);
+    /// <param name="telemetryItem"></param>
+    Task AddTelemetryInitializer(TelemetryItem telemetryItem);
 
     /// <summary>
     /// Log a bag of performance information via the customProperties field.

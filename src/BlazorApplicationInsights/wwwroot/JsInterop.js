@@ -1,8 +1,36 @@
 ﻿window.blazorApplicationInsights = {
-    addTelemetryInitializer: function (telemetryInitializer) {
-        appInsights.addTelemetryInitializer(async (telemetryItem) => {
-            return await telemetryInitializer.invokeMethodAsync("InvokeTelemetryInitializer", telemetryItem);
-        });
+    addTelemetryInitializer: function (telemetryItem) {
+        var telemetryInitializer = (envelope) => {
+            if (telemetryItem.ver !== null) {
+                envelope.ver = telemetryItem.ver;
+            }
+            if (telemetryItem.name !== null) {
+                envelope.name = telemetryItem.name;
+            }
+            if (telemetryItem.time !== null) {
+                envelope.time = telemetryItem.time;
+            }
+            if (telemetryItem.iKey !== null) {
+                envelope.iKey = telemetryItem.iKey;
+            }
+            if (telemetryItem.ext !== null) {
+                Object.assign(envelope.ext, telemetryItem.ext);
+            }
+            if (telemetryItem.tags !== null) {
+                Object.assign(envelope.tags, telemetryItem.tags);
+            }
+            if (telemetryItem.data !== null) {
+                Object.assign(envelope.data, telemetryItem.data);
+            }
+            if (telemetryItem.baseType !== null) {
+                envelope.baseType = telemetryItem.baseType;
+            }
+            if (telemetryItem.baseData !== null) {
+                Object.assign(envelope.baseData, telemetryItem.baseData);
+            }
+        }
+
+        appInsights.addTelemetryInitializer(telemetryInitializer);
     },
     getContext: function () {
         if (appInsights.context !== undefined) {
