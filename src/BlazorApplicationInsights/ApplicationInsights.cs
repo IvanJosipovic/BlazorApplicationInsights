@@ -22,16 +22,16 @@ public class ApplicationInsights : IApplicationInsights
         => await _jsRuntime.InvokeVoidAsync("appInsights.trackPageView", pageView);
 
     /// <inheritdoc />
-    public async Task TrackEvent(EventTelemetry @event, Dictionary<string, object>? customProperties = null)
-        => await _jsRuntime.InvokeVoidAsync("appInsights.trackEvent", @event, customProperties);
+    public async Task TrackEvent(EventTelemetry @event)
+        => await _jsRuntime.InvokeVoidAsync("appInsights.trackEvent", @event);
 
     /// <inheritdoc />
-    public async Task TrackTrace(TraceTelemetry trace, Dictionary<string, object>? customProperties = null)
-        => await _jsRuntime.InvokeVoidAsync("appInsights.trackTrace", trace, customProperties);
+    public async Task TrackTrace(TraceTelemetry trace)
+        => await _jsRuntime.InvokeVoidAsync("appInsights.trackTrace", trace);
 
     /// <inheritdoc />
-    public async Task TrackException(ExceptionTelemetry exception, Dictionary<string, object>? customProperties = null)
-        => await _jsRuntime.InvokeVoidAsync("appInsights.trackException", exception, customProperties);
+    public async Task TrackException(ExceptionTelemetry exception)
+        => await _jsRuntime.InvokeVoidAsync("appInsights.trackException", exception);
 
     /// <inheritdoc />
     public async Task StartTrackPage(string? name = null)
@@ -42,12 +42,12 @@ public class ApplicationInsights : IApplicationInsights
         => await _jsRuntime.InvokeVoidAsync("appInsights.stopTrackPage", name, url, customProperties, measurements);
 
     /// <inheritdoc />
-    public async Task TrackMetric(MetricTelemetry metric, Dictionary<string, object>? customProperties = null)
-        => await _jsRuntime.InvokeVoidAsync("appInsights.trackMetric", metric, customProperties);
+    public async Task TrackMetric(MetricTelemetry metric)
+        => await _jsRuntime.InvokeVoidAsync("appInsights.trackMetric", metric);
 
     /// <inheritdoc />
     public async Task TrackDependencyData(DependencyTelemetry dependency)
-        => await _jsRuntime.InvokeVoidAsync("appInsights.trackDependencyData", dependency);
+        => await _jsRuntime.InvokeVoidAsync("blazorApplicationInsights.trackDependencyData", dependency);
 
     /// <inheritdoc />
     public async Task Flush()

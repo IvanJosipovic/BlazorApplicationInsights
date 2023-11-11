@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace BlazorApplicationInsights.Models;
@@ -22,6 +25,7 @@ public class DependencyTelemetry : PartC
     public bool? Success { get; set; }
 
     [JsonPropertyName("startTime")]
+    [JsonConverter(typeof(DateTimeJsonConverter))]
     public DateTime? StartTime { get; set; }
 
     [JsonPropertyName("responseCode")]
@@ -41,4 +45,26 @@ public class DependencyTelemetry : PartC
 
     [JsonPropertyName("iKey")]
     public string? IKey { get; set; }
+}
+
+/// <summary>
+///
+/// </summary>
+[EditorBrowsable(EditorBrowsableState.Never)]
+[Browsable(false)]
+public class DateTimeJsonConverter : JsonConverter<DateTime>
+{
+    private JsonConverter<DateTime> _converter;
+
+    public override DateTime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    {
+        _converter ??= (JsonConverter<DateTime>)options.GetConverter(typeof(DateTime));
+
+        return _converter.Read(ref reader, typeof(DateOnly), options);
+    }
+
+    public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options)
+    {
+        writer.WriteNumberValue((decimal)(new DateTimeOffset(value)).ToUnixTimeMilliseconds());
+    }
 }

@@ -24,8 +24,7 @@ public interface IAppInsights
     /// Log a user action or other occurrence.
     /// </summary>
     /// <param name="@event"></param>
-    /// <param name="customProperties"></param>
-    Task TrackEvent(EventTelemetry @event, Dictionary<string, object>? customProperties = null);
+    Task TrackEvent(EventTelemetry @event);
 
     /// <summary>
     /// Logs that a page, or similar container was displayed to the user.
@@ -37,15 +36,13 @@ public interface IAppInsights
     /// Log an exception that you have caught.
     /// </summary>
     /// <param name="exception"></param>
-    /// <param name="customProperties">Additional data used to filter pages and metrics in the portal. Defaults to empty.</param>
-    Task TrackException(ExceptionTelemetry exception, Dictionary<string, object>? customProperties = null);
+    Task TrackException(ExceptionTelemetry exception);
 
     /// <summary>
     /// Log a diagnostic scenario such entering or leaving a function.
     /// </summary>
     /// <param name="trace"></param>
-    /// <param name="customProperties"></param>
-    Task TrackTrace(TraceTelemetry trace, Dictionary<string, object>? customProperties = null);
+    Task TrackTrace(TraceTelemetry trace);
 
     /// <summary>
     /// <para>
@@ -60,15 +57,14 @@ public interface IAppInsights
     /// </para>
     /// </summary>
     /// <param name="metric">input object argument. Only `name` and `average` are mandatory.</param>
-    /// <param name="customProperties"></param>
-    Task TrackMetric(MetricTelemetry metric, Dictionary<string, object>? customProperties = null);
+    Task TrackMetric(MetricTelemetry metric);
 
     /// <summary>
     /// Starts the timer for tracking a page load time. Use this instead of `trackPageView` if you want to control when the page view timer starts and stops,
     /// but don't want to calculate the duration yourself. This method doesn't send any telemetry.Call `stopTrackPage` to log the end of the page view
     /// and send the event.
     /// </summary>
-    /// <param name="name">A string that idenfities this item, unique within this HTML document. Defaults to the document title.</param>
+    /// <param name="name">A string that identifies this item, unique within this HTML document. Defaults to the document title.</param>
     Task StartTrackPage(string? name = null);
 
     /// <summary>

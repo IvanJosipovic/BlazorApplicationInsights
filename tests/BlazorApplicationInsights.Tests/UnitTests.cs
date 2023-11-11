@@ -119,9 +119,10 @@ namespace BlazorApplicationInsights.Tests
                                         stack = "my message\n"
                                     }
                                 },
-                                severityLevel = 4,
+                                severityLevel = 3,
                                 properties = new Dictionary<string, string>()
                                 {
+                                    { "customProperty", "customValue" },
                                     { "typeName", "my error" }
                                 }
                             }
@@ -141,16 +142,21 @@ namespace BlazorApplicationInsights.Tests
                                 {
                                     new Exception()
                                     {
-                                        typeName = "Exception",
+                                        typeName = "NotImplementedException",
+                                        message = "NotImplementedException: Something wrong happened :(",
                                         hasFullStack = false,
+                                        stack = "System.NotImplementedException: Something wrong happened :(\n ---> System.InvalidOperationException: TEST INNER\n   --- End of inner exception stack trace ---\n   at BlazorApplicationInsights.Components.Sample.TestComponents.TrackGlobalException() in C:\\Repos\\BlazorApplicationInsights\\samples\\BlazorApplicationInsights.Components.Sample\\TestComponents.razor.cs:line 47\n   at Microsoft.AspNetCore.Components.EventCallbackWorkItem.InvokeAsync[Object](MulticastDelegate delegate, Object arg)\n   at Microsoft.AspNetCore.Components.EventCallbackWorkItem.InvokeAsync(Object arg)\n   at Microsoft.AspNetCore.Components.ComponentBase.Microsoft.AspNetCore.Components.IHandleEvent.HandleEventAsync(EventCallbackWorkItem callback, Object arg)\n   at Microsoft.AspNetCore.Components.EventCallback.InvokeAsync(Object arg)\n   at Microsoft.AspNetCore.Components.RenderTree.Renderer.DispatchEventAsync(UInt64 eventHandlerId, EventFieldInfo fieldInfo, EventArgs eventArgs, Boolean waitForQuiescence)\n"
                                     }
                                 },
                                 severityLevel = 4,
                                 properties = new Dictionary<string, string>()
                                 {
-                                    { "Message", "Something wrong happened :(" },
-                                    { "OriginalFormat", "Unhandled exception rendering component: {Message}" },
-                                    { "typeName", "Exception" },
+                                    { "CategoryName", "Microsoft.AspNetCore.Components.WebAssembly.Rendering.WebAssemblyRenderer"},
+                                    { "EventId", "100"},
+                                    { "EventName", "ExceptionRenderingComponent"},
+                                    { "Message", "Something wrong happened :("},
+                                    { "OriginalFormat", "Unhandled exception rendering component: {Message}"},
+                                    { "typeName", "NotImplementedException"}
                                 }
                             }
                         }
@@ -216,10 +222,27 @@ namespace BlazorApplicationInsights.Tests
                             baseType = "PageviewData",
                             baseData = new Basedata()
                             {
+                                name ="BlazorApplicationInsights.Wasm.Sample",
+                                url = "https://localhost:5001/",
+                                properties = new Dictionary<string, string>()
+                                {
+                                    { "refUri", "" }
+                                }
+                            }
+                        }
+                    },
+                    new()
+                    {
+                        data = new Data()
+                        {
+                            baseType = "PageviewData",
+                            baseData = new Basedata()
+                            {
                                 name = "myPage",
                                 url = "https://localhost:5001/",
                                 properties = new Dictionary<string, string>()
                                 {
+                                    { "customProperty", "customValue" },
                                     { "refUri", "" }
                                 }
                             }
@@ -242,7 +265,11 @@ namespace BlazorApplicationInsights.Tests
                                 success = true,
                                 data = "myName",
                                 target = "localhost:5001 | myContext",
-                                type = "myType"
+                                type = "myType",
+                                properties = new Dictionary<string, string>()
+                                {
+                                    { "customProperty", "customValue" },
+                                }
                             }
                         }
                     }
@@ -268,10 +295,10 @@ namespace BlazorApplicationInsights.Tests
                                         max = 200
                                     }
                                 },
-                                //properties = new Dictionary<string, string>()
-                                //{
-                                //    { "customProperty", "customValue" }
-                                //}
+                                properties = new Dictionary<string, string>()
+                                {
+                                    { "customProperty", "customValue" }
+                                }
                             }
                         }
                     }
@@ -285,10 +312,28 @@ namespace BlazorApplicationInsights.Tests
                             baseType = "PageviewData",
                             baseData = new Basedata()
                             {
+                                name ="BlazorApplicationInsights.Wasm.Sample",
+                                url = "https://localhost:5001/",
+                                properties = new Dictionary<string, string>()
+                                {
+                                    { "customProperty", "customValue" },
+                                    { "refUri", "" }
+                                }
+                            }
+                        }
+                    },
+                    new()
+                    {
+                        data = new Data()
+                        {
+                            baseType = "PageviewData",
+                            baseData = new Basedata()
+                            {
                                 name = "myPage",
                                 url = "https://test.local",
                                 properties = new Dictionary<string, string>()
                                 {
+                                    { "customProperty", "customValue" },
                                     { "refUri", "https://test.local" },
                                     { "pageType", "TestPage" },
                                     { "isLoggedIn", "true" },
@@ -297,7 +342,7 @@ namespace BlazorApplicationInsights.Tests
                         }
                     }
                 }},
-                new object[] { "TrackPageViewPerformance", 1000, new List<AIRequestObject>()
+                new object[] { "TrackPageViewPerformance", 2000, new List<AIRequestObject>()
                 {
                     new()
                     {
@@ -366,6 +411,10 @@ namespace BlazorApplicationInsights.Tests
                             baseData = new Basedata()
                             {
                                 name = "myEvent",
+                                properties = new Dictionary<string, string>
+                                {
+                                    { "customProperty", "customValue" }
+                                }
                             }
                         }
                     }
@@ -398,7 +447,7 @@ namespace BlazorApplicationInsights.Tests
 
         [Theory]
         [MemberData(nameof(GetTests))]
-        public async Task Test(string id, int timeout, List<AIRequestObject> expectedCalls)
+            public async Task Test(string id, int timeout, List<AIRequestObject> expectedCalls)
         {
             bool hasError = false;
             int validCalls = 0;

@@ -22,7 +22,7 @@ public partial class TestComponents
 
     private async Task TrackEvent()
     {
-        await AppInsights.TrackEvent(new EventTelemetry() { Name = "My Event" }, new Dictionary<string, object>() { { "customProperty", "customValue" } });
+        await AppInsights.TrackEvent(new EventTelemetry() { Name = "My Event", Properties = new Dictionary<string, object>() { { "customProperty", "customValue" } } });
         await AppInsights.Flush();
     }
 
@@ -32,13 +32,13 @@ public partial class TestComponents
         await AppInsights.Flush();
         await AppInsights.TrackTrace(new TraceTelemetry() { Message = "myMessage1", SeverityLevel = SeverityLevel.Critical });
         await AppInsights.Flush();
-        await AppInsights.TrackTrace(new TraceTelemetry() { Message = "myMessage2", SeverityLevel = SeverityLevel.Critical }, new Dictionary<string, object>() { { "customProperty", "customValue" } });
+        await AppInsights.TrackTrace(new TraceTelemetry() { Message = "myMessage2", SeverityLevel = SeverityLevel.Critical, Properties = new Dictionary<string, object>() { { "customProperty", "customValue" } } });
         await AppInsights.Flush();
     }
 
     private async Task TrackException()
     {
-        //await AppInsights.TrackException(new Error() { Message = "my message", Name = "my error" }, null, SeverityLevel.Critical);
+        await AppInsights.TrackException(new ExceptionTelemetry() { Exception = new() { Message = "my message", Name = "my error" }, SeverityLevel = SeverityLevel.Error, Properties = new Dictionary<string, object>() { { "customProperty", "customValue" } } });
         await AppInsights.Flush();
     }
 
@@ -68,7 +68,7 @@ public partial class TestComponents
         await AppInsights.StartTrackPage("myPage");
         await AppInsights.Flush();
         await Task.Delay(100);
-        await AppInsights.StopTrackPage("myPage");
+        await AppInsights.StopTrackPage("myPage", customProperties: new Dictionary<string, string>() { { "customProperty", "customValue" } });
         await AppInsights.Flush();
     }
 
@@ -85,7 +85,8 @@ public partial class TestComponents
             CorrelationContext = "myContext",
             Type = "myType",
             Data = "mydata",
-            Target = "myTarget"
+            Target = "myTarget",
+            Properties = new Dictionary<string, object>() { { "customProperty", "customValue" } }
         });
         await AppInsights.Flush();
     }
@@ -98,9 +99,9 @@ public partial class TestComponents
             Average = 100,
             SampleCount = 200,
             Min = 1,
-            Max = 200
-        },
-        new Dictionary<string, object>() { { "customProperty", "customValue" } });
+            Max = 200,
+            Properties = new Dictionary<string, object>() { { "customProperty", "customValue" } }
+        });
 
         await AppInsights.Flush();
     }
@@ -113,7 +114,8 @@ public partial class TestComponents
             Uri = "https://test.local",
             RefUri = "https://test.local",
             PageType = "TestPage",
-            IsLoggedIn = true
+            IsLoggedIn = true,
+            Properties = new Dictionary<string, object>() { { "customProperty", "customValue" } }
         });
         await AppInsights.Flush();
     }
@@ -143,7 +145,7 @@ public partial class TestComponents
     {
         await AppInsights.StartTrackEvent("myEvent");
         await AppInsights.Flush();
-        await AppInsights.StopTrackEvent("myEvent");
+        await AppInsights.StopTrackEvent("myEvent", new Dictionary<string, string?>() { { "customProperty", "customValue" } });
         await AppInsights.Flush();
     }
 

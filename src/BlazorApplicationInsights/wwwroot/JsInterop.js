@@ -32,6 +32,13 @@
 
         appInsights.addTelemetryInitializer(telemetryInitializer);
     },
+    trackDependencyData: function (dependencyTelemetry) {
+        if (dependencyTelemetry.startTime !== null) {
+            dependencyTelemetry.startTime = new Date(dependencyTelemetry.startTime);
+        }
+
+        appInsights.trackDependencyData(dependencyTelemetry);
+    },
     getContext: function () {
         if (appInsights.context !== undefined) {
             return appInsights.context
