@@ -70,8 +70,7 @@ public class ApplicationInsightsLogger : ILogger
 
         if (exception is null)
         {
-            //todo
-            //_applicationInsights.TrackTrace(message, severity, customDimensions);
+            _applicationInsights.TrackTrace( new TraceTelemetry() { Message = message, SeverityLevel = severity, Properties = customDimensions});
             return;
         }
 

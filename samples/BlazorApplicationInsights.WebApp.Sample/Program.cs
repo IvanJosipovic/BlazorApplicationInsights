@@ -10,7 +10,7 @@ public class Program
 
         // Add services to the container.
         builder.Services.AddRazorComponents()
-            .AddServerComponents();
+            .AddInteractiveServerComponents();
 
         builder.Services.AddScoped(sp => new HttpClient());
 
@@ -34,7 +34,7 @@ public class Program
         app.UseStaticFiles();
 
         app.MapRazorComponents<App>()
-            .AddServerRenderMode();
+            .AddInteractiveServerRenderMode();
 
         app.Run();
     }

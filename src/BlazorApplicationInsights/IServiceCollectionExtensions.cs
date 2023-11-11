@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using BlazorApplicationInsights.Interfaces;
 using BlazorApplicationInsights.Models;
 using JetBrains.Annotations;
@@ -16,26 +15,40 @@ public static class IServiceCollectionExtensions
     // Nasty, but needed for unit testing.
     // ReSharper disable once MemberCanBePrivate.Global
     internal static bool PretendBrowserPlatform { get; set; }
-    private static bool IsBrowserPlatform => PretendBrowserPlatform || RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER"));
+    private static bool IsBrowserPlatform => PretendBrowserPlatform || OperatingSystem.IsBrowser();
 
     /// <summary>
     /// Adds the BlazorApplicationInsights services.
     /// </summary>
     /// <param name="services"></param>
     /// <param name="builder">Callback for configuring the service.</param>
+    /// <param name="telemetryInitializer">Telemetry Initializer.</param>
+    /// <param name="addWasmLogger">Adds the ILoggerProvider which ships all logs to Application Insights. This is disabled on Blazor Server.</param>
     /// <param name="loggingOptions">Callback for configuring the logging options. Blazor WASM only.</param>
-    public static IServiceCollection AddBlazorApplicationInsights(this IServiceCollection services, Action<BlazorApplicationInsightsConfig>? builder = null, Action<ApplicationInsightsLoggerOptions>? loggingOptions = null)
+    public static IServiceCollection AddBlazorApplicationInsights(this IServiceCollection services, Action<Config>? builder = null, Func<TelemetryItem, bool>? telemetryInitializer = null, bool addWasmLogger = true, Action<ApplicationInsightsLoggerOptions>? loggingOptions = null)
     {
         builder ??= delegate { };
 
-        var config = new BlazorApplicationInsightsConfig();
-        builder(config);
+        var initConfig = new ApplicationInsightsInitConfig();
 
-        if (config.AddWasmLogger && IsBrowserPlatform)
+        if (builder != null)
+        {
+            var config = new Config();
+            builder(config);
+            initConfig.Config = config;
+        }
+
+        if (telemetryInitializer != null)
+        {
+            initConfig.TelemetryInitializer = telemetryInitializer;
+        }
+
+        services.TryAddSingleton(initConfig);
+
+        if (addWasmLogger && IsBrowserPlatform)
             services.TryAddEnumerable(ServiceDescriptor.Singleton<ILoggerProvider, ApplicationInsightsLoggerProvider>(x => CreateLoggerProvider(x, loggingOptions)));
 
         services.AddTransient<IApplicationInsights, ApplicationInsights>();
-        services.TryAddSingleton(config);
 
         return services;
     }

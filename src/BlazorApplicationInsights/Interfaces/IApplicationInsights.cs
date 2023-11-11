@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using BlazorApplicationInsights.Models;
-using Microsoft.JSInterop;
 
 namespace BlazorApplicationInsights.Interfaces;
 
@@ -37,6 +36,5 @@ public interface IApplicationInsights : IAppInsights, IDependenciesPlugin, IProp
     /// </summary>
     /// <param name="newConfig">The new configuration is apply</param>
     /// <param name="mergeExisting">Should the new configuration merge with the existing or just replace it. Default is to merge.</param>
-    /// <returns></returns>
-    Task UpdateCfg(BlazorApplicationInsightsConfig newConfig, bool? mergeExisting = true);
+    Task UpdateCfg(Config newConfig, bool? mergeExisting = true);
 }

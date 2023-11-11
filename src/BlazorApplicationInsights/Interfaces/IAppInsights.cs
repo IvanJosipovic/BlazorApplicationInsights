@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using BlazorApplicationInsights.Models;
 
@@ -10,6 +11,8 @@ namespace BlazorApplicationInsights.Interfaces;
 /// Source:
 /// https://github.com/microsoft/ApplicationInsights-JS/blob/main/shared/AppInsightsCommon/src/Interfaces/IAppInsights.ts
 /// </summary>
+[EditorBrowsable(EditorBrowsableState.Never)]
+[Browsable(false)]
 public interface IAppInsights
 {
     /// <summary>

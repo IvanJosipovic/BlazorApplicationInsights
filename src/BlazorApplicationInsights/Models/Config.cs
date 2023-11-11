@@ -7,15 +7,8 @@ namespace BlazorApplicationInsights.Models;
 /// Configuration settings for how telemetry is sent
 /// Source: https://github.com/microsoft/ApplicationInsights-JS/blob/main/shared/AppInsightsCommon/src/Interfaces/IConfig.ts
 /// </summary>
-public class BlazorApplicationInsightsConfig : Configuration
+public class Config : Configuration
 {
-    /// <summary>
-    /// Adds the ILoggerProvider which ships all logs to Application Insights. This is disabled on Blazor Server.
-    /// Default true
-    /// </summary>
-    [JsonIgnore]
-    public bool AddWasmLogger { get; set; } = true;
-
     /// <summary>
     /// The JSON format (normal vs line delimited). True means line delimited JSON.
     /// </summary>

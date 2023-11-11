@@ -1,9 +1,10 @@
-﻿using System.Text.Json;
+﻿using System;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using BlazorApplicationInsights.Interfaces;
-using BlazorApplicationInsights.Models;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Logging;
 using Microsoft.JSInterop;
 
 namespace BlazorApplicationInsights;
@@ -12,7 +13,8 @@ public partial class ApplicationInsightsInit
 {
     [Inject] IApplicationInsights ApplicationInsights { get; set; }
     [Inject] private IJSRuntime JSRuntime { get; set; }
-    [Inject] private BlazorApplicationInsightsConfig Config { get; set; }
+    [Inject] private ApplicationInsightsInitConfig Config { get; set; }
+    [Inject] private ILogger<ApplicationInsightsInit> Logger { get; set; }
 
     public bool IsWebAssembly { get; set; }
 
@@ -22,7 +24,7 @@ public partial class ApplicationInsightsInit
     {
         base.OnInitialized();
 
-        IsWebAssembly = JSRuntime is IJSInProcessRuntime;
+        IsWebAssembly = OperatingSystem.IsBrowser();
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -31,7 +33,17 @@ public partial class ApplicationInsightsInit
         {
             await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./_content/BlazorApplicationInsights/JsInterop.js");
 
-            await ApplicationInsights.UpdateCfg(Config);
+            if (Config.Config != null)
+            {
+                await ApplicationInsights.UpdateCfg(Config.Config);
+
+                await ApplicationInsights.TrackPageView();
+            }
+        }
+
+        if (Config.TelemetryInitializer != null)
+        {
+            await ApplicationInsights.AddTelemetryInitializer(Config.TelemetryInitializer);
         }
     }
 }
