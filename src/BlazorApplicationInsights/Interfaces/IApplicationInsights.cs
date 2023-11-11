@@ -13,8 +13,7 @@ public interface IApplicationInsights : IAppInsights, IDependenciesPlugin, IProp
     /// <summary>
     /// Manually trigger an immediate send of all telemetry still in the buffer.
     /// </summary>
-    /// <param name="async"></param>
-    Task Flush(bool? async = null);
+    Task Flush();
 
     /// <summary>
     /// Clears the authenticated user id and account id. The associated cookie is cleared, if present.

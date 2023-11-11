@@ -50,8 +50,8 @@ public class ApplicationInsights : IApplicationInsights
         => await _jsRuntime.InvokeVoidAsync("appInsights.trackDependencyData", dependency);
 
     /// <inheritdoc />
-    public async Task Flush(bool? async = null)
-        => await _jsRuntime.InvokeVoidAsync("appInsights.flush");
+    public async Task Flush()
+        => await _jsRuntime.InvokeVoidAsync("appInsights.flush", false);
 
     /// <inheritdoc />
     public async Task ClearAuthenticatedUserContext()

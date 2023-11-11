@@ -81,8 +81,7 @@ public class ApplicationInsightsLogger : ILogger
             Stack = exception.ToString()
         };
 
-        //todo
-        //_applicationInsights.TrackException(error, $"{eventId}", severity, customDimensions);
+        _applicationInsights.TrackException(new() { Exception = error, Id = $"{eventId}" , SeverityLevel = severity, Properties = customDimensions});
     }
 
     /// <inheritdoc />

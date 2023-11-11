@@ -42,7 +42,7 @@ namespace BlazorApplicationInsights.Tests
             {
                 new object[] { "TrackEvent", 1000, new List<AIRequestObject>()
                 {
-                    new AIRequestObject()
+                    new()
                     {
                         data = new Data()
                         {
@@ -60,7 +60,7 @@ namespace BlazorApplicationInsights.Tests
                 }},
                 new object[] { "TrackTrace", 1000, new List<AIRequestObject>()
                 {
-                    new AIRequestObject()
+                    new()
                     {
                         data = new Data()
                         {
@@ -71,7 +71,7 @@ namespace BlazorApplicationInsights.Tests
                             }
                         }
                     },
-                    new AIRequestObject()
+                    new()
                     {
                         data = new Data()
                         {
@@ -83,7 +83,7 @@ namespace BlazorApplicationInsights.Tests
                             }
                         }
                     },
-                    new AIRequestObject()
+                    new()
                     {
                         data = new Data()
                         {
@@ -102,9 +102,9 @@ namespace BlazorApplicationInsights.Tests
                 }},
                 new object[] { "TrackException", 1000, new List<AIRequestObject>()
                 {
-                    new AIRequestObject()
+                    new()
                     {
-                        data = new Data()
+                        data = new ()
                         {
                             baseType = "ExceptionData",
                             baseData = new Basedata()
@@ -130,7 +130,7 @@ namespace BlazorApplicationInsights.Tests
                 }},
                 new object[] { "TrackGlobalException", 20000, new List<AIRequestObject>()
                 {
-                    new AIRequestObject()
+                    new()
                     {
                         data = new Data()
                         {
@@ -158,7 +158,7 @@ namespace BlazorApplicationInsights.Tests
                 }},
                 new object[] { "SetAuthenticatedUserContext", 1000, new List<AIRequestObject>()
                 {
-                    new AIRequestObject()
+                    new()
                     {
                         tags = new Dictionary<string, string>()
                         {
@@ -176,7 +176,7 @@ namespace BlazorApplicationInsights.Tests
                 }},
                 new object[] { "ClearAuthenticatedUserContext", 1000, new List<AIRequestObject>()
                 {
-                    new AIRequestObject()
+                    new()
                     {
                         tags = new Dictionary<string, string>()
                         {
@@ -191,7 +191,7 @@ namespace BlazorApplicationInsights.Tests
                             }
                         }
                     },
-                    new AIRequestObject()
+                    new()
                     {
                         tags = new Dictionary<string, string>()
                         {
@@ -209,7 +209,7 @@ namespace BlazorApplicationInsights.Tests
                 }},
                 new object[] { "StartStopTrackPage", 1000, new List<AIRequestObject>()
                 {
-                    new AIRequestObject()
+                    new()
                     {
                         data = new Data()
                         {
@@ -228,7 +228,7 @@ namespace BlazorApplicationInsights.Tests
                 }},
                 new object[] { "TrackDependencyData", 1000, new List<AIRequestObject>()
                 {
-                    new AIRequestObject()
+                    new()
                     {
                         data = new Data()
                         {
@@ -249,7 +249,7 @@ namespace BlazorApplicationInsights.Tests
                 }},
                 new object[] { "TrackMetric", 1000, new List<AIRequestObject>()
                 {
-                    new AIRequestObject()
+                    new()
                     {
                         data = new Data()
                         {
@@ -278,7 +278,7 @@ namespace BlazorApplicationInsights.Tests
                 }},
                 new object[] { "TrackPageView", 1000, new List<AIRequestObject>()
                 {
-                    new AIRequestObject()
+                    new()
                     {
                         data = new Data()
                         {
@@ -299,7 +299,7 @@ namespace BlazorApplicationInsights.Tests
                 }},
                 new object[] { "TrackPageViewPerformance", 1000, new List<AIRequestObject>()
                 {
-                    new AIRequestObject()
+                    new()
                     {
                         data = new Data()
                         {
@@ -319,7 +319,7 @@ namespace BlazorApplicationInsights.Tests
                 }},
                 new object[] { "TestLogger", 1000, new List<AIRequestObject>()
                 {
-                    new AIRequestObject()
+                    new()
                     {
                         data = new Data()
                         {
@@ -338,7 +338,7 @@ namespace BlazorApplicationInsights.Tests
                 }},
                 new object[] { "TestSemanticLogger", 1000, new List<AIRequestObject>()
                 {
-                    new AIRequestObject()
+                    new()
                     {
                         data = new Data()
                         {
@@ -358,7 +358,7 @@ namespace BlazorApplicationInsights.Tests
                 }},
                 new object[] { "StartStopTrackEvent", 1000, new List<AIRequestObject>()
                 {
-                    new AIRequestObject()
+                    new()
                     {
                         data = new Data()
                         {
@@ -372,7 +372,7 @@ namespace BlazorApplicationInsights.Tests
                 }},
                 new object[] { "TrackHttpRequest", 60000, new List<AIRequestObject>()
                 {
-                    new AIRequestObject()
+                    new()
                     {
                         data = new Data()
                         {
@@ -402,7 +402,7 @@ namespace BlazorApplicationInsights.Tests
         {
             bool hasError = false;
             int validCalls = 0;
-            List<AIRequestObject> requestData = new List<AIRequestObject>();
+            List<AIRequestObject> requestData = new();
 
             using var playwright = await Playwright.CreateAsync();
 
@@ -430,12 +430,17 @@ namespace BlazorApplicationInsights.Tests
 
             page.RequestFailed += (sender, e) =>
             {
-                hasError = true;
+                if (!e.Url.Equals("https://localhost:5001/_framework/blazor-hotreload"))
+                {
+                    hasError = true;
+                }
             };
 
-            await page.Context.AddCookiesAsync(new List<Cookie>() { new Cookie() { Url = BaseAddress, Secure = true, Name = "ai_user", Value = "R3DiFTEkHCFJZ+UCOWntgB|2021-10-06T03:25:18.134Z" } });
+            await page.Context.AddCookiesAsync(new List<Cookie>() { new() { Url = BaseAddress, Secure = true, Name = "ai_user", Value = "R3DiFTEkHCFJZ+UCOWntgB|2021-10-06T03:25:18.134Z" } });
 
             await page.GotoAsync(BaseAddress);
+
+            await page.WaitForLoadStateAsync();
 
             await page.ClickAsync("#" + id);
 
