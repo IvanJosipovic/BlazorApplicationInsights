@@ -1,4 +1,7 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.ComponentModel;
+using System.Text.Json;
+using System;
+using System.Text.Json.Serialization;
 
 namespace BlazorApplicationInsights.Models;
 
@@ -20,38 +23,61 @@ public class PageViewPerformanceTelemetry : PartC
     public string? Uri { get; set; }
 
     /// <summary>
-    /// Performance total in TimeSpan 'G' (general long) format: d:hh:mm:ss.fffffff". This is total duration in timespan format.
+    /// Performance total. This is total duration in timespan format.
     /// </summary>
     [JsonPropertyName("perfTotal")]
-    public string? PerfTotal { get; set; }
+    [JsonConverter(typeof(TimeSpanJsonConverter))]
+    public TimeSpan? PerfTotal { get; set; }
 
     /// <summary>
-    /// Performance total in TimeSpan 'G' (general long) format: d:hh:mm:ss.fffffff". This represents the total page load time.
+    /// Performance total. This represents the total page load time.
     /// </summary>
     [JsonPropertyName("duration")]
-    public string? Duration { get; set; }
+    [JsonConverter(typeof(TimeSpanJsonConverter))]
+    public TimeSpan? Duration { get; set; }
 
     /// <summary>
-    /// Sent request time in TimeSpan 'G' (general long) format: d:hh:mm:ss.fffffff.
+    /// Sent request time.
     /// </summary>
     [JsonPropertyName("networkConnect")]
-    public string? NetworkConnect { get; set; }
+    [JsonConverter(typeof(TimeSpanJsonConverter))]
+    public TimeSpan? NetworkConnect { get; set; }
 
     /// <summary>
-    /// Sent request time in TimeSpan 'G' (general long) format: d:hh:mm:ss.fffffff
+    /// Sent request time.
     /// </summary>
     [JsonPropertyName("sentRequest")]
-    public string? SentRequest { get; set; }
+    [JsonConverter(typeof(TimeSpanJsonConverter))]
+    public TimeSpan? SentRequest { get; set; }
 
     /// <summary>
-    /// Received response time in TimeSpan 'G' (general long) format: d:hh:mm:ss.fffffff.
+    /// Received response time.
     /// </summary>
     [JsonPropertyName("receivedResponse")]
-    public string? ReceivedResponse { get; set; }
+    [JsonConverter(typeof(TimeSpanJsonConverter))]
+    public TimeSpan? ReceivedResponse { get; set; }
 
     /// <summary>
-    /// DOM processing time in TimeSpan 'G' (general long) format: d:hh:mm:ss.fffffff
+    /// DOM processing time.
     /// </summary>
     [JsonPropertyName("domProcessing")]
-    public string? DomProcessing { get; set; }
+    [JsonConverter(typeof(TimeSpanJsonConverter))]
+    public TimeSpan? DomProcessing { get; set; }
+}
+
+[EditorBrowsable(EditorBrowsableState.Never)]
+[Browsable(false)]
+public class TimeSpanJsonConverter : JsonConverter<TimeSpan>
+{
+    public override TimeSpan Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void Write(Utf8JsonWriter writer, TimeSpan value, JsonSerializerOptions options)
+    {
+        //d:hh:mm:ss.fffffff
+        //@"d\:hh\:mm\:ss\.fffffff"
+        writer.WriteStringValue(value.ToString("G"));
+    }
 }

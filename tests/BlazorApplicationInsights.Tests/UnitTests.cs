@@ -342,7 +342,7 @@ namespace BlazorApplicationInsights.Tests
                         }
                     }
                 }},
-                new object[] { "TrackPageViewPerformance", 2000, new List<AIRequestObject>()
+                new object[] { "TrackPageViewPerformance", 5000, new List<AIRequestObject>()
                 {
                     new()
                     {
@@ -352,12 +352,17 @@ namespace BlazorApplicationInsights.Tests
                             baseData = new Basedata()
                             {
                                 name = "myPerf",
+                                url = "/test123",
                                 //duration = "00:00:00.111",
                                 //perfTotal = "00:00:00.222",
                                 //networkConnect = "00:00:00.333",
                                 //sentRequest = "00:00:00.444",
                                 //receivedResponse = "00:00:00.555",
-                                //domProcessing = "00:00:00.666"
+                                //domProcessing = "00:00:00.666",
+                                properties = new Dictionary<string, string>()
+                                {
+                                    { "customProperty", "customValue" }
+                                }
                             }
                         }
                     }
@@ -447,7 +452,7 @@ namespace BlazorApplicationInsights.Tests
 
         [Theory]
         [MemberData(nameof(GetTests))]
-            public async Task Test(string id, int timeout, List<AIRequestObject> expectedCalls)
+        public async Task Test(string id, int timeout, List<AIRequestObject> expectedCalls)
         {
             bool hasError = false;
             int validCalls = 0;

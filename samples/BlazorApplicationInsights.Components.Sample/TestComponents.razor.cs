@@ -124,7 +124,15 @@ public partial class TestComponents
     {
         await AppInsights.TrackPageViewPerformance(new PageViewPerformanceTelemetry()
         {
-            Name = "myPerf"
+            Name = "myPerf",
+            Uri = "/test123",
+            //DomProcessing = TimeSpan.FromSeconds(69),
+            //Duration = TimeSpan.FromSeconds(69),
+            //NetworkConnect = TimeSpan.FromSeconds(69),
+            //PerfTotal = TimeSpan.FromSeconds(69),
+            //ReceivedResponse = TimeSpan.FromSeconds(69),
+            //SentRequest = TimeSpan.FromSeconds(69),
+            Properties = new Dictionary<string, object>() { { "customProperty", "customValue" } }
         });
         await AppInsights.Flush();
     }
