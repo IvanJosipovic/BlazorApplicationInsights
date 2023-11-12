@@ -150,12 +150,12 @@ namespace BlazorApplicationInsights.Tests
                                 severityLevel = 4,
                                 properties = new Dictionary<string, string>()
                                 {
-                                    { "CategoryName", "Microsoft.AspNetCore.Components.WebAssembly.Rendering.WebAssemblyRenderer"},
-                                    { "EventId", "100"},
-                                    { "EventName", "ExceptionRenderingComponent"},
-                                    { "Message", "Something wrong happened :("},
-                                    { "OriginalFormat", "Unhandled exception rendering component: {Message}"},
-                                    { "typeName", "NotImplementedException"}
+                                    { "CategoryName", "Microsoft.AspNetCore.Components.WebAssembly.Rendering.WebAssemblyRenderer" },
+                                    { "EventId", "100" },
+                                    { "EventName", "ExceptionRenderingComponent" },
+                                    { "Message", "Something wrong happened :(" },
+                                    { "OriginalFormat", "Unhandled exception rendering component: {Message}" },
+                                    { "typeName", "NotImplementedException" }
                                 }
                             }
                         }

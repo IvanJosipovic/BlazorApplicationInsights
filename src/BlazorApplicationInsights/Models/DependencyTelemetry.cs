@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -47,9 +46,6 @@ public class DependencyTelemetry : PartC
     public string? IKey { get; set; }
 }
 
-/// <summary>
-///
-/// </summary>
 [EditorBrowsable(EditorBrowsableState.Never)]
 [Browsable(false)]
 public class DateTimeJsonConverter : JsonConverter<DateTime>

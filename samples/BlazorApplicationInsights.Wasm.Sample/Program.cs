@@ -1,4 +1,5 @@
 using BlazorApplicationInsights.Models;
+using BlazorApplicationInsights.Wasm.Sample.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 

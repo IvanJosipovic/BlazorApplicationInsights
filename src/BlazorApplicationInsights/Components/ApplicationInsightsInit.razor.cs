@@ -4,17 +4,18 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using BlazorApplicationInsights.Interfaces;
 using Microsoft.AspNetCore.Components;
-using Microsoft.Extensions.Logging;
 using Microsoft.JSInterop;
 
 namespace BlazorApplicationInsights;
 
+/// <summary>
+/// BlazorApplicationInsights initialization component
+/// </summary>
 public partial class ApplicationInsightsInit
 {
     [Inject] IApplicationInsights ApplicationInsights { get; set; }
     [Inject] private IJSRuntime JSRuntime { get; set; }
     [Inject] private ApplicationInsightsInitConfig Config { get; set; }
-    [Inject] private ILogger<ApplicationInsightsInit> Logger { get; set; }
 
     public bool IsWebAssembly { get; set; }
 

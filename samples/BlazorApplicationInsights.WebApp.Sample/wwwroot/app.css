@@ -2,12 +2,8 @@ html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-h1:focus {
-    outline: none;
-}
-
 a, .btn-link {
-    color: #0071c1;
+    color: #006bb7;
 }
 
 .btn-primary {
@@ -17,11 +13,15 @@ a, .btn-link {
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 .content {
     padding-top: 1.1rem;
+}
+
+h1:focus {
+    outline: none;
 }
 
 .valid.modified:not([type=checkbox]) {
@@ -29,11 +29,11 @@ a, .btn-link {
 }
 
 .invalid {
-    outline: 1px solid red;
+    outline: 1px solid #e52300;
 }
 
 .validation-message {
-    color: red;
+    color: #e52300;
 }
 
 .blazor-error-boundary {
