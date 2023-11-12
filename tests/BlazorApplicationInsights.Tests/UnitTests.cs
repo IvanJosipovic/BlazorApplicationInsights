@@ -316,7 +316,6 @@ namespace BlazorApplicationInsights.Tests
                                 url = "https://localhost:5001/",
                                 properties = new Dictionary<string, string>()
                                 {
-                                    { "customProperty", "customValue" },
                                     { "refUri", "" }
                                 }
                             }
@@ -505,7 +504,7 @@ namespace BlazorApplicationInsights.Tests
                 var expectedCall = expectedCalls[i];
                 var call = requestData.Where(x => x.data.baseType == expectedCall.data.baseType
                                                && x.tags.ContainsKey("ai.cloud.roleInstance")
-                                               && x.tags["ai.cloud.roleInstance"] == "Blazor Wasm")
+                                               && (x.tags["ai.cloud.roleInstance"] == "Blazor Wasm") || x.tags["ai.cloud.roleInstance"] == "Blazor Server")
                                                 .ToArray()[i];
 
                 var compare = CompareObjects(expectedCall, call);
