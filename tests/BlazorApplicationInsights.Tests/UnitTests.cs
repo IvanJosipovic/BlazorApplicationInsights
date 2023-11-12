@@ -145,7 +145,6 @@ namespace BlazorApplicationInsights.Tests
                                         typeName = "NotImplementedException",
                                         message = "NotImplementedException: Something wrong happened :(",
                                         hasFullStack = false,
-                                        stack = "System.NotImplementedException: Something wrong happened :(\n ---> System.InvalidOperationException: TEST INNER\n   --- End of inner exception stack trace ---\n   at BlazorApplicationInsights.Components.Sample.TestComponents.TrackGlobalException() in C:\\Repos\\BlazorApplicationInsights\\samples\\BlazorApplicationInsights.Components.Sample\\TestComponents.razor.cs:line 47\n   at Microsoft.AspNetCore.Components.EventCallbackWorkItem.InvokeAsync[Object](MulticastDelegate delegate, Object arg)\n   at Microsoft.AspNetCore.Components.EventCallbackWorkItem.InvokeAsync(Object arg)\n   at Microsoft.AspNetCore.Components.ComponentBase.Microsoft.AspNetCore.Components.IHandleEvent.HandleEventAsync(EventCallbackWorkItem callback, Object arg)\n   at Microsoft.AspNetCore.Components.EventCallback.InvokeAsync(Object arg)\n   at Microsoft.AspNetCore.Components.RenderTree.Renderer.DispatchEventAsync(UInt64 eventHandlerId, EventFieldInfo fieldInfo, EventArgs eventArgs, Boolean waitForQuiescence)\n"
                                     }
                                 },
                                 severityLevel = 4,
