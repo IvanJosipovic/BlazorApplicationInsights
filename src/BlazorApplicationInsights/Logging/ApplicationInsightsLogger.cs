@@ -70,7 +70,7 @@ public class ApplicationInsightsLogger : ILogger
 
         if (exception is null)
         {
-            _applicationInsights.TrackTrace( new TraceTelemetry() { Message = message, SeverityLevel = severity, Properties = customDimensions});
+            _applicationInsights.TrackTrace(new TraceTelemetry() { Message = message, SeverityLevel = severity, Properties = customDimensions });
             return;
         }
 
@@ -81,7 +81,7 @@ public class ApplicationInsightsLogger : ILogger
             Stack = exception.ToString()
         };
 
-        _applicationInsights.TrackException(new() { Exception = error, Id = $"{eventId}" , SeverityLevel = severity, Properties = customDimensions});
+        _applicationInsights.TrackException(new() { Exception = error, Id = $"{eventId}", SeverityLevel = severity, Properties = customDimensions });
     }
 
     /// <inheritdoc />
