@@ -5,7 +5,7 @@
 
 Application Insights for Blazor web applications
 
-## [Example Project](https://github.com/IvanJosipovic/BlazorApplicationInsights/tree/master/src/BlazorApplicationInsights.Sample)
+[Sample Projects](https://github.com/IvanJosipovic/BlazorApplicationInsights/tree/master/samples)
 
 ## Features
 
@@ -30,15 +30,15 @@ Application Insights for Blazor web applications
 
 ## Install on Blazor Web App
 
-- Add [BlazorApplicationInsights NuGet](https://www.nuget.org/packages/BlazorApplicationInsights)
+- Add [BlazorApplicationInsights NuGet](https://www.nuget.org/packages/BlazorApplicationInsights) to the Client project
   - dotnet add package BlazorApplicationInsights
 - Add call to Program.cs
 
   ```csharp
-      builder.Services.AddBlazorApplicationInsights(x =>
-      {
-          x.ConnectionString = "{Insert Connection String}";
-      });
+  builder.Services.AddBlazorApplicationInsights(x =>
+  {
+      x.ConnectionString = "{Insert Connection String}";
+  });
   ```
 
 - Add using statement to _Imports.razor

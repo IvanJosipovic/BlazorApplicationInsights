@@ -28,11 +28,11 @@ jobs:
       run: dotnet build -c Release
 
     - name: Dotnet Publish
-      working-directory: samples/BlazorApplicationInsights.Wasm.Sample
+      working-directory: samples/BlazorApplicationInsights.Sample.Wasm
       run: dotnet publish -c Release
 
     - name: Run App
-      working-directory: samples/BlazorApplicationInsights.Wasm.Sample
+      working-directory: samples/BlazorApplicationInsights.Sample.Wasm
       run: Start-Process dotnet 'run','-c','Release','--launch-profile','https' -PassThru
       shell: pwsh
 
