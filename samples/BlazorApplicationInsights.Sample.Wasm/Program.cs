@@ -23,8 +23,8 @@ namespace BlazorApplicationInsights.Sample.Wasm
             {
                 Tags = new Dictionary<string, object>()
                 {
-                            { "ai.cloud.role", "SPA" },
-                            { "ai.cloud.roleInstance", "Blazor Wasm" },
+                    { "ai.cloud.role", "SPA" },
+                    { "ai.cloud.roleInstance", "Blazor Wasm" },
                 }
             });
 
