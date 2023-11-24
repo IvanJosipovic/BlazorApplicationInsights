@@ -11,16 +11,17 @@ namespace BlazorApplicationInsights;
 /// <summary>
 /// BlazorApplicationInsights initialization component
 /// </summary>
-public partial class ApplicationInsightsInit : IDisposable
+public partial class ApplicationInsightsInit
 {
     [Inject] IApplicationInsights ApplicationInsights { get; set; }
     [Inject] private IJSRuntime JSRuntime { get; set; }
     [Inject] private ApplicationInsightsInitConfig Config { get; set; }
 
+    /// <summary>
+    /// Must be enabled when running in Blazor Wasm Standalone
+    /// </summary>
     [Parameter]
     public bool IsWasmStandalone { get; set; }
-
-    private bool WasPreRendered { get; set; } = true;
 
     private static readonly JsonSerializerOptions SerializerOptions = new() { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
 
@@ -38,17 +39,9 @@ public partial class ApplicationInsightsInit : IDisposable
             }
         }
 
-        if (Config.TelemetryInitializer != null)
+        if (Config.OnAppInsightsInit != null)
         {
-            await ApplicationInsights.AddTelemetryInitializer(Config.TelemetryInitializer);
+            await Config.OnAppInsightsInit(ApplicationInsights);
         }
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-    }
-
-    public void Dispose()
-    {
     }
 }

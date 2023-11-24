@@ -19,13 +19,18 @@ namespace BlazorApplicationInsights.Sample.Wasm
                 config.ConnectionString = "InstrumentationKey=219f9af4-0842-42c8-a5b1-578f09d2ee27;IngestionEndpoint=https://westus2-0.in.applicationinsights.azure.com/;LiveEndpoint=https://westus2.livediagnostics.monitor.azure.com/";
                 config.InstrumentationKey = "219f9af4-0842-42c8-a5b1-578f09d2ee27";
             },
-            new TelemetryItem()
+            async applicationInsights =>
             {
-                Tags = new Dictionary<string, object>()
+                var telemetryItem = new TelemetryItem()
                 {
-                    { "ai.cloud.role", "SPA" },
-                    { "ai.cloud.roleInstance", "Blazor Wasm" },
-                }
+                    Tags = new Dictionary<string, object>()
+                    {
+                        { "ai.cloud.role", "SPA" },
+                        { "ai.cloud.roleInstance", "Blazor Wasm" },
+                    }
+                };
+
+                await applicationInsights.AddTelemetryInitializer(telemetryItem);
             });
 
             await builder.Build().RunAsync();

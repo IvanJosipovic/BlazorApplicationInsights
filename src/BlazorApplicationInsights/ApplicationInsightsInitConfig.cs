@@ -1,4 +1,7 @@
-﻿using BlazorApplicationInsights.Models;
+﻿using BlazorApplicationInsights.Interfaces;
+using BlazorApplicationInsights.Models;
+using System;
+using System.Threading.Tasks;
 
 namespace BlazorApplicationInsights
 {
@@ -6,6 +9,6 @@ namespace BlazorApplicationInsights
     {
         public Config? Config { get; set; }
 
-        public TelemetryItem TelemetryInitializer { get; set; }
+        public Func<IApplicationInsights, Task> OnAppInsightsInit { get; set; }
     }
 }
