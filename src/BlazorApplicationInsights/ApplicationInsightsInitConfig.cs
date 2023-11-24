@@ -9,6 +9,6 @@ namespace BlazorApplicationInsights
     {
         public Config? Config { get; set; }
 
-        public Func<IApplicationInsights, Task> OnAppInsightsInit { get; set; }
+        public Func<IApplicationInsights, Task>? OnAppInsightsInit { get; set; }
     }
 }
