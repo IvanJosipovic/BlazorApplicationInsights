@@ -15,6 +15,7 @@ namespace BlazorApplicationInsights;
 
 /// <summary>Logger implementation for logging to Application Insights in Blazor Client-Side (WASM) applications</summary>
 [PublicAPI]
+[ProviderAlias("BlazorApplicationInsights")]
 public class ApplicationInsightsLogger : ILogger
 {
     private readonly string? _categoryName;

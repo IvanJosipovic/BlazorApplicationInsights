@@ -50,13 +50,9 @@ public class DependencyTelemetry : PartC
 [Browsable(false)]
 public class DateTimeJsonConverter : JsonConverter<DateTime>
 {
-    private JsonConverter<DateTime> _converter;
-
     public override DateTime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        _converter ??= (JsonConverter<DateTime>)options.GetConverter(typeof(DateTime));
-
-        return _converter.Read(ref reader, typeof(DateOnly), options);
+        throw new NotImplementedException();
     }
 
     public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options)
