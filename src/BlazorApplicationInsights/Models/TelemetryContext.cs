@@ -81,19 +81,21 @@ public class TelemetryContext
     [JsonInclude]
     public Web Web { get; private set; }
 
+    //todo
     /// <summary>
     /// application id obtained from breeze responses. Is used if appId is not specified by root config
     /// </summary>
-    public async Task<string> AppId()
-    {
-        throw new NotImplementedException();
-    }
+    //public async Task<string> AppId()
+    //{
+    //    throw new NotImplementedException();
+    //}
 
+    //todo
     /// <summary>
     /// session id obtained from session manager.
     /// </summary>
-    public async Task<string> GetSessionId()
-    {
-        throw new NotImplementedException();
-    }
+    //public async Task<string> GetSessionId()
+    //{
+    //    throw new NotImplementedException();
+    //}
 }

@@ -58,20 +58,20 @@ public class UserContext
     public bool? IsUserCookieSet { get; set; }
 
     //todo
-    public async Task SetAuthenticatedUserContext(string authenticatedUserId, string? accountId = null, bool? storeInCookie = null)
-    {
-        throw new NotImplementedException();
-    }
+    //public async Task SetAuthenticatedUserContext(string authenticatedUserId, string? accountId = null, bool? storeInCookie = null)
+    //{
+    //    throw new NotImplementedException();
+    //}
 
     //todo
-    public async Task ClearAuthenticatedUserContext()
-    {
-        throw new NotImplementedException();
-    }
+    //public async Task ClearAuthenticatedUserContext()
+    //{
+    //    throw new NotImplementedException();
+    //}
 
     //todo
-    public async Task Update(string? userId = null)
-    {
-        throw new NotImplementedException();
-    }
+    //public async Task Update(string? userId = null)
+    //{
+    //    throw new NotImplementedException();
+    //}
 }

@@ -19,21 +19,23 @@ public class SessionManager
     [JsonPropertyName("automaticSession")]
     public Session AutomaticSession { get; set; }
 
+    //todo
     /// <summary>
     /// Update the automatic session cookie if required.
     /// </summary>
-    public async Task Update()
-    {
-        throw new NotImplementedException();
-    }
+    //public async Task Update()
+    //{
+    //    throw new NotImplementedException();
+    //}
 
+    //todo
     /// <summary>
     /// Record the current state of the automatic session and store it in our cookie string format
     /// into the browser's local storage. This is used to restore the session data when the cookie
     /// expires.
     /// </summary>
-    public async Task Backup()
-    {
-        throw new NotImplementedException();
-    }
+    //public async Task Backup()
+    //{
+    //    throw new NotImplementedException();
+    //}
 }

@@ -50,7 +50,7 @@ public class Configuration
     ///
     /// 0: ALL console logging off
     /// 1: logs to console: severity >= CRITICAL
-    /// 2: logs to console: severity >= WARNING
+    /// 2: logs to console: severity >= WARNING
     /// </summary>
     [JsonPropertyName("loggingLevelConsole")]
     public int? LoggingLevelConsole { get; set; }
