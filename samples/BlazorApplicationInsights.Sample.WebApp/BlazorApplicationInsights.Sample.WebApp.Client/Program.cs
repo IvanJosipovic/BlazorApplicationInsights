@@ -9,7 +9,6 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 builder.Services.AddBlazorApplicationInsights(config =>
 {
     config.ConnectionString = "InstrumentationKey=219f9af4-0842-42c8-a5b1-578f09d2ee27;IngestionEndpoint=https://westus2-0.in.applicationinsights.azure.com/;LiveEndpoint=https://westus2.livediagnostics.monitor.azure.com/";
-    config.InstrumentationKey = "219f9af4-0842-42c8-a5b1-578f09d2ee27";
 },
 new TelemetryItem()
 {

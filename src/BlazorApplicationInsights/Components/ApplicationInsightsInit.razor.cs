@@ -11,26 +11,22 @@ namespace BlazorApplicationInsights;
 /// <summary>
 /// BlazorApplicationInsights initialization component
 /// </summary>
-public partial class ApplicationInsightsInit
+public partial class ApplicationInsightsInit : IDisposable
 {
     [Inject] IApplicationInsights ApplicationInsights { get; set; }
     [Inject] private IJSRuntime JSRuntime { get; set; }
     [Inject] private ApplicationInsightsInitConfig Config { get; set; }
 
-    public bool IsWebAssembly { get; set; }
+    [Parameter]
+    public bool IsWasmStandalone { get; set; }
+
+    private bool WasPreRendered { get; set; } = true;
 
     private static readonly JsonSerializerOptions SerializerOptions = new() { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
 
-    protected override void OnInitialized()
-    {
-        base.OnInitialized();
-
-        IsWebAssembly = OperatingSystem.IsBrowser();
-    }
-
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender && IsWebAssembly)
+        if (firstRender && IsWasmStandalone)
         {
             await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./_content/BlazorApplicationInsights/JsInterop.js");
 
@@ -46,5 +42,13 @@ public partial class ApplicationInsightsInit
         {
             await ApplicationInsights.AddTelemetryInitializer(Config.TelemetryInitializer);
         }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+    }
+
+    public void Dispose()
+    {
     }
 }

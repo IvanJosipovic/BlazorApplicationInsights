@@ -9,24 +9,28 @@ Application Insights for Blazor web applications
 
 ## Features
 
+- .Net 8 and Blazor Web App Support
 - Automatically triggers Track Page View on route changes
 - ILoggerProvider which sends all the logs to App Insights (Wasm only)
+- Programmatically set the Connection String
 - Supported [APIs](https://github.com/microsoft/ApplicationInsights-JS/blob/master/API-reference.md)
-  - GetCookieMgr
-  - TrackEvent
-  - TrackPageView
-  - TrackException
-  - TrackTrace
-  - TrackMetric
-  - StartTrackPage
-  - StopTrackPage
-  - StartTrackEvent
-  - StopTrackEvent
   - AddTelemetryInitializer
-  - TrackPageViewPerformance
-  - Flush
   - ClearAuthenticatedUserContext
+  - Context
+  - Flush
+  - GetCookieMgr
   - SetAuthenticatedUserContext
+  - StartTrackEvent
+  - StartTrackPage
+  - StopTrackEvent
+  - StopTrackPage
+  - TrackDependencyData
+  - TrackEvent
+  - TrackException
+  - TrackMetric
+  - TrackPageView
+  - TrackPageViewPerformance
+  - TrackTrace
   - UpdateCfg
 
 ## Install on Blazor Web App
@@ -68,7 +72,7 @@ Application Insights for Blazor web applications
 
 - Add [BlazorApplicationInsights NuGet](https://www.nuget.org/packages/BlazorApplicationInsights) to the Client project
   - dotnet add package BlazorApplicationInsights
-- Add call to Program.cs
+- Add call to Program.cs and set **both** the ConnectionString and InstrumentationKey
 
   ```csharp
   builder.Services.AddBlazorApplicationInsights(config =>
@@ -81,9 +85,9 @@ Application Insights for Blazor web applications
 - Add using statement to _Imports.razor
   - ```@using BlazorApplicationInsights;```
 - Add component to the top of App.razor
-  - ```<ApplicationInsightsInit  />```
+  - ```<ApplicationInsightsInit IsWasmStandalone="true" />```
 - Add Application Insights JS to head below \<base href="/" />  index.html
-  - Enter your Connection String
+  - **Leave the InstrumentationKey zero'd out, it will be updated by Blazor on startup*
 
   ```csharp
   <script type="text/javascript">
@@ -92,7 +96,7 @@ Application Insights for Blazor web applications
         ld: -1,
         crossOrigin: "anonymous",
         cfg: {
-            connectionString: "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://westus2-0.in.applicationinsights.azure.com/;LiveEndpoint=https://westus2.livediagnostics.monitor.azure.com/",
+            instrumentationKey: "00000000-0000-0000-0000-000000000000",
             disableTelemetry: true
         }
     });
