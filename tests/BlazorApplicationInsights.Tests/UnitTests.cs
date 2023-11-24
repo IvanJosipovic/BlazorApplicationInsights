@@ -221,7 +221,7 @@ namespace BlazorApplicationInsights.Tests
                             baseType = "PageviewData",
                             baseData = new Basedata()
                             {
-                                name ="BlazorApplicationInsights.Wasm.Sample",
+                                name ="BlazorApplicationInsights",
                                 url = "https://localhost:5001/",
                                 properties = new Dictionary<string, string>()
                                 {
@@ -311,7 +311,7 @@ namespace BlazorApplicationInsights.Tests
                             baseType = "PageviewData",
                             baseData = new Basedata()
                             {
-                                name ="BlazorApplicationInsights.Wasm.Sample",
+                                name ="BlazorApplicationInsights",
                                 url = "https://localhost:5001/",
                                 properties = new Dictionary<string, string>()
                                 {
