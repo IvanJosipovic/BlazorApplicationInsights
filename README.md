@@ -49,6 +49,7 @@ Application Insights for Blazor web applications
 - Add using statement to _Imports.razor
   - ```@using BlazorApplicationInsights;```
 - Add component below \<base href="/" /> in App.razor
+  - **NOTE: ** Interactivity is necessary only when the optional onAppInsightsInit callback is configured as part of the AddBlazorApplicationInsights setup.
   - ```<ApplicationInsightsInit @rendermode="@InteractiveAuto" />```
 
   ```html
@@ -160,7 +161,7 @@ public static async Task Main(string[] args)
 
     builder.Services.AddBlazorApplicationInsights(config =>
     {
-        config.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://westus2-0.in.applicationinsights.azure.com/;LiveEndpoint=https://westus2.livediagnostics.monitor.azure.com/";
+        config.ConnectionString = "{Insert Connection String}";
     },
     async applicationInsights =>
     {
