@@ -86,7 +86,7 @@ Application Insights for Blazor web applications
   - ```@using BlazorApplicationInsights;```
 - Add component to the top of App.razor
   - ```<ApplicationInsightsInit IsWasmStandalone="true" />```
-- Add Application Insights JS to head below \<base href="/" />  index.html
+- Add Application Insights JS to head below \<base href="/" /> in index.html
   - **Leave the InstrumentationKey zero'd out, it will be updated by Blazor on startup**
   - **Leave DisableTelemetry as true, it will be updated by Blazor on startup**
   ```html
@@ -158,7 +158,11 @@ public static async Task Main(string[] args)
 
     builder.Services.AddTransient(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
-    builder.Services.AddBlazorApplicationInsights(async applicationInsights =>
+    builder.Services.AddBlazorApplicationInsights(config =>
+    {
+        config.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://westus2-0.in.applicationinsights.azure.com/;LiveEndpoint=https://westus2.livediagnostics.monitor.azure.com/";
+    },
+    async applicationInsights =>
     {
         var telemetryItem = new TelemetryItem()
         {
