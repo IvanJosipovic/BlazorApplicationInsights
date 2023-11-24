@@ -12,7 +12,7 @@ Application Insights for Blazor web applications
 - .Net 8 and Blazor Web App Support
 - Automatically triggers Track Page View on route changes
 - ILoggerProvider which sends all the logs to App Insights (Wasm only)
-- Programmatically set the Connection String
+- Programmatically update settings, including the Connection String
 - Supported [APIs](https://github.com/microsoft/ApplicationInsights-JS/blob/master/API-reference.md)
   - AddTelemetryInitializer
   - ClearAuthenticatedUserContext
