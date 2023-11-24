@@ -61,6 +61,11 @@ jobs:
       working-directory: src/BlazorApplicationInsights
       run: dotnet pack -c Release -p:Version=${{ (steps.semantic.outputs.new_release_published && steps.semantic.outputs.new_release_version) || '0.0.1' }}
 
+    - uses: actions/upload-artifact@v3
+      with:
+        name: NuGet
+        path: src/BlazorApplicationInsights/bin/Release/BlazorApplicationInsights.${{ needs.semantic-release.outputs.new_release_version }}.nupkg
+
     - name: Dotnet Nuget Push
       if: steps.semantic.outputs.new_release_published == 'true'
       working-directory: src/BlazorApplicationInsights/bin/Release
