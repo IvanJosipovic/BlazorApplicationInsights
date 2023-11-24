@@ -36,7 +36,7 @@ Application Insights for Blazor web applications
 ## Install on Blazor Web App
 
 - Add [BlazorApplicationInsights NuGet](https://www.nuget.org/packages/BlazorApplicationInsights) to the Client project
-  - dotnet add package BlazorApplicationInsights
+  - ```dotnet add package BlazorApplicationInsights```
 - Add call to Program.cs in the root and Client project if one exists
 
   ```csharp
@@ -71,7 +71,7 @@ Application Insights for Blazor web applications
 ## Install on Blazor WebAssembly Standalone App
 
 - Add [BlazorApplicationInsights NuGet](https://www.nuget.org/packages/BlazorApplicationInsights) to the Client project
-  - dotnet add package BlazorApplicationInsights
+  - ```dotnet add package BlazorApplicationInsights```
 - Add call to Program.cs and set **both** the ConnectionString and InstrumentationKey
 
   ```csharp
