@@ -16,8 +16,8 @@ namespace BlazorApplicationInsights.Tests.Logging
     public class ApplicationInsightsLoggerTests
     {
         private const string MessageSimple = "This is a simple test message";
-        private readonly Mock<IApplicationInsights> _appInsightsMock = new Mock<IApplicationInsights>();
-        private readonly Mock<IJSRuntime> _jsRuntimeMock = new Mock<IJSRuntime>();
+        private readonly Mock<IApplicationInsights> _appInsightsMock = new();
+        private readonly Mock<IJSRuntime> _jsRuntimeMock = new();
 
         public ApplicationInsightsLoggerTests()
         {
@@ -49,14 +49,7 @@ namespace BlazorApplicationInsights.Tests.Logging
             var logger = services.GetRequiredService<ILogger<ApplicationInsightsLoggerTests>>();
             logger.LogError(ex, MessageSimple);
 
-            _appInsightsMock.Verify(x => x.TrackException(
-                new()
-                {
-                    Exception = It.Is<Error>(err => err != null && err.Message == ex.Message && err.Name == nameof(InvalidOperationException)),
-                    Id = It.Is<string?>(id => id == "0"),
-                    SeverityLevel = It.Is<SeverityLevel?>(severity => severity == SeverityLevel.Error),
-                    Properties = It.IsAny<Dictionary<string, object?>?>()
-                }),
+            _appInsightsMock.Verify(x => x.TrackException(It.Is<ExceptionTelemetry>(trace => trace.Exception.Message == ex.Message && trace.Exception.Name == nameof(InvalidOperationException) && trace.Id == "0" && trace.SeverityLevel == SeverityLevel.Error)),
                 Times.Once);
 
             _appInsightsMock.VerifyNoOtherCalls();
@@ -86,7 +79,10 @@ namespace BlazorApplicationInsights.Tests.Logging
             using var innerScope = logger.BeginScope("Inner Scope");
 
             logger.LogInformation(MessageSimple);
-            _appInsightsMock.Verify(x => x.TrackTrace(new TraceTelemetry() { Message = MessageSimple, SeverityLevel = SeverityLevel.Information, Properties = It.IsAny<Dictionary<string, object?>>() }), Times.Once);
+
+            _appInsightsMock.Verify(x => x.TrackTrace(It.Is<TraceTelemetry>(trace => trace.Message == MessageSimple && trace.SeverityLevel == SeverityLevel.Information)),
+            Times.Once);
+
             _appInsightsMock.VerifyNoOtherCalls();
 
             Assert.Equal(2, receivedProperties.Count);
@@ -110,7 +106,8 @@ namespace BlazorApplicationInsights.Tests.Logging
             var logger = services.GetRequiredService<ILogger<ApplicationInsightsLoggerTests>>();
             logger.LogInformation(MessageSimple);
 
-            _appInsightsMock.Verify(x => x.TrackTrace(new() { Message = MessageSimple, SeverityLevel = SeverityLevel.Information, Properties = It.IsAny<Dictionary<string, object?>?>() }), Times.Once);
+            _appInsightsMock.Verify(x => x.TrackTrace(It.Is<TraceTelemetry>(trace => trace.Message == MessageSimple && trace.SeverityLevel == SeverityLevel.Information)),
+                Times.Once);
             _appInsightsMock.VerifyNoOtherCalls();
 
             Assert.Equal(2, receivedProperties.Count);
@@ -139,7 +136,8 @@ namespace BlazorApplicationInsights.Tests.Logging
             var logger = services.GetRequiredService<ILogger<ApplicationInsightsLoggerTests>>();
             logger.LogInformation(MessageSimple);
 
-            _appInsightsMock.Verify(x => x.TrackTrace(new() { Message = MessageSimple, SeverityLevel = SeverityLevel.Information, Properties = It.IsAny<Dictionary<string, object?>?>() }), Times.Once);
+            _appInsightsMock.Verify(x => x.TrackTrace(It.Is<TraceTelemetry>(trace => trace.Message == MessageSimple && trace.SeverityLevel == SeverityLevel.Information)),
+                Times.Once);
             _appInsightsMock.VerifyNoOtherCalls();
 
             Assert.Equal(2, receivedProperties.Count);
@@ -164,7 +162,8 @@ namespace BlazorApplicationInsights.Tests.Logging
             using var _ = logger.BeginScope(new Dictionary<string, object?> { ["Key1"] = "Val1", ["Key2"] = "Val2" });
             logger.LogInformation(MessageSimple);
 
-            _appInsightsMock.Verify(x => x.TrackTrace(new() { Message = MessageSimple, SeverityLevel = SeverityLevel.Information, Properties = It.IsAny<Dictionary<string, object?>?>() }), Times.Once);
+            _appInsightsMock.Verify(x => x.TrackTrace(It.Is<TraceTelemetry>(trace => trace.Message == MessageSimple && trace.SeverityLevel == SeverityLevel.Information)),
+                Times.Once);
             _appInsightsMock.VerifyNoOtherCalls();
 
             Assert.Equal(3, receivedProperties.Count);
@@ -192,7 +191,8 @@ namespace BlazorApplicationInsights.Tests.Logging
             var logger = services.GetRequiredService<ILogger<ApplicationInsightsLoggerTests>>();
             logger.LogInformation(originalFormat, 1234, 4321);
 
-            _appInsightsMock.Verify(x => x.TrackTrace(new() { Message = formattedMessage, SeverityLevel = SeverityLevel.Information, Properties = It.IsAny<Dictionary<string, object?>?>() }), Times.Once);
+            _appInsightsMock.Verify(x => x.TrackTrace(It.Is<TraceTelemetry>(trace => trace.Message == formattedMessage && trace.SeverityLevel == SeverityLevel.Information)),
+                Times.Once);
             _appInsightsMock.VerifyNoOtherCalls();
 
             Assert.Equal(3, receivedProperties.Count);
@@ -214,7 +214,8 @@ namespace BlazorApplicationInsights.Tests.Logging
             var logger = services.GetRequiredService<ILogger<ApplicationInsightsLoggerTests>>();
             logger.LogInformation(eventId, MessageSimple);
 
-            _appInsightsMock.Verify(x => x.TrackTrace(new() { Message = MessageSimple, SeverityLevel = SeverityLevel.Information, Properties = It.IsAny<Dictionary<string, object?>?>() }), Times.Once);
+            _appInsightsMock.Verify(x => x.TrackTrace(It.Is<TraceTelemetry>(trace => trace.Message == MessageSimple && trace.SeverityLevel == SeverityLevel.Information)),
+                Times.Once);
             _appInsightsMock.VerifyNoOtherCalls();
 
             Assert.Equal(3, receivedProperties.Count);
@@ -237,7 +238,8 @@ namespace BlazorApplicationInsights.Tests.Logging
             var logger = services.GetRequiredService<ILogger<ApplicationInsightsLoggerTests>>();
             logger.Log(mapping.LogLevel, MessageSimple);
 
-            _appInsightsMock.Verify(x => x.TrackTrace(new() { Message = MessageSimple, SeverityLevel = mapping.SeverityLevel, Properties = It.IsAny<Dictionary<string, object?>?>() }), Times.Once);
+            _appInsightsMock.Verify(x => x.TrackTrace(It.Is<TraceTelemetry>(trace => trace.Message == MessageSimple && trace.SeverityLevel == mapping.SeverityLevel)),
+                Times.Once);
             _appInsightsMock.VerifyNoOtherCalls();
 
             Assert.Single(receivedProperties);
@@ -258,14 +260,14 @@ namespace BlazorApplicationInsights.Tests.Logging
         private void SetupTrackTrace(Action<TraceTelemetry> callback)
         {
             _appInsightsMock
-                .Setup(x => x.TrackTrace(new() { Message = It.IsAny<string>() , SeverityLevel = It.IsAny<SeverityLevel?>(), Properties = It.IsAny<Dictionary<string, object?>?>() }))
+                .Setup(x => x.TrackTrace(It.IsAny<TraceTelemetry>()))
                 .Callback(callback);
         }
 
         private void SetupTrackException(Action<ExceptionTelemetry> callback)
         {
             _appInsightsMock
-                .Setup(x => x.TrackException(new() { Exception = It.IsAny<Error>(), SeverityLevel = It.IsAny<SeverityLevel?>(), Properties = It.IsAny<Dictionary<string, object?>?>() }))
+                .Setup(x => x.TrackException(It.IsAny<ExceptionTelemetry>()))
                 .Callback(callback);
         }
 

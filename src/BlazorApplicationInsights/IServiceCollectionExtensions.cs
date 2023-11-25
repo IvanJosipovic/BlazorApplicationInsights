@@ -49,7 +49,7 @@ public static class IServiceCollectionExtensions
         if (addWasmLogger && IsBrowserPlatform)
             services.TryAddEnumerable(ServiceDescriptor.Singleton<ILoggerProvider, ApplicationInsightsLoggerProvider>(x => CreateLoggerProvider(x, loggingOptions)));
 
-        services.AddTransient<IApplicationInsights, ApplicationInsights>();
+        services.TryAddSingleton<IApplicationInsights, ApplicationInsights>();
 
         return services;
     }
