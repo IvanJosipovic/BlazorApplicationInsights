@@ -11,11 +11,11 @@ public class Application
     /// The application version.
     /// </summary>
     [JsonPropertyName("ver")]
-    public string? Ver { get; set; }
+    public string Ver { get; set; }
 
     /// <summary>
     /// The application build version
     /// </summary>
     [JsonPropertyName("build")]
-    public string? Build { get; set; }
+    public string Build { get; set; }
 }
