@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using BlazorApplicationInsights.Interfaces;
 using BlazorApplicationInsights.Models;
-using BlazorApplicationInsights.Models.Context;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.JSInterop;
