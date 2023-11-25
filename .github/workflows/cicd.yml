@@ -17,36 +17,36 @@ jobs:
     timeout-minutes: 15
     steps:
     - name: Checkout code
-      uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4
+      uses: actions/checkout@v4
 
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 7.0.x
+        global-json-file: global.json
 
     - name: Dotnet Build
       run: dotnet build -c Release
 
     - name: Dotnet Publish
-      working-directory: src/BlazorApplicationInsights.Sample
+      working-directory: samples/BlazorApplicationInsights.Sample.Wasm
       run: dotnet publish -c Release
 
     - name: Run App
-      working-directory: src/BlazorApplicationInsights.Sample
-      run: Start-Process dotnet 'run','-c','Release' -PassThru
+      working-directory: samples/BlazorApplicationInsights.Sample.Wasm
+      run: Start-Process dotnet 'run','-c','Release','--launch-profile','https' -PassThru
       shell: pwsh
 
     - name: Install Playwright
-      working-directory: src/BlazorApplicationInsights.Tests/bin/Release/net7.0
-      run: ./playwright.ps1 install
+      working-directory: tests/BlazorApplicationInsights.Tests/bin/Release/net8.0
+      run: ./playwright.ps1 install --with-deps
       shell: pwsh
 
     - name: Run Tests
-      working-directory: src/BlazorApplicationInsights.Tests
+      working-directory: tests/BlazorApplicationInsights.Tests
       run: dotnet test -c Release
 
     - name: Deploy
-      run: npx netlify deploy ${{ (github.ref == 'refs/heads/master' && '--prod') || '' }} --json -d src/BlazorApplicationInsights.Sample/bin/Release/net7.0/publish/wwwroot
+      run: npx netlify deploy ${{ (github.ref == 'refs/heads/master' && '--prod') || '' }} --json -d samples/BlazorApplicationInsights.Sample.Wasm/bin/Release/net8.0/publish/wwwroot
       env:
         NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
         NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
@@ -60,6 +60,11 @@ jobs:
     - name: Dotnet Pack
       working-directory: src/BlazorApplicationInsights
       run: dotnet pack -c Release -p:Version=${{ (steps.semantic.outputs.new_release_published && steps.semantic.outputs.new_release_version) || '0.0.1' }}
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: NuGet
+        path: src/BlazorApplicationInsights/bin/Release/BlazorApplicationInsights.${{ (steps.semantic.outputs.new_release_published && steps.semantic.outputs.new_release_version) || '0.0.1' }}.nupkg
 
     - name: Dotnet Nuget Push
       if: steps.semantic.outputs.new_release_published == 'true'

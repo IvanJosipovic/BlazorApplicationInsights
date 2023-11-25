@@ -1,113 +1,94 @@
 ﻿using System;
-using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using BlazorApplicationInsights.Interfaces;
+using BlazorApplicationInsights.Models;
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace BlazorApplicationInsights
+namespace BlazorApplicationInsights;
+
+[PublicAPI]
+public static class IServiceCollectionExtensions
 {
-    [PublicAPI]
-    public static class IServiceCollectionExtensions
+    // Nasty, but needed for unit testing.
+    // ReSharper disable once MemberCanBePrivate.Global
+    internal static bool PretendBrowserPlatform { get; set; }
+    private static bool IsBrowserPlatform => PretendBrowserPlatform || OperatingSystem.IsBrowser();
+
+    /// <summary>
+    /// Adds the BlazorApplicationInsights services.
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="builder">Callback for configuring the service.</param>
+    /// <param name="onAppInsightsInit">Callback which allows calling Application Insights commands on startup.  Note, requires component to be interactive!</param>
+    /// <param name="addWasmLogger">Adds the ILoggerProvider which ships all logs to Application Insights. This is disabled on Blazor Server.</param>
+    /// <param name="loggingOptions">Callback for configuring the logging options. Blazor WASM only.</param>
+    public static IServiceCollection AddBlazorApplicationInsights(this IServiceCollection services, Action<Config>? builder = null, Func<IApplicationInsights, Task>? onAppInsightsInit = null, bool addWasmLogger = true, Action<ApplicationInsightsLoggerOptions>? loggingOptions = null)
     {
-        // Nasty, but needed for unit testing.
-        // ReSharper disable once MemberCanBePrivate.Global
-        internal static bool PretendBrowserPlatform { get; set; }
-        private static bool IsBrowserPlatform => PretendBrowserPlatform || RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER"));
+        builder ??= delegate { };
 
-        /// <summary>
-        /// Adds the BlazorApplicationInsights services.
-        /// </summary>
-        /// <param name="services"></param>
-        /// <param name="onInsightsInit"></param>
-        /// <param name="addILoggerProvider">Adds the ILogerProver which ships all logs to Application Insights. This is disabled on Blazor Server.</param>
-        /// <param name="enableAutoRouteTracking">Enables automatic Track Page View on Route changes</param>
-        /// <returns>IServiceCollection</returns>
-        public static IServiceCollection AddBlazorApplicationInsights(this IServiceCollection services, Func<IApplicationInsights, Task> onInsightsInit, bool addILoggerProvider = true, bool enableAutoRouteTracking = true)
-            => AddBlazorApplicationInsights(services, config => config.AddLogger(addILoggerProvider).SetEnableAutoRouteTracking(enableAutoRouteTracking).WithOnInitCallback(onInsightsInit));
+        var initConfig = new ApplicationInsightsInitConfig();
 
-        /// <summary>
-        /// Adds the BlazorApplicationInsights services.
-        /// </summary>
-        /// <param name="services"></param>
-        /// <param name="addILoggerProvider">Adds the ILogerProver which ships all logs to Application Insights. This is disabled on Blazor Server.</param>
-        /// <param name="enableAutoRouteTracking">Enables automatic Track Page View on Route changes</param>
-        /// <returns>IServiceCollection</returns>
-        public static IServiceCollection AddBlazorApplicationInsights(this IServiceCollection services, bool addILoggerProvider = true, bool enableAutoRouteTracking = true)
-            => AddBlazorApplicationInsights(services, config => config.AddLogger(addILoggerProvider).SetEnableAutoRouteTracking(enableAutoRouteTracking));
-
-
-        /// <summary>
-        /// Adds the BlazorApplicationInsights services.
-        /// </summary>
-        /// <param name="services"></param>
-        /// <param name="builder">Callback for configuring the service</param>
-        /// <returns></returns>
-        public static IServiceCollection AddBlazorApplicationInsights(this IServiceCollection services, Action<BlazorAppInsightsConfigBuilder> builder)
+        if (builder != null)
         {
-            var configBuilder = new BlazorAppInsightsConfigBuilder();
-            builder(configBuilder);
-
-            if (configBuilder.ShouldAddLogger && IsBrowserPlatform)
-                services.TryAddEnumerable(ServiceDescriptor.Singleton<ILoggerProvider, ApplicationInsightsLoggerProvider>(x => CreateLoggerProvider(x, configBuilder.CallbackConfigureLoggerOptions)));
-
-            services.TryAddSingleton<IApplicationInsights>(_ => new ApplicationInsights(configBuilder.CallbackInitializingAppInsights) {EnableAutoRouteTracking = configBuilder.ShouldSetEnableAutoRouteTracking });
-            return services;
+            var config = new Config();
+            builder(config);
+            initConfig.Config = config;
         }
 
-        private static ApplicationInsightsLoggerProvider CreateLoggerProvider(IServiceProvider services, Action<ApplicationInsightsLoggerOptions>? configure)
+        if (onAppInsightsInit != null)
         {
-            configure ??= delegate { };
-
-            var options = new ApplicationInsightsLoggerOptions();
-            configure(options);
-
-            // Sure, this is a little insane, but I had already gone with IOptions
-            // before ripping out Microsoft.Extensions.Logging.Configuration.
-            // Rather than redoing the plumbing, let's just keep it and
-            // if we want to add Logging.Configuration later it should be easy.
-            var optionsMonitor = new DummyOptionsMonitor(options);
-            var appInsights = services.GetRequiredService<IApplicationInsights>();
-
-            return new ApplicationInsightsLoggerProvider(appInsights, optionsMonitor);
+            initConfig.OnAppInsightsInit = onAppInsightsInit;
         }
 
-        private static void AddLoggerProviderLegacy(IServiceCollection services)
+        services.TryAddSingleton(initConfig);
+
+        if (addWasmLogger && IsBrowserPlatform)
+            services.TryAddEnumerable(ServiceDescriptor.Singleton<ILoggerProvider, ApplicationInsightsLoggerProvider>(x => CreateLoggerProvider(x, loggingOptions)));
+
+        services.TryAddSingleton<IApplicationInsights, ApplicationInsights>();
+
+        return services;
+    }
+
+    private static ApplicationInsightsLoggerProvider CreateLoggerProvider(IServiceProvider services, Action<ApplicationInsightsLoggerOptions>? configure)
+    {
+        configure ??= delegate { };
+
+        var options = new ApplicationInsightsLoggerOptions();
+        configure(options);
+
+        // Sure, this is a little insane, but I had already gone with IOptions
+        // before ripping out Microsoft.Extensions.Logging.Configuration.
+        // Rather than redoing the plumbing, let's just keep it and
+        // if we want to add Logging.Configuration later it should be easy.
+        var optionsMonitor = new DummyOptionsMonitor(options);
+        var appInsights = services.GetRequiredService<IApplicationInsights>();
+
+        return new ApplicationInsightsLoggerProvider(appInsights, optionsMonitor);
+    }
+
+    private class DummyOptionsMonitor : IOptionsMonitor<ApplicationInsightsLoggerOptions>
+    {
+        public DummyOptionsMonitor(ApplicationInsightsLoggerOptions currentValue)
         {
-            services.TryAddSingleton<ILoggerProvider, ApplicationInsightsLoggerProvider>();
+            CurrentValue = currentValue;
         }
 
-        private static void RemoveService<TService, TImplementation>(IServiceCollection services)
+        public ApplicationInsightsLoggerOptions Get(string? name)
         {
-            foreach (var service in services.ToArray())
-            {
-                if (service.ServiceType == typeof(TService) || service.ImplementationType == typeof(TImplementation))
-                    services.Remove(service);
-            }
+            if (name != string.Empty)
+                return null;
+
+            return CurrentValue;
         }
 
-        private class DummyOptionsMonitor : IOptionsMonitor<ApplicationInsightsLoggerOptions>
-        {
-            public DummyOptionsMonitor(ApplicationInsightsLoggerOptions currentValue)
-            {
-                CurrentValue = currentValue;
-            }
+        public IDisposable OnChange(Action<ApplicationInsightsLoggerOptions, string> listener)
+            => NoOpDisposable.Instance;
 
-            public ApplicationInsightsLoggerOptions Get(string name)
-            {
-                if (name != string.Empty)
-                    return null;
-
-                return CurrentValue;
-            }
-
-            public IDisposable OnChange(Action<ApplicationInsightsLoggerOptions, string> listener)
-                => NoOpDisposable.Instance;
-
-            public ApplicationInsightsLoggerOptions CurrentValue { get; set; }
-        }
+        public ApplicationInsightsLoggerOptions CurrentValue { get; set; }
     }
 }

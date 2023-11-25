@@ -1,16 +1,15 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace BlazorApplicationInsights
+namespace BlazorApplicationInsights.Models;
+
+public class Error
 {
-    public class Error
-    {
-        [JsonPropertyName("name")]
-        public string Name { get; set; }
+    [JsonPropertyName("name")]
+    public string Name { get; set; }
 
-        [JsonPropertyName("message")]
-        public string Message { get; set; }
+    [JsonPropertyName("message")]
+    public string Message { get; set; }
 
-        [JsonPropertyName("stack")]
-        public string? Stack { get; set; }
-    }
+    [JsonPropertyName("stack")]
+    public string? Stack { get; set; }
 }

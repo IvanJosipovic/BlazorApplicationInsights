@@ -14,10 +14,10 @@
                 envelope.iKey = telemetryItem.iKey;
             }
             if (telemetryItem.ext !== null) {
-                envelope.ext = telemetryItem.ext;
+                Object.assign(envelope.ext, telemetryItem.ext);
             }
             if (telemetryItem.tags !== null) {
-                envelope.tags = telemetryItem.tags;
+                Object.assign(envelope.tags, telemetryItem.tags);
             }
             if (telemetryItem.data !== null) {
                 Object.assign(envelope.data, telemetryItem.data);
@@ -26,78 +26,59 @@
                 envelope.baseType = telemetryItem.baseType;
             }
             if (telemetryItem.baseData !== null) {
-                envelope.baseData = telemetryItem.baseData;
+                Object.assign(envelope.baseData, telemetryItem.baseData);
             }
         }
+
         appInsights.addTelemetryInitializer(telemetryInitializer);
     },
-    trackDependencyData: function (data) {
-        var dependencyTelemetry = {};
-
-        if (data.id !== null) {
-            dependencyTelemetry["id"] = data.id;
-        }
-        if (data.name !== null) {
-            dependencyTelemetry["name"] = data.name;
-        }
-        if (data.duration !== null) {
-            dependencyTelemetry["duration"] = data.duration;
-        }
-        if (data.success !== null) {
-            dependencyTelemetry["success"] = data.success;
-        }
-        if (data.startTime !== null) {
-            dependencyTelemetry["startTime"] = new Date(data.startTime);
-        }
-        if (data.responseCode !== null) {
-            dependencyTelemetry["responseCode"] = data.responseCode;
-        }
-        if (data.correlationContext !== null) {
-            dependencyTelemetry["correlationContext"] = data.correlationContext;
-        }
-        if (data.type !== null) {
-            dependencyTelemetry["type"] = data.type;
-        }
-        if (data.data !== null) {
-            dependencyTelemetry["data"] = data.data;
-        }
-        if (data.target !== null) {
-            dependencyTelemetry["target"] = data.target;
+    trackDependencyData: function (dependencyTelemetry) {
+        if (dependencyTelemetry.startTime !== null) {
+            dependencyTelemetry.startTime = new Date(dependencyTelemetry.startTime);
         }
 
         appInsights.trackDependencyData(dependencyTelemetry);
     },
-    setInstrumentationKey: function (instrumentationKey) {
-        appInsights.config.instrumentationKey = instrumentationKey;
-    },
-    setConnectionString: function (connectionString) {
-        appInsights.config.connectionString = connectionString;
-    },
-    loadAppInsights: function () {
-        if (appInsights.loadAppInsights !== undefined) {
-            appInsights.loadAppInsights();
-        }
-    },
-    getUserId: function () {
+    getContext: function () {
         if (appInsights.context !== undefined) {
-            return appInsights.context.user.authenticatedId || appInsights.context.user.id;
+            return appInsights.context
         }
     },
-    getSessionId: function () {
-        if (appInsights.context !== undefined) {
-            return appInsights.context.sessionManager.automaticSession.id;
+    cookieMgrSetCookiesEnabled: function (enabled) {
+        if (appInsights.getCookieMgr !== undefined) {
+            appInsights.getCookieMgr().setEnabled(enabled);
         }
     },
-    setCookiesEnabled: function (enabled) {
-        if (appInsights.core !== undefined) {
-            appInsights.core.getCookieMgr().setEnabled(enabled);
-        }
-    },
-    getCookiesEnabled: function () {
-        if (appInsights.core !== undefined) {
-            return appInsights.core.getCookieMgr().isEnabled();
+    cookieMgrGetCookiesEnabled: function () {
+        if (appInsights.getCookieMgr !== undefined) {
+            return appInsights.getCookieMgr().isEnabled();
         } else {
             return false;
+        }
+    },
+    cookieMgrSet: function (name, value, maxAgeSec, domain, path) {
+        if (appInsights.getCookieMgr !== undefined) {
+            appInsights.getCookieMgr().set(name, value, maxAgeSec, domain, path);
+        }
+    },
+    cookieMgrGet: function (name) {
+        if (appInsights.getCookieMgr !== undefined) {
+            appInsights.getCookieMgr().get(name);
+        }
+    },
+    cookieMgrDel: function (name, path) {
+        if (appInsights.getCookieMgr !== undefined) {
+            appInsights.getCookieMgr().del(name, path);
+        }
+    },
+    cookieMgrPurge: function (name, path) {
+        if (appInsights.getCookieMgr !== undefined) {
+            appInsights.getCookieMgr().purge(name, path);
+        }
+    },
+    cookieMgrUnload: function (isAsync) {
+        if (appInsights.getCookieMgr !== undefined) {
+            appInsights.getCookieMgr().unload(isAsync);
         }
     },
 };

@@ -5,8 +5,6 @@ VisualStudioVersion = 17.0.31521.260
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApplicationInsights", "src\BlazorApplicationInsights\BlazorApplicationInsights.csproj", "{07E8E6A7-A6A4-4CAB-BD84-2C4BF3142E7B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApplicationInsights.Sample", "src\BlazorApplicationInsights.Sample\BlazorApplicationInsights.Sample.csproj", "{86923C5A-38D3-424C-B147-5370ABF16C3A}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0131129F-20EC-4147-9C9A-A13BE002AB11}"
 	ProjectSection(SolutionItems) = preProject
 		.releaserc.json = .releaserc.json
@@ -16,7 +14,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.github\renovate.json = .github\renovate.json
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApplicationInsights.Tests", "src\BlazorApplicationInsights.Tests\BlazorApplicationInsights.Tests.csproj", "{C7FD9039-7393-4755-830C-A194C30C8F13}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApplicationInsights.Tests", "tests\BlazorApplicationInsights.Tests\BlazorApplicationInsights.Tests.csproj", "{24F9E5F0-0CAF-4399-86AF-4641D305B069}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApplicationInsights.Sample.Components", "samples\BlazorApplicationInsights.Sample.Components\BlazorApplicationInsights.Sample.Components.csproj", "{C020284F-BDBB-4C83-B426-0591CE027115}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E301E898-61E7-42DF-8F23-DB4E34550732}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{8E51F70D-BCC4-4A78-85F2-79D639EED440}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{D6AB13B2-BF98-46F4-8D7A-361F1F5F91FA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApplicationInsights.Sample.Wasm", "samples\BlazorApplicationInsights.Sample.Wasm\BlazorApplicationInsights.Sample.Wasm.csproj", "{C8F5829A-B2F4-46C6-9749-2A7BB3565F25}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorApplicationInsights.Sample.WebApp", "samples\BlazorApplicationInsights.Sample.WebApp\BlazorApplicationInsights.Sample.WebApp\BlazorApplicationInsights.Sample.WebApp.csproj", "{E3782F8D-0C4F-4161-B816-C432865639AE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorApplicationInsights.Sample.WebApp.Client", "samples\BlazorApplicationInsights.Sample.WebApp\BlazorApplicationInsights.Sample.WebApp.Client\BlazorApplicationInsights.Sample.WebApp.Client.csproj", "{A73F04FB-FCDD-43B7-AC8E-1595E8E21CA7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,17 +40,37 @@ Global
 		{07E8E6A7-A6A4-4CAB-BD84-2C4BF3142E7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{07E8E6A7-A6A4-4CAB-BD84-2C4BF3142E7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{07E8E6A7-A6A4-4CAB-BD84-2C4BF3142E7B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{86923C5A-38D3-424C-B147-5370ABF16C3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{86923C5A-38D3-424C-B147-5370ABF16C3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{86923C5A-38D3-424C-B147-5370ABF16C3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{86923C5A-38D3-424C-B147-5370ABF16C3A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C7FD9039-7393-4755-830C-A194C30C8F13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C7FD9039-7393-4755-830C-A194C30C8F13}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C7FD9039-7393-4755-830C-A194C30C8F13}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C7FD9039-7393-4755-830C-A194C30C8F13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24F9E5F0-0CAF-4399-86AF-4641D305B069}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24F9E5F0-0CAF-4399-86AF-4641D305B069}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24F9E5F0-0CAF-4399-86AF-4641D305B069}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24F9E5F0-0CAF-4399-86AF-4641D305B069}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C020284F-BDBB-4C83-B426-0591CE027115}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C020284F-BDBB-4C83-B426-0591CE027115}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C020284F-BDBB-4C83-B426-0591CE027115}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C020284F-BDBB-4C83-B426-0591CE027115}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8F5829A-B2F4-46C6-9749-2A7BB3565F25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8F5829A-B2F4-46C6-9749-2A7BB3565F25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8F5829A-B2F4-46C6-9749-2A7BB3565F25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8F5829A-B2F4-46C6-9749-2A7BB3565F25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3782F8D-0C4F-4161-B816-C432865639AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3782F8D-0C4F-4161-B816-C432865639AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3782F8D-0C4F-4161-B816-C432865639AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3782F8D-0C4F-4161-B816-C432865639AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A73F04FB-FCDD-43B7-AC8E-1595E8E21CA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A73F04FB-FCDD-43B7-AC8E-1595E8E21CA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A73F04FB-FCDD-43B7-AC8E-1595E8E21CA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A73F04FB-FCDD-43B7-AC8E-1595E8E21CA7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{07E8E6A7-A6A4-4CAB-BD84-2C4BF3142E7B} = {E301E898-61E7-42DF-8F23-DB4E34550732}
+		{24F9E5F0-0CAF-4399-86AF-4641D305B069} = {D6AB13B2-BF98-46F4-8D7A-361F1F5F91FA}
+		{C020284F-BDBB-4C83-B426-0591CE027115} = {8E51F70D-BCC4-4A78-85F2-79D639EED440}
+		{C8F5829A-B2F4-46C6-9749-2A7BB3565F25} = {8E51F70D-BCC4-4A78-85F2-79D639EED440}
+		{E3782F8D-0C4F-4161-B816-C432865639AE} = {8E51F70D-BCC4-4A78-85F2-79D639EED440}
+		{A73F04FB-FCDD-43B7-AC8E-1595E8E21CA7} = {8E51F70D-BCC4-4A78-85F2-79D639EED440}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3EBB1AF9-73E1-4D46-B0F7-C0E8B8E2173D}

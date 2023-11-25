@@ -3,20 +3,20 @@
   "enabled": true,
   "timezone": "America/Vancouver",
   "dependencyDashboard": true,
-  "dependencyDashboardTitle": "Renovate Dashboard",
   "semanticCommits": "enabled",
-  "suppressNotifications": [ "prIgnoreNotification" ],
-  "rebaseWhen": "conflicted",
   "assignees": [ "@ivanjosipovic" ],
-  "extends": [ "config:base" ],
+  "extends": [ "config:recommended" ],
   "platformAutomerge": true,
+  "ignorePaths": [
+    "**/docs/**"
+  ],
   "packageRules": [
     {
       "automerge": true,
-      "matchUpdateTypes": ["minor", "patch", "digest"],
+      "matchUpdateTypes": [ "minor", "patch", "digest" ],
       "matchCurrentVersion": "!/^0/",
       "matchFileNames": [
-        "src/BlazorApplicationInsights.Tests/BlazorApplicationInsights.Tests.csproj"
+        "tests/**"
       ]
     }
   ]
