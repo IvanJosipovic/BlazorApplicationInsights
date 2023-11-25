@@ -83,7 +83,7 @@ public class Configuration
     /// Extension configs loaded in SDK
     /// </summary>
     [JsonPropertyName("extensionConfig")]
-    public Dictionary<string, object>? ExtensionConfig { get; set; }
+    public Dictionary<string, object?>? ExtensionConfig { get; set; }
 
     /// <summary>
     /// Flag that disables the Instrumentation Key validation.

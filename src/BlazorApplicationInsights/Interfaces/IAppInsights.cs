@@ -75,7 +75,7 @@ public interface IAppInsights
     /// <param name="url">a relative or absolute URL that identifies the page or other item. Defaults to the window location.</param>
     /// <param name="customProperties">additional data used to filter pages and metrics in the portal. Defaults to empty.</param>
     /// <param name="measurements">metrics associated with this page, displayed in Metrics Explorer on the portal. Defaults to empty.</param>
-    Task StopTrackPage(string? name = null, string? url = null, Dictionary<string, string>? customProperties = null, Dictionary<string, decimal>? measurements = null);
+    Task StopTrackPage(string? name = null, string? url = null, Dictionary<string, object?>? customProperties = null, Dictionary<string, decimal>? measurements = null);
 
     /// <summary>
     /// Starts logging an extended event.
@@ -89,7 +89,7 @@ public interface IAppInsights
     /// <param name="name">The string you used to identify this event in `startTrackEvent`</param>
     /// <param name="properties">additional data used to filter events and metrics in the portal. Defaults to empty.</param>
     /// <param name="measurements">metrics associated with this event, displayed in Metrics Explorer on the portal. Defaults to empty.</param>
-    Task StopTrackEvent(string name, Dictionary<string, string?>? properties = null, Dictionary<string, decimal>? measurements = null);
+    Task StopTrackEvent(string name, Dictionary<string, object?>? properties = null, Dictionary<string, decimal>? measurements = null);
 
     /// <summary>
     /// Adds a telemetry initializer to the collection. Telemetry initializers will be called one by one,

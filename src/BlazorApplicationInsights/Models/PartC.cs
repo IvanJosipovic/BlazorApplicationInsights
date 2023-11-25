@@ -13,5 +13,5 @@ public abstract class PartC
     /// Property bag to contain additional custom properties (Part C).
     /// </summary>
     [JsonPropertyName("properties")]
-    public Dictionary<string, object> Properties { get; set; }
+    public Dictionary<string, object?>? Properties { get; set; }
 }

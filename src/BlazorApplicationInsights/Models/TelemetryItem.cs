@@ -37,19 +37,19 @@ public class TelemetryItem
     /// System context properties of the telemetry item, example: ip address, city etc
     /// </summary>
     [JsonPropertyName("ext")]
-    public Dictionary<string, object>? Ext { get; set; }
+    public Dictionary<string, object?>? Ext { get; set; }
 
     /// <summary>
     /// System context property extensions that are not global (not in ctx)
     /// </summary>
     [JsonPropertyName("tags")]
-    public Dictionary<string, object>? Tags { get; set; }
+    public Dictionary<string, object?>? Tags { get; set; }
 
     /// <summary>
     /// Custom data
     /// </summary>
     [JsonPropertyName("data")]
-    public Dictionary<string, object>? Data { get; set; }
+    public Dictionary<string, object?>? Data { get; set; }
 
     /// <summary>
     /// Telemetry type used for part B
@@ -61,5 +61,5 @@ public class TelemetryItem
     /// Based on schema for part B
     /// </summary>
     [JsonPropertyName("baseData")]
-    public Dictionary<string, object>? BaseData { get; set; }
+    public Dictionary<string, object?>? BaseData { get; set; }
 }

@@ -37,7 +37,7 @@ public class ApplicationInsights : IApplicationInsights
         => await _jsRuntime.InvokeVoidAsync("appInsights.startTrackPage", name!);
 
     /// <inheritdoc />
-    public async Task StopTrackPage(string? name = null, string? url = null, Dictionary<string, string>? customProperties = null, Dictionary<string, decimal>? measurements = null)
+    public async Task StopTrackPage(string? name = null, string? url = null, Dictionary<string, object?>? customProperties = null, Dictionary<string, decimal>? measurements = null)
         => await _jsRuntime.InvokeVoidAsync("appInsights.stopTrackPage", name, url, customProperties, measurements);
 
     /// <inheritdoc />
@@ -73,7 +73,7 @@ public class ApplicationInsights : IApplicationInsights
         => await _jsRuntime.InvokeVoidAsync("appInsights.startTrackEvent", name);
 
     /// <inheritdoc />
-    public async Task StopTrackEvent(string name, Dictionary<string, string?>? properties = null, Dictionary<string, decimal>? measurements = null)
+    public async Task StopTrackEvent(string name, Dictionary<string, object?>? properties = null, Dictionary<string, decimal>? measurements = null)
         => await _jsRuntime.InvokeVoidAsync("appInsights.stopTrackEvent", name, properties, measurements);
 
     /// <inheritdoc />
