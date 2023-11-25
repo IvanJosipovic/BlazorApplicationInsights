@@ -23,7 +23,7 @@ namespace BlazorApplicationInsights.Sample.Wasm
             {
                 var telemetryItem = new TelemetryItem()
                 {
-                    Tags = new Dictionary<string, object>()
+                    Tags = new Dictionary<string, object?>()
                     {
                         { "ai.cloud.role", "SPA" },
                         { "ai.cloud.roleInstance", "Blazor Wasm" },
