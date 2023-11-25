@@ -16,7 +16,7 @@ public class TelemetryContext
     /// </summary>
     [JsonPropertyName("application")]
     [JsonInclude]
-    public Application Application { get; private set; }
+    public Application? Application { get; private set; }
 
     /// <summary>
     /// The object describing a device tracked by this object.
