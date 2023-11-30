@@ -16,6 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
+        name: [Wasm, Wasm6, Server, WebApp]
         path: [samples/BlazorApplicationInsights.Sample.Wasm, samples/BlazorApplicationInsights.Sample.Wasm6, samples/BlazorApplicationInsights.Sample.Server, samples/BlazorApplicationInsights.Sample.WebApp]
     steps:
     - name: Checkout code

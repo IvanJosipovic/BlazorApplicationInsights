@@ -9,12 +9,13 @@ namespace BlazorApplicationInsights;
 /// <inheritdoc />
 public class ApplicationInsights : IApplicationInsights
 {
-    public ApplicationInsights(IJSRuntime jSRuntime)
+    private IJSRuntime _jsRuntime;
+
+    /// <inheritdoc />
+    public void InitJSRuntime(IJSRuntime jSRuntime)
     {
         _jsRuntime = jSRuntime;
     }
-
-    private readonly IJSRuntime _jsRuntime;
 
     /// <inheritdoc />
     public async Task TrackPageView(PageViewTelemetry? pageView = null)

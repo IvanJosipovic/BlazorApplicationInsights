@@ -25,8 +25,14 @@ public partial class ApplicationInsightsInit
 
     private static readonly JsonSerializerOptions SerializerOptions = new() { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
 
+    /// <inheritdoc/>
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
+        if (firstRender)
+        {
+            ApplicationInsights.InitJSRuntime(JSRuntime);
+        }
+
         if (firstRender && IsWasmStandalone)
         {
             await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./_content/BlazorApplicationInsights/JsInterop.js");
