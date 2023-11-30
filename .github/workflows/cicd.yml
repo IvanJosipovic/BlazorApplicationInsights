@@ -26,6 +26,9 @@ jobs:
       with:
         global-json-file: global.json
 
+    - name: Dotnet Build
+      run: dotnet build -c Release
+
     - name: Run App
       working-directory: ${{ matrix.path }}
       run: Start-Process dotnet 'run','-c','Release','--launch-profile','https' -PassThru
