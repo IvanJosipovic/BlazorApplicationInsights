@@ -45,7 +45,7 @@ public partial class ApplicationInsightsInit
             }
         }
 
-        if (Config.OnAppInsightsInit != null)
+        if (firstRender && Config.OnAppInsightsInit != null)
         {
             await Config.OnAppInsightsInit(ApplicationInsights);
         }
