@@ -471,7 +471,7 @@ namespace BlazorApplicationInsights.Tests
 
             page.Request += (sender, e) =>
             {
-                if (e.Url.Equals("https://dc.services.visualstudio.com/v2/track"))
+                if (e.Url.Equals("https://dc.services.visualstudio.com/v2/track") || e.Url.Contains(".azure.com/v2/track"))
                 {
                     if (!string.IsNullOrEmpty(e.PostData))
                     {
@@ -503,8 +503,8 @@ namespace BlazorApplicationInsights.Tests
                 var expectedCall = expectedCalls[i];
                 var call = requestData.Where(x => x.data.baseType == expectedCall.data.baseType
                                                && x.tags.ContainsKey("ai.cloud.roleInstance")
-                                               && (x.tags["ai.cloud.roleInstance"] == "Blazor Wasm") || x.tags["ai.cloud.roleInstance"] == "Blazor Server")
-                                                .ToArray()[i];
+                                               && (x.tags["ai.cloud.roleInstance"] == "Blazor Wasm" || x.tags["ai.cloud.roleInstance"] == "Blazor Server")
+                                            ).ToArray()[i];
 
                 var compare = CompareObjects(expectedCall, call);
 
@@ -524,14 +524,14 @@ namespace BlazorApplicationInsights.Tests
             validCalls.Should().Be(expectedCalls.Count);
         }
 
-        internal bool CompareObjects(object sourceObj, object desinationObj)
+        internal bool CompareObjects(object sourceObj, object destinationObj)
         {
             foreach (PropertyInfo propertyInfo in sourceObj.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance))
             {
                 try
                 {
                     var source = propertyInfo.GetValue(sourceObj, null);
-                    var dest = propertyInfo.GetValue(desinationObj, null);
+                    var dest = propertyInfo.GetValue(destinationObj, null);
 
                     if (source == null) continue;
 

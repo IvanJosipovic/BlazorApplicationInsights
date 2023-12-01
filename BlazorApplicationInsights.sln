@@ -26,9 +26,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{D6AB13B2
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApplicationInsights.Sample.Wasm", "samples\BlazorApplicationInsights.Sample.Wasm\BlazorApplicationInsights.Sample.Wasm.csproj", "{C8F5829A-B2F4-46C6-9749-2A7BB3565F25}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorApplicationInsights.Sample.WebApp", "samples\BlazorApplicationInsights.Sample.WebApp\BlazorApplicationInsights.Sample.WebApp\BlazorApplicationInsights.Sample.WebApp.csproj", "{E3782F8D-0C4F-4161-B816-C432865639AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApplicationInsights.Sample.WebApp", "samples\BlazorApplicationInsights.Sample.WebApp\BlazorApplicationInsights.Sample.WebApp\BlazorApplicationInsights.Sample.WebApp.csproj", "{E3782F8D-0C4F-4161-B816-C432865639AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorApplicationInsights.Sample.WebApp.Client", "samples\BlazorApplicationInsights.Sample.WebApp\BlazorApplicationInsights.Sample.WebApp.Client\BlazorApplicationInsights.Sample.WebApp.Client.csproj", "{A73F04FB-FCDD-43B7-AC8E-1595E8E21CA7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApplicationInsights.Sample.WebApp.Client", "samples\BlazorApplicationInsights.Sample.WebApp\BlazorApplicationInsights.Sample.WebApp.Client\BlazorApplicationInsights.Sample.WebApp.Client.csproj", "{A73F04FB-FCDD-43B7-AC8E-1595E8E21CA7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApplicationInsights.Sample.Server", "samples\BlazorApplicationInsights.Sample.Server\BlazorApplicationInsights.Sample.Server.csproj", "{7F20811A-451A-46D5-B47A-FF45FEB3299E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorApplicationInsights.Sample.Wasm6", "samples\BlazorApplicationInsights.Sample.Wasm6\BlazorApplicationInsights.Sample.Wasm6.csproj", "{998E59D1-3046-4BCF-A90A-72BCFEAD3919}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -60,6 +64,14 @@ Global
 		{A73F04FB-FCDD-43B7-AC8E-1595E8E21CA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A73F04FB-FCDD-43B7-AC8E-1595E8E21CA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A73F04FB-FCDD-43B7-AC8E-1595E8E21CA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F20811A-451A-46D5-B47A-FF45FEB3299E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F20811A-451A-46D5-B47A-FF45FEB3299E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F20811A-451A-46D5-B47A-FF45FEB3299E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F20811A-451A-46D5-B47A-FF45FEB3299E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{998E59D1-3046-4BCF-A90A-72BCFEAD3919}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{998E59D1-3046-4BCF-A90A-72BCFEAD3919}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{998E59D1-3046-4BCF-A90A-72BCFEAD3919}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{998E59D1-3046-4BCF-A90A-72BCFEAD3919}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -71,6 +83,8 @@ Global
 		{C8F5829A-B2F4-46C6-9749-2A7BB3565F25} = {8E51F70D-BCC4-4A78-85F2-79D639EED440}
 		{E3782F8D-0C4F-4161-B816-C432865639AE} = {8E51F70D-BCC4-4A78-85F2-79D639EED440}
 		{A73F04FB-FCDD-43B7-AC8E-1595E8E21CA7} = {8E51F70D-BCC4-4A78-85F2-79D639EED440}
+		{7F20811A-451A-46D5-B47A-FF45FEB3299E} = {8E51F70D-BCC4-4A78-85F2-79D639EED440}
+		{998E59D1-3046-4BCF-A90A-72BCFEAD3919} = {8E51F70D-BCC4-4A78-85F2-79D639EED440}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3EBB1AF9-73E1-4D46-B0F7-C0E8B8E2173D}
