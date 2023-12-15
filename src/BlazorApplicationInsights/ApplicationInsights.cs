@@ -2,6 +2,7 @@
 using BlazorApplicationInsights.Models;
 using Microsoft.JSInterop;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace BlazorApplicationInsights;
@@ -79,7 +80,16 @@ public class ApplicationInsights : IApplicationInsights
 
     /// <inheritdoc />
     public async Task UpdateCfg(Config newConfig, bool? mergeExisting = true)
-        => await _jsRuntime.InvokeVoidAsync("appInsights.updateCfg", newConfig, mergeExisting);
+    {
+        var options = new JsonSerializerOptions
+        {
+            DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
+        };
+
+        var configJson = JsonSerializer.Serialize(newConfig, options);
+
+        await _jsRuntime.InvokeVoidAsync("appInsights.updateCfg", configJson, mergeExisting);
+    }
 
     /// <inheritdoc />
     public async Task<TelemetryContext> Context()
