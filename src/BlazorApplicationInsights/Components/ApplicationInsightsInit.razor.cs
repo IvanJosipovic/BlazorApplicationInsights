@@ -22,6 +22,12 @@ public partial class ApplicationInsightsInit
     [Parameter]
     public bool IsWasmStandalone { get; set; }
 
+    /// <summary>
+    /// When enabled this library will not call UpdateCfg and configuration must be set manually in the index.html
+    /// </summary>
+    [Parameter]
+    public bool IsWasmManualInit { get; set; }
+
     private string script { get; set; }
 
     private static readonly JsonSerializerOptions SerializerOptions = new() { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
@@ -46,7 +52,7 @@ public partial class ApplicationInsightsInit
         {
             await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./_content/BlazorApplicationInsights/JsInterop.js");
 
-            if (Config.Config != null)
+            if (Config.Config != null && !IsWasmManualInit)
             {
                 await ApplicationInsights.UpdateCfg(Config.Config);
 
