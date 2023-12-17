@@ -13,12 +13,14 @@ public class Config : Configuration
     /// The JSON format (normal vs line delimited). True means line delimited JSON.
     /// </summary>
     [JsonPropertyName("emitLineDelimitedJson")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public bool? EmitLineDelimitedJson { get; set; }
 
     /// <summary>
     /// An optional account id, if your app groups users into accounts. No spaces, commas, semicolons, equals, or vertical bars.
     /// </summary>
     [JsonPropertyName("accountId")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? AccountId { get; set; }
 
     /// <summary>
@@ -26,6 +28,7 @@ public class Config : Configuration
     /// Default 30*60*1000
     /// </summary>
     [JsonPropertyName("sessionRenewalMs")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public int? SessionRenewalMs { get; set; }
 
     /// <summary>
@@ -33,6 +36,7 @@ public class Config : Configuration
     /// Default 24*60*60*1000
     /// </summary>
     [JsonPropertyName("sessionExpirationMs")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public int? SessionExpirationMs { get; set; }
 
     /// <summary>
@@ -40,6 +44,7 @@ public class Config : Configuration
     /// Default 100000
     /// </summary>
     [JsonPropertyName("maxBatchSizeInBytes")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public int? MaxBatchSizeInBytes { get; set; }
 
     /// <summary>
@@ -47,54 +52,63 @@ public class Config : Configuration
     /// Default 15s
     /// </summary>
     [JsonPropertyName("maxBatchInterval")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public int? MaxBatchInterval { get; set; }
 
     /// <summary>
     /// If true, exceptions are not autocollected. Default is false.
     /// </summary>
     [JsonPropertyName("disableExceptionTracking")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public bool? DisableExceptionTracking { get; set; }
 
     /// <summary>
     /// If true, telemetry is not collected or sent. Default is false.
     /// </summary>
     [JsonPropertyName("disableTelemetry")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public bool? DisableTelemetry { get; set; }
 
     /// <summary>
     /// Percentage of events that will be sent. Default is 100, meaning all events are sent.
     /// </summary>
     [JsonPropertyName("samplingPercentage")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public int? SamplingPercentage { get; set; }
 
     /// <summary>
     /// If true, on a pageview, the previous instrumented page's view time is tracked and sent as telemetry and a new timer is started for the current pageview.
     /// </summary>
     [JsonPropertyName("autoTrackPageVisitTime")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public bool? AutoTrackPageVisitTime { get; set; }
 
     /// <summary>
     /// Automatically track route changes in Blazor. If true, each route change will send a new Pageview to Application Insights.
     /// </summary>
     [JsonPropertyName("enableAutoRouteTracking")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public bool? EnableAutoRouteTracking { get; set; } = true;
 
     /// <summary>
     /// If true, Ajax calls are not autocollected. Default is false.
     /// </summary>
     [JsonPropertyName("disableAjaxTracking")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public bool? DisableAjaxTracking { get; set; }
 
     /// <summary>
     /// If true, Fetch requests are not autocollected. Default is false (Since 2.8.0, previously true).
     /// </summary>
     [JsonPropertyName("disableFetchTracking")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public bool? DisableFetchTracking { get; set; }
 
     /// <summary>
     /// Provide a way to exclude specific route from automatic tracking for XMLHttpRequest or Fetch request. For an ajax / fetch request that the request url matches with the regex patterns, auto tracking is turned off.
     /// </summary>
     [JsonPropertyName("excludeRequestFromAutoTrackingPatterns")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public List<string>? ExcludeRequestFromAutoTrackingPatterns { get; set; }
 
     //todo
@@ -102,12 +116,14 @@ public class Config : Configuration
     /// Provide a way to enrich dependencies logs with context at the beginning of api call.
     /// </summary>
     //[JsonPropertyName("addRequestContext")]
+    //[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     //public Func<IRequestContext, ICustomProperties>? AddRequestContext { get; set; }
 
     /// <summary>
     /// If true, default behavior of trackPageView is changed to record end of page view duration interval when trackPageView is called. If false and no custom duration is provided to trackPageView, the page view performance is calculated using the navigation timing API. Default is false.
     /// </summary>
     [JsonPropertyName("overridePageViewDuration")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public bool? OverridePageViewDuration { get; set; }
 
     /// <summary>
@@ -115,18 +131,21 @@ public class Config : Configuration
     /// Default 500
     /// </summary>
     [JsonPropertyName("maxAjaxCallsPerView")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public int? MaxAjaxCallsPerView { get; set; }
 
     /// <summary>
     /// If false, internal telemetry sender buffers will be checked at startup for items not yet sent. Default is true.
     /// </summary>
     [JsonPropertyName("disableDataLossAnalysis")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public bool? DisableDataLossAnalysis { get; set; }
 
     /// <summary>
     /// If false, the SDK will add two headers ('Request-Id' and 'Request-Context') to all dependency requests to correlate them with corresponding requests on the server side. Default is false.
     /// </summary>
     [JsonPropertyName("disableCorrelationHeaders")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public bool? DisableCorrelationHeaders { get; set; }
 
     /// <summary>
@@ -134,12 +153,14 @@ public class Config : Configuration
     /// Default AI_AND_W3C
     /// </summary>
     [JsonPropertyName("distributedTracingMode")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? DistributedTracingMode { get; set; }
 
     /// <summary>
     /// Disable correlation headers for specific domain.
     /// </summary>
     [JsonPropertyName("correlationHeaderExcludedDomains")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public List<string>? CorrelationHeaderExcludedDomains { get; set; }
 
     /// <summary>
@@ -147,18 +168,21 @@ public class Config : Configuration
     /// Default false
     /// </summary>
     [JsonPropertyName("disableFlushOnBeforeUnload")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public bool? DisableFlushOnBeforeUnload { get; set; }
 
     /// <summary>
     /// If true, flush method will not be called when onPageHide or onVisibilityChange (hidden state) event(s) trigger.
     /// </summary>
     [JsonPropertyName("disableFlushOnUnload")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public bool? DisableFlushOnUnload { get; set; }
 
     /// <summary>
     /// If true, the buffer with all unsent telemetry is stored in session storage. The buffer is restored on page load. Default is true.
     /// </summary>
     [JsonPropertyName("enableSessionStorageBuffer")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public bool? EnableSessionStorageBuffer { get; set; }
 
     //todo
@@ -166,6 +190,7 @@ public class Config : Configuration
     /// If specified, overrides the storage & retrieval mechanism that is used to manage unsent telemetry.
     /// </summary>
     //[JsonPropertyName("bufferOverride")]
+    //[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     //public IStorageBuffer? BufferOverride { get; set; }
 
     /// <summary>
@@ -173,12 +198,14 @@ public class Config : Configuration
     /// Default false
     /// </summary>
     [JsonPropertyName("isRetryDisabled")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public bool? IsRetryDisabled { get; set; }
 
     /// <summary>
     /// If true, the SDK will not store or read any data from local and session storage. Default is false.
     /// </summary>
     [JsonPropertyName("isStorageUseDisabled")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public bool? IsStorageUseDisabled { get; set; }
 
     /// <summary>
@@ -186,6 +213,7 @@ public class Config : Configuration
     /// Default true
     /// </summary>
     [JsonPropertyName("isBeaconApiDisabled")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public bool? IsBeaconApiDisabled { get; set; }
 
     /// <summary>
@@ -193,18 +221,21 @@ public class Config : Configuration
     /// If no other transport is available it will still use XMLHttpRequest
     /// </summary>
     [JsonPropertyName("disableXhr")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public bool? DisableXhr { get; set; }
 
     /// <summary>
     /// If fetch keepalive is supported, do not use it for sending events during unload, it may still fallback to fetch() without keepalive.
     /// </summary>
     [JsonPropertyName("onunloadDisableFetch")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public bool? OnUnloadDisableFetch { get; set; }
 
     /// <summary>
     /// Sets the SDK extension name. Only alphabetic characters are allowed. The extension name is added as a prefix to the 'ai.internal.sdkVersion' tag (e.g. 'ext_javascript:2.0.0'). Default is null.
     /// </summary>
     [JsonPropertyName("sdkExtension")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? SdkExtension { get; set; }
 
     /// <summary>
@@ -212,36 +243,42 @@ public class Config : Configuration
     /// Default is false
     /// </summary>
     [JsonPropertyName("isBrowserLinkTrackingEnabled")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public bool? IsBrowserLinkTrackingEnabled { get; set; }
 
     /// <summary>
     /// AppId is used for the correlation between AJAX dependencies happening on the client-side with the server-side requests. When Beacon API is enabled, it cannot be used automatically, but can be set manually in the configuration. Default is null.
     /// </summary>
     [JsonPropertyName("appId")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? AppId { get; set; }
 
     /// <summary>
     /// If true, the SDK will add two headers ('Request-Id' and 'Request-Context') to all CORS requests to correlate outgoing AJAX dependencies with corresponding requests on the server side. Default is false.
     /// </summary>
     [JsonPropertyName("enableCorsCorrelation")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public bool? EnableCorsCorrelation { get; set; }
 
     /// <summary>
     /// An optional value that will be used as name postfix for localStorage and session cookie name.
     /// </summary>
     [JsonPropertyName("namePrefix")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? NamePrefix { get; set; }
 
     /// <summary>
     /// An optional value that will be used as name postfix for session cookie name. If undefined, namePrefix is used as name postfix for session cookie name.
     /// </summary>
     [JsonPropertyName("sessionCookiePostfix")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? SessionCookiePostfix { get; set; }
 
     /// <summary>
     /// An optional value that will be used as name postfix for user cookie name. If undefined, no postfix is added on user cookie name.
     /// </summary>
     [JsonPropertyName("userCookiePostfix")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? UserCookiePostfix { get; set; }
 
     /// <summary>
@@ -249,6 +286,7 @@ public class Config : Configuration
     /// Default false
     /// </summary>
     [JsonPropertyName("enableRequestHeaderTracking")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public bool? EnableRequestHeaderTracking { get; set; }
 
     /// <summary>
@@ -256,6 +294,7 @@ public class Config : Configuration
     /// Default false
     /// </summary>
     [JsonPropertyName("enableResponseHeaderTracking")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public bool? EnableResponseHeaderTracking { get; set; }
 
     /// <summary>
@@ -263,6 +302,7 @@ public class Config : Configuration
     /// Default false
     /// </summary>
     [JsonPropertyName("enableAjaxErrorStatusText")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public bool? EnableAjaxErrorStatusText { get; set; }
 
     /// <summary>
@@ -270,6 +310,7 @@ public class Config : Configuration
     /// Default false
     /// </summary>
     [JsonPropertyName("enableAjaxPerfTracking")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public bool? EnableAjaxPerfTracking { get; set; }
 
     /// <summary>
@@ -277,6 +318,7 @@ public class Config : Configuration
     /// Default 3
     /// </summary>
     [JsonPropertyName("maxAjaxPerfLookupAttempts")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public int? MaxAjaxPerfLookupAttempts { get; set; }
 
     /// <summary>
@@ -286,6 +328,7 @@ public class Config : Configuration
     /// Defaults to 3
     /// </summary>
     [JsonPropertyName("ajaxPerfLookupDelay")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public int? AjaxPerfLookupDelay { get; set; }
 
     /// <summary>
@@ -293,42 +336,49 @@ public class Config : Configuration
     /// Default false
     /// </summary>
     [JsonPropertyName("onunloadDisableBeacon")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public bool? OnunloadDisableBeacon { get; set; }
 
     /// <summary>
     /// Enable correlation headers for specific domains
     /// </summary>
     [JsonPropertyName("correlationHeaderDomains")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public List<string>? CorrelationHeaderDomains { get; set; }
 
     /// <summary>
     /// Disable correlation headers using regular expressions
     /// </summary>
     //[JsonPropertyName("correlationHeaderExcludePatterns")]
+    //[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     //public List<string>? CorrelationHeaderExcludePatterns { get; set; }
 
     /// <summary>
     /// The ability for the user to provide extra headers
     /// </summary>
     //[JsonPropertyName("customHeaders")]
+    //[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     //public List<CustomHeader>? CustomHeaders { get; set; }
 
     /// <summary>
     /// Provide user an option to convert undefined field to user defined value.
     /// </summary>
     //[JsonPropertyName("convertUndefined")]
+    //[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     //public object? ConvertUndefined { get; set; }
 
     /// <summary>
     /// [Optional] The number of events that can be kept in memory before the SDK starts to drop events. By default, this is 10,000.
     /// </summary>
     [JsonPropertyName("eventsLimitInMem")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public int? EventsLimitInMem { get; set; }
 
     /// <summary>
     /// [Optional] Disable iKey deprecation error message.
     /// </summary>
     [JsonPropertyName("disableIkeyDeprecationMessage")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public bool? DisableIkeyDeprecationMessage { get; set; }
 
     /// <summary>
@@ -337,11 +387,13 @@ public class Config : Configuration
     /// This flag exists as the provided regex is generic and may unexpectedly match a domain that
     /// should not be excluded.        /// </summary>
     [JsonPropertyName("addIntEndpoints")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public bool? AddIntEndpoints { get; set; }
 
     /// <summary>
     /// The default maximum number of events in one transmission. After this number is reached, a new transmission is started. Default is 250.
     /// </summary>
     //[JsonPropertyName("throttleMgrCfg")]
+    //[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     //public IThrottleMgrConfig? ThrottleMgrCfg { get; set; }
 }

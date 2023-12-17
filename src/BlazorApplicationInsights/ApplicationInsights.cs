@@ -78,7 +78,7 @@ public class ApplicationInsights : IApplicationInsights
         => await _jsRuntime.InvokeVoidAsync("appInsights.stopTrackEvent", name, properties, measurements);
 
     /// <inheritdoc />
-    public async Task UpdateCfg(Config newConfig, bool? mergeExisting = true)
+    public async Task UpdateCfg(Config newConfig, bool? mergeExisting = null)
         => await _jsRuntime.InvokeVoidAsync("appInsights.updateCfg", newConfig, mergeExisting);
 
     /// <inheritdoc />
