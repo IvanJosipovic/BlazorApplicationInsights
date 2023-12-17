@@ -14,13 +14,14 @@ public class Configuration
     /// Instrumentation key of resource. Either this or connectionString must be specified.
     /// </summary>
     [JsonPropertyName("instrumentationKey")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? InstrumentationKey { get; set; }
 
     /// <summary>
     /// Connection string of resource. Either this or instrumentationKey must be specified.
     /// </summary>
     [JsonPropertyName("connectionString")]
-
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? ConnectionString { get; set; }
 
     /// <summary>
@@ -31,12 +32,14 @@ public class Configuration
     /// the frequency at which the events are sent.
     /// </summary>
     [JsonPropertyName("diagnosticLogInterval")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public int? DiagnosticLogInterval { get; set; }
 
     /// <summary>
     /// Maximum number of iKey transmitted logging telemetry per page view
     /// </summary>
     [JsonPropertyName("maxMessageLimit")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public int? MaxMessageLimit { get; set; }
 
     /// <summary>
@@ -53,6 +56,7 @@ public class Configuration
     /// 2: logs to console: severity >= WARNING
     /// </summary>
     [JsonPropertyName("loggingLevelConsole")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public int? LoggingLevelConsole { get; set; }
 
     /// <summary>
@@ -65,36 +69,42 @@ public class Configuration
     /// 2: logs to iKey: severity >= WARNING
     /// </summary>
     [JsonPropertyName("loggingLevelTelemetry")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public int? LoggingLevelTelemetry { get; set; }
 
     /// <summary>
     /// If enabled, uncaught exceptions will be thrown to help with debugging
     /// </summary>
     [JsonPropertyName("enableDebug")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public bool? EnableDebug { get; set; }
 
     /// <summary>
     /// Endpoint where telemetry data is sent
     /// </summary>
     [JsonPropertyName("endpointUrl")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? EndpointUrl { get; set; }
 
     /// <summary>
     /// Extension configs loaded in SDK
     /// </summary>
     [JsonPropertyName("extensionConfig")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public Dictionary<string, object?>? ExtensionConfig { get; set; }
 
     /// <summary>
     /// Flag that disables the Instrumentation Key validation.
     /// </summary>
     [JsonPropertyName("disableInstrumentationKeyValidation")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public bool? DisableInstrumentationKeyValidation { get; set; }
 
     /// <summary>
     /// [Optional] Fire every single performance event not just the top level root performance event. Defaults to false.
     /// </summary>
     [JsonPropertyName("perfEvtsSendAll")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public bool? PerfEvtsSendAll { get; set; }
 
     /// <summary>
@@ -102,6 +112,7 @@ public class Configuration
     /// Defaults to 22, previous default value was 5, if you need to keep the previous maximum length you should set this value to 5.
     /// </summary>
     [JsonPropertyName("idLength")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public int? IdLength { get; set; }
 
     /// <summary>
@@ -109,6 +120,7 @@ public class Configuration
     /// It can be set here or as part of the cookieCfg.domain, the cookieCfg takes precedence if both are specified.
     /// </summary>
     [JsonPropertyName("cookieDomain")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? CookieDomain { get; set; }
 
     /// <summary>
@@ -116,6 +128,7 @@ public class Configuration
     /// It can be set here or as part of the cookieCfg.domain, the cookieCfg takes precedence if both are specified.
     /// </summary>
     [JsonPropertyName("cookiePath")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? CookiePath { get; set; }
 
     /// <summary>
@@ -123,6 +136,7 @@ public class Configuration
     /// read any data from cookies. Cookie usage can be re-enabled after initialization via the core.getCookieMgr().enable().
     /// </summary>
     [JsonPropertyName("disableCookiesUsage")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public bool? DisableCookiesUsage { get; set; }
 
     /// <summary>
@@ -131,6 +145,7 @@ public class Configuration
     /// Unload events include "beforeunload", "unload", "visibilitychange" (with 'hidden' state) and "pagehide"
     /// </summary>
     [JsonPropertyName("disablePageUnloadEvents")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string[]? DisablePageUnloadEvents { get; set; }
 
     /// <summary>
@@ -139,6 +154,7 @@ public class Configuration
     /// Page Show events include "pageshow" and "visibilitychange" (with 'visible' state)
     /// </summary>
     [JsonPropertyName("disablePageShowEvents")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string[]? DisablePageShowEvents { get; set; }
 
     /// <summary>
@@ -146,6 +162,7 @@ public class Configuration
     /// this will not send any notifications.
     /// </summary>
     [JsonPropertyName("disableDbgExt")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public bool? DisableDbgExt { get; set; }
 
     /// <summary>
@@ -153,11 +170,13 @@ public class Configuration
     /// Default is false
     /// </summary>
     [JsonPropertyName("enableWParam")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public bool? EnableWParam { get; set; }
 
     /// <summary>
     /// Custom optional value that will be added as a prefix for storage name.
     /// </summary>
     [JsonPropertyName("storagePrefix")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? StoragePrefix { get; set; }
 }
