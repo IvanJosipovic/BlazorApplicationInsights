@@ -36,7 +36,7 @@ public interface IApplicationInsights : IAppInsights, IDependenciesPlugin, IProp
     /// </summary>
     /// <param name="newConfig">The new configuration is apply</param>
     /// <param name="mergeExisting">Should the new configuration merge with the existing or just replace it. Default is to merge.</param>
-    Task UpdateCfg(Config newConfig, bool? mergeExisting = true);
+    Task UpdateCfg(Config newConfig, bool? mergeExisting = null);
 
     /// <summary>
     /// Sets JSRuntime for the service
