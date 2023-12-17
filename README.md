@@ -73,13 +73,12 @@ Application Insights for Blazor web applications
 
 - Add [BlazorApplicationInsights NuGet](https://www.nuget.org/packages/BlazorApplicationInsights) to the Client project
   - ```dotnet add package BlazorApplicationInsights```
-- Add call to Program.cs and set **both** the ConnectionString and InstrumentationKey
+- Add call to Program.cs and set the ConnectionString
 
   ```csharp
   builder.Services.AddBlazorApplicationInsights(config =>
   {
       config.ConnectionString = "{Insert Connection String}";
-      config.InstrumentationKey = "{Insert Instrumentation Key}";
   });
   ```
 
