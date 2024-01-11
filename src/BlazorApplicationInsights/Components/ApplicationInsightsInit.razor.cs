@@ -46,7 +46,7 @@ public partial class ApplicationInsightsInit
 
             if (Config.Config != null)
             {
-                await ApplicationInsights.UpdateCfg(Config.Config);
+                await ApplicationInsights.UpdateCfg(Config.Config, false);
 
                 await ApplicationInsights.TrackPageView();
             }
