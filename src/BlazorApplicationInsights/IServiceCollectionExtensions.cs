@@ -28,8 +28,6 @@ public static class IServiceCollectionExtensions
     /// <param name="loggingOptions">Callback for configuring the logging options. Blazor WASM only.</param>
     public static IServiceCollection AddBlazorApplicationInsights(this IServiceCollection services, Action<Config>? builder = null, Func<IApplicationInsights, Task>? onAppInsightsInit = null, bool addWasmLogger = true, Action<ApplicationInsightsLoggerOptions>? loggingOptions = null)
     {
-        builder ??= delegate { };
-
         var initConfig = new ApplicationInsightsInitConfig();
 
         if (builder != null)
