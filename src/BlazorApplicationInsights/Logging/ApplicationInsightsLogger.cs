@@ -44,6 +44,9 @@ public class ApplicationInsightsLogger : ILogger
     /// <summary>Include scope information in CustomDimensions</summary>
     public bool IncludeScopes { get; set; }
 
+    /// <summary>Min LogLevel to write to app insights</summary>
+    public LogLevel MinLogLevel { get; set; }
+
     /// <summary>
     /// <para>Callback that will be called before customDimensions are set</para>
     /// <para>This allows enriching customDimensions with values that should apply to all log lines</para>
@@ -86,7 +89,7 @@ public class ApplicationInsightsLogger : ILogger
     }
 
     /// <inheritdoc />
-    public bool IsEnabled(LogLevel logLevel) => logLevel != LogLevel.None;
+    public bool IsEnabled(LogLevel logLevel) => this.MinLogLevel <= logLevel && logLevel != LogLevel.None;
 
     /// <inheritdoc />
     public IDisposable BeginScope<TState>(TState state) => ScopeProvider.Push(state);
