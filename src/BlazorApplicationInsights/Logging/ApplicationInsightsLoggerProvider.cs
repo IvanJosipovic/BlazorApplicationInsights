@@ -69,6 +69,7 @@ public class ApplicationInsightsLoggerProvider : ILoggerProvider, ISupportExtern
         return new ApplicationInsightsLogger(categoryName, _applicationInsights)
         {
             ScopeProvider = GetScopeProvider(),
+            MinLogLevel = _options.MinLogLevel,
             IncludeScopes = _options.IncludeScopes,
             IncludeCategoryName = _options.IncludeCategoryName,
 
@@ -98,6 +99,7 @@ public class ApplicationInsightsLoggerProvider : ILoggerProvider, ISupportExtern
             logger.ScopeProvider = scopeProvider;
             logger.IncludeCategoryName = options.IncludeCategoryName;
             logger.IncludeScopes = options.IncludeScopes;
+            logger.MinLogLevel = options.MinLogLevel;
 
 #pragma warning disable 618
             logger.EnrichmentCallback = _enrichmentCallback;
