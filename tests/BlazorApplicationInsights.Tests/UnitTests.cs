@@ -466,6 +466,7 @@ namespace BlazorApplicationInsights.Tests
                 if (e.Type == "error" && !e.Text.Contains("Something wrong happened :("))
                 {
                     hasError = true;
+                    output.WriteLine(e.Text);
                 }
             };
 
@@ -485,6 +486,7 @@ namespace BlazorApplicationInsights.Tests
                 if (!e.Url.Equals("https://localhost:5001/_framework/blazor-hotreload"))
                 {
                     hasError = true;
+                    output.WriteLine(e.Url);
                 }
             };
 
@@ -520,7 +522,7 @@ namespace BlazorApplicationInsights.Tests
                 }
             }
 
-            hasError.Should().Be(false);
+            hasError.Should().BeFalse();
             validCalls.Should().Be(expectedCalls.Count);
         }
 
@@ -619,6 +621,7 @@ namespace BlazorApplicationInsights.Tests
                 if (e.Type == "error" && e.Text != "Failed to load resource: net::ERR_FAILED" && !e.Text.Contains("Something wrong happened :("))
                 {
                     hasError = true;
+                    output.WriteLine(e.Text);
                 }
             };
 
@@ -633,6 +636,7 @@ namespace BlazorApplicationInsights.Tests
                     e.Url != "https://localhost:5001/_framework/blazor-hotreload")
                 {
                     hasError = true;
+                    output.WriteLine(e.Url);
                 }
             };
 
@@ -647,10 +651,30 @@ namespace BlazorApplicationInsights.Tests
         [Fact]
         public async Task GetUserId_ShouldReturnAGeneratedValue_WhenNotSet()
         {
+            bool hasError = false;
+
             using var playwright = await Playwright.CreateAsync();
 
             await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions() { Headless = Headless });
             var page = await browser.NewPageAsync(new BrowserNewPageOptions() { IgnoreHTTPSErrors = true });
+
+            page.Console += (sender, e) =>
+            {
+                if (e.Type == "error" && !e.Text.Contains("Something wrong happened :("))
+                {
+                    hasError = true;
+                    output.WriteLine(e.Text);
+                }
+            };
+
+            page.RequestFailed += (sender, e) =>
+            {
+                if (!e.Url.Equals("https://localhost:5001/_framework/blazor-hotreload"))
+                {
+                    hasError = true;
+                    output.WriteLine(e.Url);
+                }
+            };
 
             await page.GotoAsync(BaseAddress);
             await page.ClickAsync("#GetUserId");
@@ -660,15 +684,36 @@ namespace BlazorApplicationInsights.Tests
             var userId = (await page.Locator("#UserId").AllInnerTextsAsync()).FirstOrDefault();
 
             userId.Should().NotBeNullOrEmpty();
+            hasError.Should().BeFalse();
         }
 
         [Fact]
         public async Task GetUserId_ShouldReturnSetUserId_WhenSet()
         {
+            bool hasError = false;
+
             using var playwright = await Playwright.CreateAsync();
 
             await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions() { Headless = Headless });
             var page = await browser.NewPageAsync(new BrowserNewPageOptions() { IgnoreHTTPSErrors = true });
+
+            page.Console += (sender, e) =>
+            {
+                if (e.Type == "error" && !e.Text.Contains("Something wrong happened :("))
+                {
+                    hasError = true;
+                    output.WriteLine(e.Text);
+                }
+            };
+
+            page.RequestFailed += (sender, e) =>
+            {
+                if (!e.Url.Equals("https://localhost:5001/_framework/blazor-hotreload"))
+                {
+                    hasError = true;
+                    output.WriteLine(e.Url);
+                }
+            };
 
             await page.GotoAsync(BaseAddress);
             await page.ClickAsync("#SetAuthenticatedUserContext");
@@ -681,15 +726,35 @@ namespace BlazorApplicationInsights.Tests
             var userId = (await page.Locator("#UserId").AllInnerTextsAsync()).FirstOrDefault();
 
             userId.Should().Be("myUserId");
+            hasError.Should().BeFalse();
         }
 
         [Fact]
         public async Task GetSessionId_ShouldReturnAGeneratedValue()
         {
+            bool hasError = false;
             using var playwright = await Playwright.CreateAsync();
 
             await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions() { Headless = Headless });
             var page = await browser.NewPageAsync(new BrowserNewPageOptions() { IgnoreHTTPSErrors = true });
+
+            page.Console += (sender, e) =>
+            {
+                if (e.Type == "error" && !e.Text.Contains("Something wrong happened :("))
+                {
+                    hasError = true;
+                    output.WriteLine(e.Text);
+                }
+            };
+
+            page.RequestFailed += (sender, e) =>
+            {
+                if (!e.Url.Equals("https://localhost:5001/_framework/blazor-hotreload"))
+                {
+                    hasError = true;
+                    output.WriteLine(e.Url);
+                }
+            };
 
             await page.GotoAsync(BaseAddress);
             await page.ClickAsync("#GetSessionId");
@@ -699,15 +764,36 @@ namespace BlazorApplicationInsights.Tests
             var sessionId = (await page.Locator("#SessionId").AllInnerTextsAsync()).FirstOrDefault();
 
             sessionId.Should().NotBeNullOrEmpty();
+            hasError.Should().BeFalse();
         }
 
         [Fact]
         public async Task SetCookiesEnabled_False_ShouldDisableCookies()
         {
+            bool hasError = false;
+
             using var playwright = await Playwright.CreateAsync();
 
             await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions() { Headless = Headless });
             var page = await browser.NewPageAsync(new BrowserNewPageOptions() { IgnoreHTTPSErrors = true });
+
+            page.Console += (sender, e) =>
+            {
+                if (e.Type == "error" && !e.Text.Contains("Something wrong happened :("))
+                {
+                    hasError = true;
+                    output.WriteLine(e.Text);
+                }
+            };
+
+            page.RequestFailed += (sender, e) =>
+            {
+                if (!e.Url.Equals("https://localhost:5001/_framework/blazor-hotreload"))
+                {
+                    hasError = true;
+                    output.WriteLine(e.Url);
+                }
+            };
 
             await page.GotoAsync(BaseAddress);
             await page.ClickAsync("#DisableCookies");
@@ -718,16 +804,36 @@ namespace BlazorApplicationInsights.Tests
             var enabled = (await page.Locator("#CookiesEnabled").AllInnerTextsAsync()).FirstOrDefault();
 
             enabled.Should().Be("False");
+            hasError.Should().BeFalse();
         }
-
 
         [Fact]
         public async Task SetCookiesEnabled_True_ShouldEnableCookies()
         {
+            bool hasError = false;
+
             using var playwright = await Playwright.CreateAsync();
 
             await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions() { Headless = Headless });
             var page = await browser.NewPageAsync(new BrowserNewPageOptions() { IgnoreHTTPSErrors = true });
+
+            page.Console += (sender, e) =>
+            {
+                if (e.Type == "error" && !e.Text.Contains("Something wrong happened :("))
+                {
+                    hasError = true;
+                    output.WriteLine(e.Text);
+                }
+            };
+
+            page.RequestFailed += (sender, e) =>
+            {
+                if (!e.Url.Equals("https://localhost:5001/_framework/blazor-hotreload"))
+                {
+                    hasError = true;
+                    output.WriteLine(e.Url);
+                }
+            };
 
             await page.GotoAsync(BaseAddress);
             await page.ClickAsync("#DisableCookies");
@@ -740,7 +846,7 @@ namespace BlazorApplicationInsights.Tests
             var enabled = (await page.Locator("#CookiesEnabled").AllInnerTextsAsync()).FirstOrDefault();
 
             enabled.Should().Be("True");
+            hasError.Should().BeFalse();
         }
-
     }
 }
