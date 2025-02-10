@@ -1,8 +1,10 @@
-﻿using System.Text.Json;
+﻿using System;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using BlazorApplicationInsights.Interfaces;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Logging;
 using Microsoft.JSInterop;
 
 namespace BlazorApplicationInsights;
@@ -15,6 +17,7 @@ public partial class ApplicationInsightsInit
     [Inject] IApplicationInsights ApplicationInsights { get; set; }
     [Inject] private IJSRuntime JSRuntime { get; set; }
     [Inject] private ApplicationInsightsInitConfig Config { get; set; }
+    [Inject] private ILogger<ApplicationInsightsInit> Logger { get; set; }
 
     /// <summary>
     /// Must be enabled when running in Blazor Wasm Standalone
@@ -46,9 +49,15 @@ public partial class ApplicationInsightsInit
 
             if (Config.Config != null)
             {
-                await ApplicationInsights.UpdateCfg(Config.Config, false);
-
-                await ApplicationInsights.TrackPageView();
+                try
+                {
+                    await ApplicationInsights.UpdateCfg(Config.Config, false);
+                    await ApplicationInsights.TrackPageView();
+                }
+                catch (Exception ex)
+                {
+                    Logger.LogError(ex, "Failed to update configuration and track page view. An ad blocker or CSP may be blocking the App Insights script.");
+                }
             }
         }
 
