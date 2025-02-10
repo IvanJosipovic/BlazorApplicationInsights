@@ -26,7 +26,7 @@ public static class IServiceCollectionExtensions
     /// <param name="onAppInsightsInit">Callback which allows calling Application Insights commands on startup.  Note, requires component to be interactive!</param>
     /// <param name="addWasmLogger">Adds the ILoggerProvider which ships all logs to Application Insights. This is disabled on Blazor Server.</param>
     /// <param name="loggingOptions">Callback for configuring the logging options. Blazor WASM only.</param>
-    public static IServiceCollection AddBlazorApplicationInsights(this IServiceCollection services, Action<Config>? builder = null, Func<IApplicationInsights, Task>? onAppInsightsInit = null, bool addWasmLogger = true, Action<ApplicationInsightsLoggerOptions>? loggingOptions = null)
+    public static IServiceCollection AddBlazorApplicationInsights(this IServiceCollection services, Action<Config>? builder = null, Func<IServiceProvider, IApplicationInsights, Task>? onAppInsightsInit = null, bool addWasmLogger = true, Action<ApplicationInsightsLoggerOptions>? loggingOptions = null)
     {
         var initConfig = new ApplicationInsightsInitConfig();
 
