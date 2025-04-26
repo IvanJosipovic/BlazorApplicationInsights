@@ -16,7 +16,7 @@ namespace BlazorApplicationInsights.Sample.Wasm
 
             builder.Services.AddBlazorApplicationInsights(config =>
             {
-                config.ConnectionString = "InstrumentationKey=219f9af4-0842-42c8-a5b1-578f09d2ee27;IngestionEndpoint=https://westus2-0.in.applicationinsights.azure.com/;LiveEndpoint=https://westus2.livediagnostics.monitor.azure.com/";
+                config.ConnectionString = "InstrumentationKey=4f8d37b3-0d6e-4c1a-80a2-035a0e832299;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/;LiveEndpoint=https://westus.livediagnostics.monitor.azure.com/;ApplicationId=5eaf113f-fc6a-407d-bdc5-d626b71d22a7";
             },
             async applicationInsights =>
             {
