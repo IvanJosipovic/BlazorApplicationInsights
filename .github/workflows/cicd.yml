@@ -35,7 +35,7 @@ jobs:
       shell: pwsh
 
     - name: Install Playwright
-      working-directory: tests/BlazorApplicationInsights.Tests/bin/Release/net8.0
+      working-directory: tests/BlazorApplicationInsights.Tests/bin/Release/net9.0
       run: ./playwright.ps1 install --with-deps
       shell: pwsh
 

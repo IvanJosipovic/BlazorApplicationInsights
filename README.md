@@ -9,7 +9,7 @@ Application Insights for Blazor web applications
 
 ## Features
 
-- .NET 6/7/8 and Blazor Web App Support
+- .NET 6/7/8/9 and Blazor Web App Support
 - Automatically triggers Track Page View on route changes
 - ILoggerProvider which sends all the logs to App Insights (Wasm only)
 - Programmatically update settings, including the Connection String
