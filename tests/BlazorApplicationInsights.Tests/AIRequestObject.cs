@@ -60,6 +60,15 @@ namespace BlazorApplicationInsights.Tests
         public string message { get; set; }
         public bool hasFullStack { get; set; }
         public string stack { get; set; }
-        public string[] parsedStack { get; set; }
+        public ParsedStack[] parsedStack { get; set; }
+    }
+
+    public class ParsedStack
+    {
+        public int level { get; set; }
+        public string method { get; set; }
+        public string assembly { get; set; }
+        public string fileName { get; set; }
+        public int line { get; set; }
     }
 }
