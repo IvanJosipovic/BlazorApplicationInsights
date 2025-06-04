@@ -109,16 +109,16 @@ namespace BlazorApplicationInsights.Tests
                             baseType = "ExceptionData",
                             baseData = new Basedata()
                             {
-                                exceptions = new []
-                                {
+                                exceptions =
+                                [
                                     new Exception()
                                     {
                                         typeName = "my error",
                                         message = "my error: my message",
                                         hasFullStack = false,
-                                        stack = "my message\n"
+                                        stack = "my message"
                                     }
-                                },
+                                ],
                                 severityLevel = 3,
                                 properties = new Dictionary<string, string>()
                                 {
