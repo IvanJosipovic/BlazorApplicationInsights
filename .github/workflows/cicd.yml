@@ -41,7 +41,15 @@ jobs:
 
     - name: Run Tests
       working-directory: tests/BlazorApplicationInsights.Tests
-      run: dotnet test -c Release
+      run: dotnet test -c Release --logger "trx;LogFileName=test-results.trx"
+
+    - name: Test Report
+      uses: dorny/test-reporter@v2
+      if: success() || failure()
+      with:
+        name: KubeUI Tests
+        path: tests/BlazorApplicationInsights.Tests/TestResults/test-results.trx
+        reporter: dotnet-trx
 
   build:
     name: Create Release
