@@ -138,15 +138,15 @@ namespace BlazorApplicationInsights.Tests
                             baseType = "ExceptionData",
                             baseData = new Basedata()
                             {
-                                exceptions = new []
-                                {
+                                exceptions =
+                                [
                                     new Exception()
                                     {
                                         typeName = "NotImplementedException",
                                         message = "NotImplementedException: Something wrong happened :(",
-                                        hasFullStack = false,
+                                        hasFullStack = true,
                                     }
-                                },
+                                ],
                                 severityLevel = 4,
                                 properties = new Dictionary<string, string>()
                                 {
