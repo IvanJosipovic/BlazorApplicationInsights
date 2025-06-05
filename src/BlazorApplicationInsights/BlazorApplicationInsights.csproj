@@ -18,6 +18,8 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
     <IsTrimmable>false</IsTrimmable>
+    <StaticWebAssetFingerprintingEnabled>false</StaticWebAssetFingerprintingEnabled>
+    <StaticWebAssetsFingerprintContent>false</StaticWebAssetsFingerprintContent>
   </PropertyGroup>
 
   <ItemGroup>
