@@ -14,6 +14,7 @@ namespace BlazorApplicationInsights;
 /// </summary>
 public partial class ApplicationInsightsInit
 {
+    [Inject] IServiceProvider ServiceProvider { get; set; }
     [Inject] IApplicationInsights ApplicationInsights { get; set; }
     [Inject] private IJSRuntime JSRuntime { get; set; }
     [Inject] private ApplicationInsightsInitConfig Config { get; set; }
@@ -63,7 +64,7 @@ public partial class ApplicationInsightsInit
 
         if (firstRender && Config.OnAppInsightsInit != null)
         {
-            await Config.OnAppInsightsInit(ApplicationInsights);
+            await Config.OnAppInsightsInit(ServiceProvider, ApplicationInsights);
         }
     }
 }
