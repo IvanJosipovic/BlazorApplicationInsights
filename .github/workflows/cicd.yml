@@ -9,6 +9,13 @@ on:
   pull_request:
     types: [opened, reopened, synchronize]
 
+permissions:
+  id-token: write
+  contents: write
+  actions: write
+  checks: write
+  issues: write
+
 name: Create Release
 jobs:
   test:
