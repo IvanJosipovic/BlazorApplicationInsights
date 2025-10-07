@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.31521.260
+# Visual Studio Version 18
+VisualStudioVersion = 18.0.11018.127 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApplicationInsights", "src\BlazorApplicationInsights\BlazorApplicationInsights.csproj", "{07E8E6A7-A6A4-4CAB-BD84-2C4BF3142E7B}"
 EndProject
@@ -31,8 +31,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApplicationInsights.Sample.WebApp.Client", "samples\BlazorApplicationInsights.Sample.WebApp\BlazorApplicationInsights.Sample.WebApp.Client\BlazorApplicationInsights.Sample.WebApp.Client.csproj", "{A73F04FB-FCDD-43B7-AC8E-1595E8E21CA7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApplicationInsights.Sample.Server", "samples\BlazorApplicationInsights.Sample.Server\BlazorApplicationInsights.Sample.Server.csproj", "{7F20811A-451A-46D5-B47A-FF45FEB3299E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorApplicationInsights.Sample.Wasm6", "samples\BlazorApplicationInsights.Sample.Wasm6\BlazorApplicationInsights.Sample.Wasm6.csproj", "{998E59D1-3046-4BCF-A90A-72BCFEAD3919}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -68,10 +66,6 @@ Global
 		{7F20811A-451A-46D5-B47A-FF45FEB3299E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F20811A-451A-46D5-B47A-FF45FEB3299E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F20811A-451A-46D5-B47A-FF45FEB3299E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{998E59D1-3046-4BCF-A90A-72BCFEAD3919}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{998E59D1-3046-4BCF-A90A-72BCFEAD3919}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{998E59D1-3046-4BCF-A90A-72BCFEAD3919}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{998E59D1-3046-4BCF-A90A-72BCFEAD3919}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -84,7 +78,6 @@ Global
 		{E3782F8D-0C4F-4161-B816-C432865639AE} = {8E51F70D-BCC4-4A78-85F2-79D639EED440}
 		{A73F04FB-FCDD-43B7-AC8E-1595E8E21CA7} = {8E51F70D-BCC4-4A78-85F2-79D639EED440}
 		{7F20811A-451A-46D5-B47A-FF45FEB3299E} = {8E51F70D-BCC4-4A78-85F2-79D639EED440}
-		{998E59D1-3046-4BCF-A90A-72BCFEAD3919} = {8E51F70D-BCC4-4A78-85F2-79D639EED440}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3EBB1AF9-73E1-4D46-B0F7-C0E8B8E2173D}
