@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        path: [samples/BlazorApplicationInsights.Sample.Wasm, samples/BlazorApplicationInsights.Sample.Wasm6]
+        path: [samples/BlazorApplicationInsights.Sample.Wasm]
     steps:
     - name: Checkout code
       uses: actions/checkout@v5
