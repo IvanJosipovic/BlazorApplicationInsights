@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BlazorApplicationInsights
 {
-    internal class ApplicationInsightsInitConfig
+    public class ApplicationInsightsInitConfig
     {
         public Config? Config { get; set; }
 
