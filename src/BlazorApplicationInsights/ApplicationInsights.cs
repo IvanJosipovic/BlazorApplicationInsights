@@ -51,7 +51,7 @@ public class ApplicationInsights : IApplicationInsights
 
     /// <inheritdoc />
     public async Task Flush()
-        => await _jsRuntime.InvokeVoidAsync("appInsights.flush", false);
+        => await _jsRuntime.InvokeVoidAsync("appInsights.flush");
 
     /// <inheritdoc />
     public async Task ClearAuthenticatedUserContext()
