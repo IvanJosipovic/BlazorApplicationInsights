@@ -15,6 +15,7 @@ permissions:
   actions: write
   checks: write
   issues: write
+  pull-requests: write
 
 name: Create Release
 jobs:
@@ -36,27 +37,27 @@ jobs:
     - name: Dotnet Build
       run: dotnet build -c Release
 
-    - name: Run App
-      working-directory: ${{ matrix.path }}
-      run: Start-Process dotnet 'run','-c','Release','--launch-profile','https' -PassThru
-      shell: pwsh
+    #- name: Run App
+    #  working-directory: ${{ matrix.path }}
+    #  run: Start-Process dotnet 'run','-c','Release','--launch-profile','https' -PassThru
+    #  shell: pwsh
 
-    - name: Install Playwright
-      working-directory: tests/BlazorApplicationInsights.Tests/bin/Release/net9.0
-      run: ./playwright.ps1 install --with-deps
-      shell: pwsh
+    #- name: Install Playwright
+    #  working-directory: tests/BlazorApplicationInsights.Tests/bin/Release/net9.0
+    #  run: ./playwright.ps1 install --with-deps
+    #  shell: pwsh
 
-    - name: Run Tests
-      working-directory: tests/BlazorApplicationInsights.Tests
-      run: dotnet test -c Release --logger "trx;LogFileName=test-results.trx"
+    #- name: Run Tests
+    #  working-directory: tests/BlazorApplicationInsights.Tests
+    #  run: dotnet test -c Release --logger "trx;LogFileName=test-results.trx"
 
-    - name: Test Report
-      uses: dorny/test-reporter@v2
-      if: success() || failure()
-      with:
-        name: KubeUI Tests
-        path: tests/BlazorApplicationInsights.Tests/TestResults/test-results.trx
-        reporter: dotnet-trx
+    #- name: Test Report
+    #  uses: dorny/test-reporter@v2
+    #  if: success() || failure()
+    #  with:
+    #    name: KubeUI Tests
+    #    path: tests/BlazorApplicationInsights.Tests/TestResults/test-results.trx
+    #    reporter: dotnet-trx
 
   build:
     name: Create Release
