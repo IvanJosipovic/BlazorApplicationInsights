@@ -622,9 +622,14 @@ namespace BlazorApplicationInsights.Tests
                 }
             };
 
-            await page.RouteAsync("https://dc.services.visualstudio.com/v2/track", async (x) => await x.AbortAsync());
-
-            await page.RouteAsync("https://js.monitor.azure.com/scripts/b/ai.3.gbl.min.js", async (x) => await x.AbortAsync());
+            await page.RouteAsync("**", async r =>
+            {
+                if (r.Request.Url == "https://dc.services.visualstudio.com/v2/track" || r.Request.Url == "https://js.monitor.azure.com/scripts/b/ai.3.gbl.min.js")
+                {
+                    await r.AbortAsync();
+                }
+                await r.ContinueAsync();
+            });
 
             page.RequestFailed += (sender, e) =>
             {
