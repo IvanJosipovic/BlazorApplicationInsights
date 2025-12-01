@@ -619,6 +619,7 @@ namespace BlazorApplicationInsights.Tests
                 if (e.Type == "error" && e.Text != "Failed to load resource: net::ERR_FAILED" && !e.Text.Contains("Something wrong happened :("))
                 {
                     hasError = true;
+                    output.WriteLine(e.Text);
                 }
             };
 
@@ -628,7 +629,10 @@ namespace BlazorApplicationInsights.Tests
                 {
                     await r.AbortAsync();
                 }
-                await r.ContinueAsync();
+                else
+                {
+                    await r.ContinueAsync();
+                }
             });
 
             page.RequestFailed += (sender, e) =>
