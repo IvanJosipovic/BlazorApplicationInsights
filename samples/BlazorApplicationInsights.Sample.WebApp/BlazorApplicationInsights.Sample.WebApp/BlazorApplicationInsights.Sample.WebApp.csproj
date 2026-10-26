@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BlazorApplicationInsights.Sample.WebApp.Client\BlazorApplicationInsights.Sample.WebApp.Client.csproj" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="9.0.*" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="10.0.1*" />
   </ItemGroup>
 
 </Project>
